@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: theme("colors.paper");
+  color: theme("colors.ink");
+  font-family: theme("fontFamily.serif");
+  font-size: theme("fontSize.body[0]");
+  line-height: theme("fontSize.body[1].lineHeight");
+}
+
+.font-ui {
+  font-family: theme("fontFamily.sans");
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: theme("colors.accent");
+}
+
+/* Reading column prose for EssayBody */
+.prose-hawazine {
+  max-width: theme("maxWidth.reading");
+  color: theme("colors.ink");
+  font-family: theme("fontFamily.serif");
+  font-size: theme("fontSize.body[0]");
+  line-height: theme("fontSize.body[1].lineHeight");
+}
+
+.prose-hawazine p {
+  margin-top: 1.1em;
+  margin-bottom: 1.1em;
+}
+
+.prose-hawazine p:first-child {
+  margin-top: 0;
+}
+
+.prose-hawazine h2 {
+  font-family: theme("fontFamily.serif");
+  font-size: 1.75rem;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+}
+
+.prose-hawazine h3 {
+  font-family: theme("fontFamily.serif");
+  font-size: 1.35rem;
+  line-height: 1.25;
+  margin-top: 1.7em;
+  margin-bottom: 0.5em;
+}
+
+.prose-hawazine a {
+  color: theme("colors.ink");
+  border-bottom: 1px solid theme("colors.quiet");
+  transition: border-color 120ms ease;
+}
+
+.prose-hawazine a:hover {
+  color: theme("colors.accent");
+  border-bottom-color: theme("colors.accent");
+}
+
+.prose-hawazine blockquote {
+  font-style: italic;
+  border-left: 2px solid theme("colors.quiet");
+  padding-left: 1.25rem;
+  margin: 1.5rem 0;
+  color: theme("colors.ink");
+}
+
+.prose-hawazine ul,
+.prose-hawazine ol {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-left: 1.4rem;
+}
+
+.prose-hawazine li {
+  margin: 0.35em 0;
+}
+
+.prose-hawazine hr {
+  border: 0;
+  border-top: 1px solid theme("colors.quiet");
+  margin: 2.5em auto;
+  width: 4rem;
+}
+
+.prose-hawazine img {
+  margin: 2em 0;
+  width: 100%;
+  height: auto;
+}
+
+/* Utility: scrollbar-less horizontal gallery */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
