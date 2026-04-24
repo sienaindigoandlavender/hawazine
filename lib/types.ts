@@ -51,6 +51,12 @@ export interface Property {
   updatedAt: string;
 }
 
+export type JournalFormat =
+  | "the-medina"
+  | "the-market"
+  | "the-house"
+  | "the-record";
+
 export interface JournalEntry {
   slug: string;
   title: string;
@@ -60,6 +66,7 @@ export interface JournalEntry {
   heroImageAlt?: string;
   publishedAt: string;
   published: boolean;
+  format?: JournalFormat;
 }
 
 export interface Page {

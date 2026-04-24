@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { JournalEntry } from "@/lib/types";
+import { formatLabel } from "@/lib/content/journal";
 
 export function JournalCard({ entry }: { entry: JournalEntry }) {
   const date = new Date(entry.publishedAt).toLocaleDateString("en-GB", {
@@ -26,6 +27,11 @@ export function JournalCard({ entry }: { entry: JournalEntry }) {
         <p className="font-ui text-meta uppercase tracking-[0.14em] text-quiet">
           {date}
         </p>
+        {entry.format && (
+          <p className="font-ui text-meta uppercase tracking-[0.18em] text-quiet mt-2 mb-2">
+            {formatLabel(entry.format)}
+          </p>
+        )}
         <h3 className="mt-2 font-serif text-2xl text-ink transition-colors group-hover:text-accent">
           {entry.title}
         </h3>
