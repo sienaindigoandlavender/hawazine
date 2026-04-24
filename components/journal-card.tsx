@@ -1,5 +1,6 @@
+import Image from "next/image";
+import Link from "next/link";
 import type { JournalEntry } from "@/lib/types";
-import { ImageWithPanel } from "@/components/image-with-panel";
 
 const FORMAT_DISPLAY: Record<string, string> = {
   "the-medina": "The Medina",
@@ -16,37 +17,45 @@ function formatDate(iso: string): string {
   });
 }
 
+// Simpler grid-card pattern for /journal beneath the featured entry:
+// hero image on top, typography below. No overlays, no floating panels.
 export function JournalCard({ entry }: { entry: JournalEntry }) {
   const kicker = entry.format ? FORMAT_DISPLAY[entry.format] : undefined;
 
   return (
-    <ImageWithPanel
-      imageUrl={entry.heroImageUrl}
-      imageAlt={entry.heroImageAlt ?? entry.title}
-      size="card"
-      href={`/journal/${entry.slug}`}
-    >
-      {kicker && (
-        <p className="font-sans text-meta uppercase tracking-[0.18em] text-quiet">
-          {kicker}
-        </p>
+    <Link href={`/journal/${entry.slug}`} className="group block">
+      {entry.heroImageUrl && (
+        <div className="relative aspect-[3/2] w-full overflow-hidden bg-ink/5">
+          <Image
+            src={entry.heroImageUrl}
+            alt={entry.heroImageAlt ?? entry.title}
+            fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover"
+          />
+        </div>
       )}
-      <h3 className="mt-3 font-serif text-body leading-[1.25] text-ink transition-colors group-hover:text-accent md:text-[1.125rem]">
-        {entry.title}
-      </h3>
-      {entry.subtitle && (
-        <p className="mt-2 line-clamp-2 font-serif text-meta text-ink-soft">
-          {entry.subtitle}
-        </p>
-      )}
-      <div className="mt-5 border-t border-rule pt-3">
+      <div className={entry.heroImageUrl ? "mt-6" : "py-6"}>
+        {kicker && (
+          <p className="pb-2 font-sans text-[0.6875rem] uppercase tracking-[0.24em] text-quiet">
+            <span className="border-b border-quiet pb-1">{kicker}</span>
+          </p>
+        )}
+        <h3 className="mt-4 font-serif text-subtitle leading-[1.2] text-ink transition-colors group-hover:text-accent">
+          {entry.title}
+        </h3>
+        {entry.subtitle && (
+          <p className="mt-3 line-clamp-2 font-serif text-body text-ink-soft">
+            {entry.subtitle}
+          </p>
+        )}
         <time
           dateTime={entry.publishedAt}
-          className="font-sans text-meta text-quiet"
+          className="mt-4 block font-sans text-meta text-quiet"
         >
           {formatDate(entry.publishedAt)}
         </time>
       </div>
-    </ImageWithPanel>
+    </Link>
   );
 }
