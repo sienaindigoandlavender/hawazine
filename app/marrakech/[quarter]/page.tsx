@@ -62,6 +62,30 @@ export default function QuarterPage({ params }: Params) {
         <EssayBody markdown={quarter.essay} />
       </section>
 
+      {quarter.landmarks && quarter.landmarks.length > 0 && (
+        <section className="mx-auto max-w-page px-6 py-12">
+          <p className="font-ui text-meta uppercase tracking-[0.18em] text-quiet mb-6">
+            In the quarter
+          </p>
+          <div className="border-t border-ink/10">
+            {quarter.landmarks.map((landmark, i) => (
+              <div
+                key={`${landmark.type}-${i}`}
+                className="grid grid-cols-[1fr_2fr] gap-4 border-b border-ink/10 py-3"
+              >
+                <span className="font-ui text-meta uppercase tracking-[0.14em] text-quiet">
+                  {landmark.type}
+                </span>
+                <span className="font-serif text-body text-ink">
+                  {landmark.label}
+                  <span className="text-quiet"> — {landmark.note}</span>
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       <section className="mx-auto max-w-page px-6 py-12">
         <h2 className="font-serif text-section text-ink">Where {quarter.name} is</h2>
         <p className="mt-3 max-w-reading font-ui text-meta text-quiet">

@@ -12,6 +12,23 @@ export interface GalleryImage {
   caption?: string;
 }
 
+export type LandmarkType =
+  | "market"
+  | "pharmacy"
+  | "school"
+  | "hammam"
+  | "transport"
+  | "hospital"
+  | "mosque"
+  | "parking"
+  | "landmark";
+
+export interface Landmark {
+  type: LandmarkType;
+  label: string;
+  note: string;
+}
+
 export interface Quarter {
   slug: string;
   name: string;
@@ -21,6 +38,7 @@ export interface Quarter {
   heroImageAlt: string;
   mapCenter: { lat: number; lng: number };
   mapZoom?: number;
+  landmarks?: Landmark[];
   published: boolean;
 }
 
