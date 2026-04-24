@@ -97,6 +97,43 @@ export interface Page {
   updatedAt: string;
 }
 
+// --- The Oracle (market intelligence) ---
+// Public/private boundary: TransactionRecord is always private and feeds
+// aggregates only. MarketNote is the published surface.
+
+export interface TransactionRecord {
+  id: string;
+  date: string; // YYYY-MM
+  quarter: string; // quarter slug
+  type: "riad" | "dar" | "land" | "apartment";
+  titleType?: TitleStatus; // omit when unknown
+  surfaceM2?: number;
+  askingPriceDh?: number;
+  transactionPriceDh?: number;
+  daysOnMarket?: number;
+  source: "hawazine" | "observed" | "reported";
+  notes?: string; // private, never published
+}
+
+export interface MarketNote {
+  id: string;
+  date: string;
+  quarter?: string; // omit for medina-wide notes
+  headline: string;
+  body: string;
+  dataPoints?: string[];
+  format: "the-record" | "the-market";
+  published: boolean;
+}
+
+export interface PriceAggregate {
+  quarter: string;
+  count: number;
+  medianDhPerM2?: number;
+  rangeDhPerM2?: { min: number; max: number };
+  observedRange?: { from: string; to: string };
+}
+
 export const TITLE_STATUS_LABEL: Record<TitleStatus, string> = {
   melkia: "Melkia",
   titre_foncier: "Titre foncier",
