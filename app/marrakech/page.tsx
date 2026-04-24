@@ -5,6 +5,8 @@ import { EssayBody } from "@/components/essay-body";
 import { QuarterCard } from "@/components/quarter-card";
 import { getPageBySlug } from "@/lib/content/pages";
 import { getPublishedQuarters } from "@/lib/content/quarters";
+import { siteConfig } from "@/lib/site";
+import { absoluteUrl, buildBreadcrumbJsonLd, SEO_KEYWORDS } from "@/lib/seo";
 
 const QuarterMap = dynamic(
   () => import("@/components/quarter-map").then((m) => m.QuarterMap),
@@ -23,16 +25,76 @@ const QuarterMap = dynamic(
 const page = getPageBySlug("marrakech")!;
 
 export const metadata: Metadata = {
-  title: page.title,
+  title: `${page.title} — the medina and its quarters`,
   description: page.subtitle,
+  keywords: [
+    ...SEO_KEYWORDS.base,
+    "Marrakech medina quarters",
+    "Laksour",
+    "Mouassine",
+    "Bab Doukkala",
+    "Kasbah Marrakech",
+    "Mellah Marrakech",
+  ],
   alternates: { canonical: "/marrakech" },
+  openGraph: {
+    type: "website",
+    title: `${page.title} — the medina and its quarters`,
+    description: page.subtitle,
+    url: absoluteUrl("/marrakech"),
+  },
 };
 
 export default function MarrakechPage() {
   const quarters = getPublishedQuarters();
 
+  const collectionJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${absoluteUrl("/marrakech")}#collection`,
+    name: page.title,
+    description: page.subtitle,
+    url: absoluteUrl("/marrakech"),
+    inLanguage: siteConfig.language,
+    isPartOf: { "@id": `${siteConfig.url}#website` },
+    about: {
+      "@type": "Place",
+      name: "Marrakech medina",
+      containedInPlace: {
+        "@type": "City",
+        name: "Marrakech",
+        containedInPlace: { "@type": "Country", name: "Morocco" },
+      },
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListOrder: "https://schema.org/ItemListUnordered",
+      numberOfItems: quarters.length,
+      itemListElement: quarters.map((q, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: absoluteUrl(`/marrakech/${q.slug}`),
+        name: q.name,
+      })),
+    },
+  };
+
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Marrakech", path: "/marrakech" },
+  ]);
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       <EditorialHero
         kicker="Marrakech"
         title={page.title}
