@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { siteConfig } from "@/lib/site";
 import { NewsletterForm } from "@/components/newsletter-form";
-import { GoogleTranslate } from "@/components/google-translate";
 
 export function SiteFooter() {
   return (
@@ -12,7 +11,7 @@ export function SiteFooter() {
           "linear-gradient(to bottom, #1f1f1f 0%, #161616 55%, #0e0e0e 100%)",
       }}
     >
-      <div className="mx-auto grid max-w-page gap-10 px-6 py-16 md:grid-cols-4 md:gap-12">
+      <div className="mx-auto grid max-w-page gap-10 px-6 py-16 md:grid-cols-3 md:gap-12">
         <div>
           <p className="font-serif text-2xl">{siteConfig.name}</p>
           <p className="mt-4 font-ui text-meta leading-relaxed text-paper/70">
@@ -51,15 +50,6 @@ export function SiteFooter() {
           </ul>
           <div className="mt-6">
             <NewsletterForm />
-          </div>
-        </div>
-
-        <div>
-          <p className="font-ui text-meta uppercase tracking-[0.14em] text-paper/60">
-            Language
-          </p>
-          <div className="mt-4">
-            <GoogleTranslate />
           </div>
         </div>
       </div>
