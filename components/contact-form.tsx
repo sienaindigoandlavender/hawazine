@@ -22,7 +22,7 @@ export function ContactForm({ propertySlug, source = "contact_page", defaultMess
     const form = event.currentTarget;
     const data = new FormData(form);
     const payload = {
-      name: String(data.get("name") ?? ""),
+      name: `${data.get("firstName") ?? ""} ${data.get("lastName") ?? ""}`.trim(),
       email: String(data.get("email") ?? ""),
       phone: String(data.get("phone") ?? ""),
       message: String(data.get("message") ?? ""),
@@ -58,7 +58,10 @@ export function ContactForm({ propertySlug, source = "contact_page", defaultMess
 
   return (
     <form onSubmit={onSubmit} className="font-ui space-y-6">
-      <Field label="Name" name="name" required />
+      <div className="grid grid-cols-2 gap-8">
+        <Field label="First name" name="firstName" required />
+        <Field label="Last name" name="lastName" required />
+      </div>
       <Field label="Email" name="email" type="email" required />
       <Field label="Phone (optional)" name="phone" />
       <Field
