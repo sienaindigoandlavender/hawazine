@@ -115,8 +115,10 @@ This iteration restructured identity and layout without touching infrastructure:
 
 - Typography: Fraunces + IBM Plex Sans; new display/section/subtitle/body/meta
   scale in `tailwind.config.ts`.
-- Palette: warm paper `#F8F4EC`, warm ink `#1A1714`, ink-soft `#3D342E` for
-  body prose, quiet `#7A6E63`, accent terracotta `#8B3A2F`, rule `#D9CFBE`.
+- Palette: pure white paper `#FFFFFF`, warm ink `#1A1714`, ink-soft
+  `#3D342E` for body prose, quiet `#7A6E63`, accent terracotta `#8B3A2F`
+  (under evaluation against the white background), rule `#E8E8E6` for
+  hairlines. A warm-paper variant was tried and reverted.
 - Wordmark: 1.75rem serif with a small all-caps tagline on desktop.
 - Nav: primary `Marrakech · Buying · Craft · Properties · Contact`; a smaller
   secondary `The Index · Glossary · Journal` sits below it.
