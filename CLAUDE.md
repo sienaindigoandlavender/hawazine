@@ -36,19 +36,26 @@ Markdown bodies render through `react-markdown` + `remark-gfm` via the
 
 - Colours live in `tailwind.config.ts` (April 2026 restructure): `paper
   #FFFFFF` (pure white site background — the warm-paper variant was tried
-  and reverted), `ink #1A1714` (warm near-black), `ink-soft #3D342E`
-  (default body prose — the site `body` declaration binds to this),
-  `quiet #7A6E63`, `accent #8B3A2F` (deep terracotta — hover / occasional
-  highlight only, not for large fills; currently under evaluation against
-  the white background), `rule #E8E8E6` (hairlines, cool enough to read
-  cleanly on white). Footer keeps its dark inline gradient `#1f1f1f →
-  #161616 → #0e0e0e`.
+  and reverted), `paper-deep #F5F5F4` (**small inline panels only** —
+  property info cards overlaying hero imagery, for example — never a
+  full-width section-band background), `ink #1A1714` (warm near-black),
+  `ink-soft #3D342E` (default body prose — the site `body` declaration
+  binds to this), `quiet #7A6E63`, `accent #8B3A2F` (deep terracotta —
+  hover / occasional highlight only, not for large fills; currently
+  under evaluation against the white background), `rule #E5E5E5` (cool
+  hairlines, legible on white). Footer keeps its dark inline gradient
+  `#1f1f1f → #161616 → #0e0e0e`.
 - Fonts: `Fraunces` (serif, display + body) and `IBM_Plex_Sans` (sans, nav,
   metadata, UI). Exposed as CSS variables `--font-serif` and `--font-sans`.
   Tailwind: `font-serif` and `font-sans`. The earlier `.font-ui` CSS class
   has been retired in new components; prefer `font-sans`.
-- Backgrounds: pure white `#FFFFFF`. A warm-paper variant was tried and
-  reverted — it drifted the register in the wrong direction.
+- Backgrounds: pure white `#FFFFFF` site-wide. A warm-paper variant was
+  tried and reverted. **Sections separate through whitespace and typographic
+  rhythm, not background fills.** Grey bands across full-width sections are
+  off-register for this project (reference: The Modern House — pure white
+  page throughout; grey only appears as floating cards over photography).
+  If a section genuinely needs visual separation, a single 1px `border-rule`
+  rule above and/or below it — never a coloured fill.
 - Body prose: `ink-soft` default. Editorial prose inside `.prose-hawazine`
   reads `ink` (slightly heavier). Use `quiet` for metadata/captions only.
 
