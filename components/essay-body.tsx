@@ -20,9 +20,15 @@ const components: Components = {
   },
 };
 
-export function EssayBody({ markdown }: { markdown: string }) {
+export function EssayBody({
+  markdown,
+  className,
+}: {
+  markdown: string;
+  className?: string;
+}) {
   return (
-    <div className="prose-hawazine mx-auto">
+    <div className={`prose-hawazine mx-auto${className ? ` ${className}` : ""}`}>
       <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
         {markdown}
       </ReactMarkdown>
