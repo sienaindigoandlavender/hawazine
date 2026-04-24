@@ -68,7 +68,7 @@ export default function HomePage() {
         <div className="flex items-baseline justify-between gap-6">
           <h2 className="font-serif text-section text-ink">The Index</h2>
           <Link
-            href="/the-index"
+            href="/buying"
             className="font-sans text-meta uppercase tracking-[0.18em] text-quiet transition-colors hover:text-accent"
           >
             Continue reading →

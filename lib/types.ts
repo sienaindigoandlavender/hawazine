@@ -126,23 +126,6 @@ export interface MarketNote {
   published: boolean;
 }
 
-export type IndexCategory =
-  | "legal"
-  | "procedure"
-  | "costs"
-  | "questions"
-  | "ownership";
-
-export interface IndexEntry {
-  slug: string;
-  title: string;
-  glossLine: string;
-  category: IndexCategory;
-  bodyMarkdown: string;
-  updatedAt: string;
-  published: boolean;
-}
-
 export type GlossaryCategory =
   | "legal-title"
   | "transaction-taxation"

@@ -54,10 +54,9 @@ Never commit `.env*` files; only `.env.example` ships in git.
 | Quarters (medina neighbourhoods) | `lib/content/quarters.ts` |
 | Properties (listings) | `lib/content/properties.ts` |
 | Journal entries (editorial) | `lib/content/journal.ts` |
-| The Index entries (reference) | `lib/content/the-index.ts` |
 | Glossary terms | `lib/content/glossary.ts` |
 | The Oracle (market intelligence) | `lib/content/oracle.ts` |
-| Static pages (Marrakech, Buying, About, How we work) | `lib/content/pages.ts` |
+| Static pages — Marrakech, Buying (= The Index), About, How we work | `lib/content/pages.ts` |
 | Site config (nav, email) | `lib/site.ts` |
 
 Each entity has a `published` boolean; set it to `false` to hide without
@@ -72,9 +71,8 @@ Public routes:
 
 - `/` — home
 - `/marrakech`, `/marrakech/[quarter]`
-- `/buying`, `/buying/melkia`, `/buying/the-process`, `/buying/costs`, `/buying/what-to-ask`
+- `/buying`, `/buying/melkia`, `/buying/the-process`, `/buying/costs`, `/buying/what-to-ask` — reference content. Labelled "Buying" in primary nav, "The Index" in secondary nav. Same destination, two doors for two reading intents.
 - `/craft` — scaffold
-- `/the-index`, `/the-index/[slug]` — reference entries (scaffold, empty until content arrives)
 - `/glossary` — single-page glossary with same-page anchors (no per-term URLs; this is a deliberate decision matching the Slow Morocco format)
 - `/journal`, `/journal/[slug]` — editorial, demoted to secondary nav
 - `/properties`, `/properties/[slug]`
@@ -123,7 +121,12 @@ This iteration restructured identity and layout without touching infrastructure:
 - Nav: primary `Marrakech · Buying · Craft · Properties · Contact`; a smaller
   secondary `The Index · Glossary · Journal` sits below it.
 - Reading column narrows to 640px.
-- New route scaffolds: `/craft`, `/the-index`, `/the-index/[slug]`, `/glossary`.
+- New route scaffolds: `/craft`, `/glossary`.
 - **Glossary URL structure — resolved**: single page, same-page anchors
   (`/glossary#melkia`), no per-term routes. Matches the Slow Morocco format.
   Decision documented here rather than left flagged.
+- **Buying / The Index overlap — resolved**: one destination, two doors.
+  Primary nav "Buying" and secondary nav "The Index" both link to `/buying`;
+  individual reference entries live at `/buying/<slug>`. The short-lived
+  `/the-index` and `/the-index/[slug]` routes created earlier in this pass
+  have been removed.
