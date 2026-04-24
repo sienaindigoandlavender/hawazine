@@ -130,20 +130,38 @@ export type GlossaryCategory =
   | "legal-title"
   | "transaction-taxation"
   | "urban-planning-land"
-  | "architecture"
+  | "architecture-built"
+  | "craft-materials"
   | "people-roles";
 
-export interface GlossaryTerm {
-  slug: string; // same-page anchor target
+export interface GlossaryCrossLink {
+  term: string;
+  anchor: string;
+}
+
+export interface GlossaryExternalLink {
+  label: string;
+  href: string;
+}
+
+export interface GlossaryEntry {
+  slug: string; // same-page anchor target, kebab-case
   term: string;
   pronunciation?: string;
   arabic?: string;
+  french?: string;
   category: GlossaryCategory;
   definition: string;
   context?: string;
-  also?: string[];
-  see?: string[]; // slugs of other terms
-  quickReference?: boolean;
+  alsoKnownAs?: string[];
+  seeAlso?: GlossaryCrossLink[];
+  relatedContent?: GlossaryExternalLink[];
+}
+
+export interface GlossaryCategoryMeta {
+  slug: GlossaryCategory;
+  label: string;
+  description: string;
 }
 
 export interface PriceAggregate {

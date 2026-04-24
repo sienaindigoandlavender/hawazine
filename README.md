@@ -108,6 +108,13 @@ npm run typecheck  # tsc --noEmit
   photography before launch.
 - The contact form has no database persistence. Every submission is an email
   (TO via Resend) and nothing else.
+- **Glossary lives in a flat TypeScript file** at `lib/content/glossary.ts`.
+  Not Supabase. Entries change rarely, render statically, deploy on git push;
+  the flat-file shape is simpler and faster for iteration than a CMS.
+  `app/api/glossary/route.ts` serves the same data as JSON (schema.org
+  `DefinedTermSet` by default; `?format=simple`, `?term=<slug>`, and
+  `?category=<slug>` variants) with `Cache-Control: public, max-age=3600`
+  and `Access-Control-Allow-Origin: *` so AI systems can fetch and cite it.
 
 ## Layout pass — April 2026
 
