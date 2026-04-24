@@ -111,6 +111,35 @@ a:hover {
   height: auto;
 }
 
+/* Quarter-map popup — editorial, minimal, no balloon tip */
+.quarter-map-popup .mapboxgl-popup-tip {
+  display: none;
+}
+
+.quarter-map-popup .mapboxgl-popup-content {
+  background: theme("colors.paper");
+  color: theme("colors.ink");
+  font-family: theme("fontFamily.sans");
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  padding: 0.85rem 1rem;
+  max-width: 18rem;
+  border: 1px solid rgba(17, 17, 17, 0.1);
+  border-radius: 0;
+  box-shadow: 0 10px 30px rgba(17, 17, 17, 0.08);
+}
+
+.quarter-map-popup .mapboxgl-popup-content strong {
+  display: block;
+  font-family: theme("fontFamily.sans");
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.6875rem;
+  color: theme("colors.quiet");
+  margin-bottom: 0.4rem;
+}
+
 /* Utility: scrollbar-less horizontal gallery */
 .no-scrollbar {
   scrollbar-width: none;
