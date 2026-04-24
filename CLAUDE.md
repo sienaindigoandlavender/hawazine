@@ -88,7 +88,7 @@ Shared components in `components/`:
 ## Contact form
 
 - `/api/contact` (runtime: nodejs) reads `RESEND_API_KEY`, `CONTACT_EMAIL_TO`,
-  `CONTACT_EMAIL_FROM`, and optional `CONTACT_EMAIL_CC`.
+  and `CONTACT_EMAIL_FROM`.
 - Inputs are trimmed and length-capped before templating into HTML.
 - HTML body uses `escapeHtml()` on every user-provided value to avoid
   injection.
