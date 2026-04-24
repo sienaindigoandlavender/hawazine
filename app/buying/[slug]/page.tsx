@@ -10,6 +10,7 @@ import {
   indexCategories,
   indexEntries,
 } from "@/lib/content/the-index";
+import { absoluteUrl, buildBreadcrumbJsonLd, SEO_KEYWORDS } from "@/lib/seo";
 
 interface Params {
   params: { slug: string };
@@ -30,12 +31,20 @@ export function generateMetadata({ params }: Params): Metadata {
   return {
     title: `${entry.question} — The Index`,
     description: entry.preview,
+    keywords: [...SEO_KEYWORDS.base, ...SEO_KEYWORDS.buying],
     alternates: { canonical: `/buying/${entry.slug}` },
     openGraph: {
       title: entry.question,
       description: entry.preview,
       url: `${siteConfig.url}/buying/${entry.slug}`,
       type: "article",
+      publishedTime: entry.lastUpdated,
+      modifiedTime: entry.lastUpdated,
+    },
+    twitter: {
+      card: "summary",
+      title: entry.question,
+      description: entry.preview,
     },
   };
 }
@@ -70,39 +79,70 @@ export default function IndexEntryPage({ params }: Params) {
   if (!entry) notFound();
 
   const category = indexCategories.find((c) => c.slug === entry.category);
-  const jsonLd =
-    entry.body.length < 1500
+
+  // Always emit FAQ JSON-LD — this is the format answer engines (Google
+  // SGE, ChatGPT search, Perplexity) prefer to surface as a direct answer.
+  // For longer entries, also emit Article so the body is indexed as
+  // editorial content rather than a one-shot answer.
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: entry.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: entry.preview,
+          url: absoluteUrl(`/buying/${entry.slug}`),
+        },
+      },
+    ],
+  };
+
+  const articleJsonLd =
+    entry.body.length >= 1500
       ? {
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: [
-            {
-              "@type": "Question",
-              name: entry.question,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: `${entry.preview} ${entry.body}`,
-              },
-            },
-          ],
-        }
-      : {
           "@context": "https://schema.org",
           "@type": "Article",
           headline: entry.question,
           description: entry.preview,
           datePublished: entry.lastUpdated,
           dateModified: entry.lastUpdated,
-          author: { "@type": "Organization", name: siteConfig.name },
-          publisher: { "@type": "Organization", name: siteConfig.name },
-          mainEntityOfPage: `${siteConfig.url}/buying/${entry.slug}`,
-        };
+          inLanguage: siteConfig.language,
+          author: { "@id": `${siteConfig.url}#organization` },
+          publisher: { "@id": `${siteConfig.url}#organization` },
+          mainEntityOfPage: absoluteUrl(`/buying/${entry.slug}`),
+          articleSection: category?.label,
+          isPartOf: { "@id": `${absoluteUrl("/buying")}#collection` },
+        }
+      : null;
+
+  const breadcrumbItems = [
+    { name: "Home", path: "/" },
+    { name: "Buying", path: "/buying" },
+    ...(category
+      ? [{ name: category.label, path: `/buying#${category.slug}` }]
+      : []),
+    { name: entry.question, path: `/buying/${entry.slug}` },
+  ];
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(breadcrumbItems);
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      {articleJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        />
+      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       <article className="mx-auto max-w-page px-6 pt-12 pb-16 md:pt-16">
