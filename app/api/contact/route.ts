@@ -47,15 +47,13 @@ export async function POST(request: Request) {
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_EMAIL_TO;
-  const from = process.env.CONTACT_EMAIL_FROM;
+  const to = process.env.CONTACT_EMAIL_TO ?? "morocco@hawazine.com";
+  const from = process.env.CONTACT_EMAIL_FROM ?? "noreply@hawazine.com";
 
-  if (!apiKey || !to || !from) {
+  if (!apiKey) {
     // Fail loud in dev, fail safely in prod.
     if (process.env.NODE_ENV !== "production") {
-      console.error(
-        "[contact] Missing env: RESEND_API_KEY, CONTACT_EMAIL_TO, CONTACT_EMAIL_FROM must be set.",
-      );
+      console.error("[contact] Missing env: RESEND_API_KEY must be set.");
     }
     return NextResponse.json(
       { error: "Contact form is not yet configured." },
