@@ -19,10 +19,10 @@ export default function NotFound() {
         </Link>
         , or write to us at{" "}
         <a
-          href="mailto:mouad@hawazine.com"
+          href="mailto:morocco@hawazine.com"
           className="underline decoration-quiet underline-offset-4 hover:decoration-accent hover:text-accent"
         >
-          mouad@hawazine.com
+          morocco@hawazine.com
         </a>
         .
       </p>

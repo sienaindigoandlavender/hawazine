@@ -103,4 +103,4 @@ npm run typecheck  # tsc --noEmit
   the content modules so the scaffold renders without setup. Replace with real
   photography before launch.
 - The contact form has no database persistence. Every submission is an email
-  (TO + CC via Resend) and nothing else.
+  (TO via Resend) and nothing else.

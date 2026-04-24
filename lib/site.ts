@@ -5,7 +5,7 @@ export const siteConfig = {
   tagline: "Riads, dars, and land in the Marrakech medina.",
   description:
     "A licensed Moroccan real estate agency specialising in melkia-titled riads, dars, and land in Laksour and Mouassine. An editorial publication that happens to sell property.",
-  email: "mouad@hawazine.com",
+  email: "morocco@hawazine.com",
   carteProfessionnelle: "[carte professionnelle — number TK]",
 } as const;
 
