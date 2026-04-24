@@ -64,7 +64,6 @@ None of these questions are rude. Sellers who take offence at them are signallin
   {
     slug: "about",
     title: "About Hawazine",
-    subtitle: "An editorial agency for the Marrakech medina",
     bodyMarkdown: `Hawazine is a Marrakech medina real estate agency with editorial authority. Not a portal, not a samsar, not a branch of a French luxury network parachuted into the souks. We are inside the medina — by history, by residency, by the work of reading the titles, walking the derbs, and understanding what a house here has been through before it became available.
 
 The writing on this site is the work. We write about the medina the way Monocle writes about cities: its quarters, its titles, its prices, its buildings, its people. With intelligence, specificity, and affection. The houses we sell are part of that world, not the other way around.`,
