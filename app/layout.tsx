@@ -4,6 +4,7 @@ import { EB_Garamond, Inter } from "next/font/google";
 import { siteConfig } from "@/lib/site";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { GoogleAnalytics } from "@/components/google-analytics";
 
 const serif = EB_Garamond({
   subsets: ["latin"],
@@ -71,6 +72,7 @@ export default function RootLayout({
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />
+        <GoogleAnalytics />
       </body>
     </html>
   );
