@@ -202,8 +202,8 @@ export function QuarterMap({ height = "480px", activeQuarter }: QuarterMapProps)
     });
 
     map.on("load", () => {
-      try { map.setPaintProperty("background", "background-color", "#F8F4EC"); } catch {}
-      try { map.setPaintProperty("water", "fill-color", "#D9CFBE"); } catch {}
+      try { map.setPaintProperty("background", "background-color", "#FAFAF8"); } catch {}
+      try { map.setPaintProperty("water", "fill-color", "#E8E4DC"); } catch {}
 
       QUARTERS.forEach((quarter) => {
         const sourceId = `quarter-${quarter.slug}`;

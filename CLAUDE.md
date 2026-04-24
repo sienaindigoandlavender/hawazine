@@ -34,19 +34,21 @@ Markdown bodies render through `react-markdown` + `remark-gfm` via the
 
 ## Design tokens
 
-- Colours live in `tailwind.config.ts` (April 2026 restructure):
-  `paper #F8F4EC` (warm off-white, site background), `paper-deep #F1EBDE`
-  (section bands), `ink #1A1714` (warm near-black), `ink-soft #3D342E`
+- Colours live in `tailwind.config.ts` (April 2026 restructure): `paper
+  #FFFFFF` (pure white site background — the warm-paper variant was tried
+  and reverted), `ink #1A1714` (warm near-black), `ink-soft #3D342E`
   (default body prose — the site `body` declaration binds to this),
   `quiet #7A6E63`, `accent #8B3A2F` (deep terracotta — hover / occasional
-  highlight only, not for large fills), `rule #D9CFBE` (hairlines). Footer
-  keeps its dark inline gradient `#1f1f1f → #161616 → #0e0e0e`.
+  highlight only, not for large fills; currently under evaluation against
+  the white background), `rule #E8E8E6` (hairlines, cool enough to read
+  cleanly on white). Footer keeps its dark inline gradient `#1f1f1f →
+  #161616 → #0e0e0e`.
 - Fonts: `Fraunces` (serif, display + body) and `IBM_Plex_Sans` (sans, nav,
   metadata, UI). Exposed as CSS variables `--font-serif` and `--font-sans`.
   Tailwind: `font-serif` and `font-sans`. The earlier `.font-ui` CSS class
   has been retired in new components; prefer `font-sans`.
-- Backgrounds: warm paper `#F8F4EC` everywhere. Do not reintroduce pure
-  white or cream.
+- Backgrounds: pure white `#FFFFFF`. A warm-paper variant was tried and
+  reverted — it drifted the register in the wrong direction.
 - Body prose: `ink-soft` default. Editorial prose inside `.prose-hawazine`
   reads `ink` (slightly heavier). Use `quiet` for metadata/captions only.
 

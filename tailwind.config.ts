@@ -9,13 +9,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: "#F8F4EC",
-        "paper-deep": "#F1EBDE",
+        paper: "#FFFFFF",
         ink: "#1A1714",
         "ink-soft": "#3D342E",
         quiet: "#7A6E63",
         accent: "#8B3A2F",
-        rule: "#D9CFBE",
+        rule: "#E8E8E6",
         "footer-top": "#1f1f1f",
         "footer-mid": "#161616",
         "footer-bottom": "#0e0e0e",
