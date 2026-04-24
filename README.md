@@ -15,7 +15,6 @@ Editorial publication for a licensed Marrakech-medina real estate agency.
 | Maps | Mapbox GL JS |
 | Email | Resend |
 | Hosting | Vercel |
-| Translation | Google Translate widget (footer + header on md+) |
 
 There is no CMS and no database in v1. All quarters, properties, journal
 entries, and pages live as typed TS data under `lib/content/`. To update
@@ -103,7 +102,5 @@ npm run typecheck  # tsc --noEmit
 - **Demo Cloudinary URLs** (`res.cloudinary.com/demo/...`) are used throughout
   the content modules so the scaffold renders without setup. Replace with real
   photography before launch.
-- The Google Translate widget is loaded on the client via `<Script>` with
-  `strategy="afterInteractive"`; it will not appear until hydration.
 - The contact form has no database persistence. Every submission is an email
   (TO + CC via Resend) and nothing else.

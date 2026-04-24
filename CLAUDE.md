@@ -68,8 +68,6 @@ Shared components in `components/`:
 - `contact-form.tsx` — POSTs JSON to `/api/contact`.
 - `newsletter-form.tsx` — footer signup. POSTs to `/api/contact` with
   `source: "newsletter"` so the same Resend mail path handles it.
-- `google-translate.tsx` — client component, loads Google Translate
-  via `<Script strategy="afterInteractive">`.
 - `google-analytics.tsx` — loads the GA4 gtag script via
   `<Script strategy="afterInteractive">`. Renders nothing when
   `NEXT_PUBLIC_GA_MEASUREMENT_ID` is unset, so dev/preview stays clean.
@@ -121,5 +119,4 @@ Shared components in `components/`:
   partner logo walls.
 - No carousel on property pages — gallery is an arrow-navigable horizontal
   scroll with scrollbars hidden (`.no-scrollbar`).
-- The Google Translate widget is the only i18n mechanism in v1; no
-  multi-language content files.
+- No in-site translation widget in v1; the site ships English-only.
