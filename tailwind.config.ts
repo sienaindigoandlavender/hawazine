@@ -10,11 +10,12 @@ const config: Config = {
     extend: {
       colors: {
         paper: "#FFFFFF",
+        "paper-deep": "#F5F5F4",
         ink: "#1A1714",
         "ink-soft": "#3D342E",
         quiet: "#7A6E63",
         accent: "#8B3A2F",
-        rule: "#E8E8E6",
+        rule: "#E5E5E5",
         "footer-top": "#1f1f1f",
         "footer-mid": "#161616",
         "footer-bottom": "#0e0e0e",
