@@ -70,6 +70,71 @@ const QUARTERS: QuarterShape[] = [
       [-7.998, 31.631],
     ],
   },
+  {
+    slug: "riad-laarous",
+    name: "Riad Laarous",
+    description:
+      "Between Mouassine and Bab Doukkala. Local in character, quietly residential, largely unphotographed.",
+    coordinates: [
+      [-7.996, 31.63],
+      [-7.99, 31.63],
+      [-7.99, 31.635],
+      [-7.996, 31.635],
+      [-7.996, 31.63],
+    ],
+  },
+  {
+    slug: "arset-el-maach",
+    name: "Arset el-Maach",
+    description:
+      "Five minutes east of Jemaa el-Fna. Orchard district turned residential; noisy on the arteries, silent one street back.",
+    coordinates: [
+      [-7.988, 31.624],
+      [-7.982, 31.624],
+      [-7.982, 31.629],
+      [-7.988, 31.629],
+      [-7.988, 31.624],
+    ],
+  },
+  {
+    slug: "mellah",
+    name: "Mellah",
+    description:
+      "The historic Jewish quarter, inside the walls. Taller buildings, iron balconies facing the street. Title situations here want care.",
+    coordinates: [
+      [-7.986, 31.619],
+      [-7.98, 31.619],
+      [-7.98, 31.624],
+      [-7.986, 31.624],
+      [-7.986, 31.619],
+    ],
+  },
+  {
+    slug: "kennaria",
+    name: "Kennaria",
+    description:
+      "Between Jemaa el-Fna and the Mellah. Home to the Bahia; tourist spine on the main routes, quiet behind them.",
+    coordinates: [
+      [-7.987, 31.6215],
+      [-7.982, 31.6215],
+      [-7.982, 31.626],
+      [-7.987, 31.626],
+      [-7.987, 31.6215],
+    ],
+  },
+  {
+    slug: "bab-taghzout",
+    name: "Bab Taghzout",
+    description:
+      "Near the northern wall. The least visited of the medina quarters, and the most intact.",
+    coordinates: [
+      [-7.991, 31.634],
+      [-7.985, 31.634],
+      [-7.985, 31.639],
+      [-7.991, 31.639],
+      [-7.991, 31.634],
+    ],
+  },
 ];
 
 function centroid(ring: [number, number][]): [number, number] {
