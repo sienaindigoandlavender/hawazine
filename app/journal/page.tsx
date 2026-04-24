@@ -2,14 +2,24 @@ import type { Metadata } from "next";
 import { JournalCard } from "@/components/journal-card";
 import { JournalFeatured } from "@/components/journal-featured";
 import { getPublishedJournalEntries } from "@/lib/content/journal";
+import { siteConfig } from "@/lib/site";
+import { absoluteUrl, buildBreadcrumbJsonLd, SEO_KEYWORDS } from "@/lib/seo";
 
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Journal",
+  title: "Journal — dispatches from the Marrakech medina",
   description:
-    "Dispatches from the medina — craft, architecture, and the daily life of a place.",
+    "Dispatches from the medina — craft, architecture, and the daily life of a place. Editorial from Hawazine.",
+  keywords: [...SEO_KEYWORDS.base, ...SEO_KEYWORDS.journal],
   alternates: { canonical: "/journal" },
+  openGraph: {
+    type: "website",
+    title: "Journal — dispatches from the Marrakech medina",
+    description:
+      "Dispatches from the medina — craft, architecture, and the daily life of a place.",
+    url: absoluteUrl("/journal"),
+  },
 };
 
 function formatDate(iso: string): string {
@@ -26,8 +36,67 @@ export default async function JournalIndex() {
   const featured = entries[0];
   const grid = entries.slice(1);
 
+  const blogJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": `${absoluteUrl("/journal")}#blog`,
+    name: `${siteConfig.name} Journal`,
+    description:
+      "Dispatches from the Marrakech medina — craft, architecture, and the daily life of a place.",
+    url: absoluteUrl("/journal"),
+    inLanguage: siteConfig.language,
+    isPartOf: { "@id": `${siteConfig.url}#website` },
+    publisher: { "@id": `${siteConfig.url}#organization` },
+    blogPost: entries.map((entry) => ({
+      "@type": "BlogPosting",
+      headline: entry.title,
+      description: entry.subtitle,
+      url: absoluteUrl(`/journal/${entry.slug}`),
+      datePublished: entry.publishedAt,
+      dateModified: entry.publishedAt,
+      author: { "@id": `${siteConfig.url}#organization` },
+      ...(entry.heroImageUrl && { image: entry.heroImageUrl }),
+    })),
+  };
+
+  const itemListJsonLd =
+    entries.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          itemListOrder: "https://schema.org/ItemListOrderDescending",
+          numberOfItems: entries.length,
+          itemListElement: entries.map((entry, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            url: absoluteUrl(`/journal/${entry.slug}`),
+            name: entry.title,
+          })),
+        }
+      : null;
+
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Journal", path: "/journal" },
+  ]);
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogJsonLd) }}
+      />
+      {itemListJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+        />
+      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       <header className="mx-auto max-w-page px-6 pt-16 pb-16 md:pt-24">
         <p className="font-sans text-meta uppercase tracking-[0.18em] text-quiet">
           Journal

@@ -9,6 +9,7 @@ import {
   getPublishedJournalEntries,
 } from "@/lib/content/journal";
 import { siteConfig } from "@/lib/site";
+import { absoluteUrl, buildBreadcrumbJsonLd, SEO_KEYWORDS } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -27,12 +28,22 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return {
     title: entry.title,
     description: entry.subtitle,
+    keywords: [...SEO_KEYWORDS.base, ...SEO_KEYWORDS.journal],
     alternates: { canonical: `/journal/${entry.slug}` },
     openGraph: {
       type: "article",
       title: entry.title,
       description: entry.subtitle,
+      url: absoluteUrl(`/journal/${entry.slug}`),
       publishedTime: entry.publishedAt,
+      modifiedTime: entry.publishedAt,
+      images: entry.heroImageUrl ? [entry.heroImageUrl] : undefined,
+      authors: [siteConfig.url],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: entry.title,
+      description: entry.subtitle,
       images: entry.heroImageUrl ? [entry.heroImageUrl] : undefined,
     },
   };
@@ -42,28 +53,42 @@ export default async function JournalEntryPage({ params }: Params) {
   const entry = await getJournalEntryBySlug(params.slug);
   if (!entry) notFound();
 
-  const jsonLd = {
+  const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: entry.title,
     description: entry.subtitle,
     datePublished: entry.publishedAt,
     dateModified: entry.publishedAt,
-    author: { "@type": "Organization", name: siteConfig.name },
-    publisher: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      url: siteConfig.url,
-    },
+    inLanguage: siteConfig.language,
+    author: { "@id": `${siteConfig.url}#organization` },
+    publisher: { "@id": `${siteConfig.url}#organization` },
     image: entry.heroImageUrl,
-    mainEntityOfPage: `${siteConfig.url}/journal/${entry.slug}`,
+    mainEntityOfPage: absoluteUrl(`/journal/${entry.slug}`),
+    isPartOf: { "@id": `${absoluteUrl("/journal")}#blog` },
+    ...(entry.format && {
+      articleSection: entry.format
+        .split("-")
+        .map((s) => s[0].toUpperCase() + s.slice(1))
+        .join(" "),
+    }),
   };
+
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Journal", path: "/journal" },
+    { name: entry.title, path: `/journal/${entry.slug}` },
+  ]);
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       <JournalEntryHeader entry={entry} />
