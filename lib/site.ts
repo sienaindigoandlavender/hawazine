@@ -6,7 +6,6 @@ export const siteConfig = {
   description:
     "Riads, dars, and land across every quarter of the Marrakech medina. An editorial publication that happens to sell houses in it.",
   email: "morocco@hawazine.com",
-  carteProfessionnelle: "[carte professionnelle — number TK]",
 } as const;
 
 export const primaryNav = [
