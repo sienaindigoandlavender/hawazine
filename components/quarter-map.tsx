@@ -156,7 +156,7 @@ function escapeHtml(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
-const ACCENT = "#1B2A4E";
+const ACCENT = "#8B3A2F";
 const FILL_INACTIVE = 0.08;
 const FILL_ACTIVE = 0.18;
 
@@ -202,8 +202,8 @@ export function QuarterMap({ height = "480px", activeQuarter }: QuarterMapProps)
     });
 
     map.on("load", () => {
-      try { map.setPaintProperty("background", "background-color", "#FAFAF8"); } catch {}
-      try { map.setPaintProperty("water", "fill-color", "#E8E4DC"); } catch {}
+      try { map.setPaintProperty("background", "background-color", "#F8F4EC"); } catch {}
+      try { map.setPaintProperty("water", "fill-color", "#D9CFBE"); } catch {}
 
       QUARTERS.forEach((quarter) => {
         const sourceId = `quarter-${quarter.slug}`;
@@ -260,7 +260,7 @@ export function QuarterMap({ height = "480px", activeQuarter }: QuarterMapProps)
             "text-transform": "uppercase",
           },
           paint: {
-            "text-color": "#111111",
+            "text-color": "#1A1714",
           },
         });
 
