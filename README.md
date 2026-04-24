@@ -33,12 +33,14 @@ npm run dev                  # http://localhost:3000
 See `.env.example` for the authoritative list with inline comments.
 At minimum, for local dev you need:
 
-- `NEXT_PUBLIC_SITE_URL` — usually `http://localhost:3000` in dev.
-- `RESEND_API_KEY`, `CONTACT_EMAIL_TO`, `CONTACT_EMAIL_FROM` — required for the
-  contact form to send mail. The form will return a 500 with a clear message
-  until these are set.
+- `RESEND_API_KEY` — required for the contact form to send mail. The form
+  returns a 500 with a clear message until this is set. `CONTACT_EMAIL_TO`
+  and `CONTACT_EMAIL_FROM` are optional overrides; sensible defaults
+  (morocco@hawazine.com, noreply@hawazine.com) are baked into the route.
 - `NEXT_PUBLIC_MAPBOX_TOKEN` — required for `/marrakech/[quarter]` maps.
   Without it, the map component renders a neutral placeholder.
+- `NEXT_PUBLIC_SITE_URL` — optional; defaults to `https://hawazine.com`.
+  Set to `http://localhost:3000` in dev if you need accurate canonical URLs.
 - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` — only needed if you wish to reference
   a real Cloudinary account in image URLs. URLs are hardcoded in content
   modules, so the cloud name can also simply be part of those URLs.
