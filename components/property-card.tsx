@@ -11,6 +11,7 @@ export function PropertyCard({ property }: { property: Property }) {
       imageUrl={property.heroImageUrl}
       imageAlt={property.heroImageAlt}
       size="card"
+      tone="paper-deep"
       href={`/properties/${property.slug}`}
       aspectRatio="aspect-[4/3]"
     >

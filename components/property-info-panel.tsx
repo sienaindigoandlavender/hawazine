@@ -37,126 +37,135 @@ function quarterLabel(property: Property): string | null {
   return q?.name ?? null;
 }
 
-function formatLabel(property: Property): string {
+function typeLine(property: Property): string {
   const type = PROPERTY_TYPE_LABEL[property.propertyType];
   const quarter = quarterLabel(property);
   return quarter ? `${type} · ${quarter}` : type;
 }
 
-function priceLine(property: Property): string | null {
-  const formatted = formatPriceDh(property.askingPriceDh);
-  if (!formatted) return null;
-  if (property.titleStatus) {
-    return `${formatted} · ${TITLE_STATUS_LABEL[property.titleStatus]}`;
-  }
-  return formatted;
-}
-
-// Featured panel — landing page top entry. Format / title / sub-location /
-// price + status / stats / CTA. Maximum density that still reads as quiet.
+// Featured panel — landing page top entry. Follows the Modern House rhythm:
+// small eyebrow label, substantial serif title, then a tight stack of
+// area / price / tenure lines with no gaps between them. One hairline
+// rule before the stats row, another before the CTA.
 function FeaturedPanel({ property }: { property: Property }) {
   const stats = statsLine(property);
-  const price = priceLine(property);
+  const price = formatPriceDh(property.askingPriceDh);
 
   return (
     <div className="font-sans">
-      <p className="text-meta uppercase tracking-[0.18em] text-quiet">
-        Property · {formatLabel(property)}
+      <p className="text-[0.6875rem] uppercase tracking-[0.2em] text-quiet">
+        {typeLine(property)}
       </p>
-      <h2 className="mt-3 font-serif text-subtitle leading-[1.25] text-ink">
+      <h2 className="mt-4 font-serif text-[1.6rem] leading-[1.2] text-ink">
         {property.title}
       </h2>
-      {property.subLocation && (
-        <p className="mt-2 font-serif text-body text-ink-soft">
-          {property.subLocation}
-        </p>
+      <div className="mt-3 space-y-0.5 text-meta text-ink">
+        {property.subLocation && (
+          <p className="font-serif text-body text-ink-soft">
+            {property.subLocation}
+          </p>
+        )}
+        {price && <p className="pt-2">{price}</p>}
+        {property.titleStatus && (
+          <p>{TITLE_STATUS_LABEL[property.titleStatus]}</p>
+        )}
+      </div>
+      {stats && (
+        <>
+          <div className="my-5 border-t border-rule" />
+          <p className="text-meta text-ink">{stats}</p>
+        </>
       )}
-      {price && <p className="mt-4 text-meta text-ink">{price}</p>}
-      {(stats || price) && <div className="my-5 border-t border-rule" />}
-      {stats && <p className="text-meta text-ink">{stats}</p>}
       <div className="my-5 border-t border-rule" />
-      <p className="text-meta uppercase tracking-[0.18em] text-ink transition-colors group-hover:text-accent">
+      <p className="text-[0.6875rem] uppercase tracking-[0.2em] text-ink transition-colors group-hover:text-accent">
         View property →
       </p>
     </div>
   );
 }
 
-// Card panel — grid card. Lighter version of the featured panel without the
-// CTA (the whole card is the link). Stats sit alongside the price line.
+// Card panel — grid card. A stripped-down featured panel: eyebrow, title,
+// price, title status, stats. No CTA (the whole card is the link).
 function CardPanel({ property }: { property: Property }) {
   const stats = statsLine(property);
-  const price = priceLine(property);
+  const price = formatPriceDh(property.askingPriceDh);
 
   return (
     <div className="font-sans">
-      <p className="text-meta uppercase tracking-[0.18em] text-quiet">
-        {formatLabel(property)}
+      <p className="text-[0.6875rem] uppercase tracking-[0.2em] text-quiet">
+        {typeLine(property)}
       </p>
-      <h3 className="mt-3 font-serif text-[1.25rem] leading-[1.25] text-ink transition-colors group-hover:text-accent">
+      <h3 className="mt-3 font-serif text-[1.2rem] leading-[1.25] text-ink transition-colors group-hover:text-accent">
         {property.title}
       </h3>
-      {property.subLocation && (
-        <p className="mt-2 font-serif text-body text-ink-soft">
-          {property.subLocation}
-        </p>
+      <div className="mt-2 text-meta text-ink">
+        {property.subLocation && (
+          <p className="font-serif text-body text-ink-soft">
+            {property.subLocation}
+          </p>
+        )}
+        {price && <p className="pt-2">{price}</p>}
+        {property.titleStatus && (
+          <p>{TITLE_STATUS_LABEL[property.titleStatus]}</p>
+        )}
+      </div>
+      {stats && (
+        <>
+          <div className="my-4 border-t border-rule" />
+          <p className="text-meta text-ink">{stats}</p>
+        </>
       )}
-      {(price || stats) && <div className="my-4 border-t border-rule" />}
-      {price && <p className="text-meta text-ink">{price}</p>}
-      {stats && <p className="mt-1 text-meta text-ink">{stats}</p>}
     </div>
   );
 }
 
-// Hero panel — individual property page. Carries the most metadata: full
-// location, price + note, title status + note, contact action.
+// Hero panel — individual property page. Carries the most metadata:
+// quarter + walking description, price + note, title status + note,
+// then a bordered contact action (matches Modern House's REQUEST VIEWING).
 function HeroPanel({ property }: { property: Property }) {
   const quarter = quarterLabel(property);
   const price = formatPriceDh(property.askingPriceDh);
 
   return (
     <div className="font-sans">
-      {(quarter || property.subLocation) && (
-        <>
-          {quarter && <p className="text-meta text-ink">{quarter}</p>}
-          {property.subLocation && (
-            <p className="mt-2 font-serif text-body text-ink-soft">
-              {property.subLocation}
-            </p>
-          )}
-        </>
+      {quarter && (
+        <p className="text-[0.6875rem] uppercase tracking-[0.2em] text-quiet">
+          {quarter}
+        </p>
+      )}
+      {property.subLocation && (
+        <p className="mt-3 font-serif text-body text-ink-soft">
+          {property.subLocation}
+        </p>
       )}
 
       {(price || property.priceNote) && (
-        <>
-          <div className="my-5 border-t border-rule" />
+        <div className="mt-4">
           {price && <p className="text-meta text-ink">{price}</p>}
           {property.priceNote && (
-            <p className="mt-1 text-meta text-quiet">{property.priceNote}</p>
+            <p className="mt-0.5 text-meta text-quiet">{property.priceNote}</p>
           )}
-        </>
+        </div>
       )}
 
       {property.titleStatus && (
-        <>
-          <div className="my-5 border-t border-rule" />
+        <div className="mt-3">
           <p className="text-meta text-ink">
             {TITLE_STATUS_LABEL[property.titleStatus]}
           </p>
           {property.titleNotes && (
-            <p className="mt-1 font-serif text-body text-ink-soft">
-              {property.titleNotes}
+            <p className="mt-0.5 text-meta text-quiet">
+              Chain of ownership verified.
             </p>
           )}
-        </>
+        </div>
       )}
 
-      <div className="my-5 border-t border-rule" />
       <a
         href="/contact"
-        className="inline-block text-meta uppercase tracking-[0.18em] text-ink transition-colors hover:text-accent"
+        className="mt-6 block border border-ink px-6 py-3 text-center text-[0.6875rem] uppercase tracking-[0.2em] text-ink transition-colors hover:bg-ink hover:text-paper"
       >
-        Contact us →
+        Contact us
       </a>
     </div>
   );

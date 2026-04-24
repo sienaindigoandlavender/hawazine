@@ -198,6 +198,7 @@ export default function PropertyPage({ params }: Params) {
           imageUrl={property.heroImageUrl}
           imageAlt={property.heroImageAlt}
           size="featured"
+          tone="paper-deep"
           priority
           aspectRatio="aspect-[16/9] md:aspect-[2.2/1]"
         >

@@ -134,8 +134,20 @@ Shared components in `components/`:
 - `essay-body.tsx` — markdown → typographically consistent prose. Internal
   links (`/foo`) resolve to Next.js `Link`; external links open in a new tab.
 - `static-page.tsx` — wraps `EditorialHero` + `EssayBody` for static pages.
-- `property-card.tsx`, `property-hero.tsx`, `property-meta.tsx` — listing UI.
-  Meta renders as a sticky sidebar; no bedrooms/bathrooms icon triplet.
+- `image-with-panel.tsx` — the Modern House pattern (image + floating
+  info panel). Used by properties. `tone="paper-deep"` is the property
+  default (warm off-white card over photography); `tone="paper"` is the
+  Journal default. `size="featured"` floats the panel mid-left; `size="card"`
+  pins it bottom-left in a smaller footprint.
+- `property-featured.tsx`, `property-card.tsx` — wrap `ImageWithPanel` for
+  the landing top entry and grid cards respectively. The whole card is the
+  link; no separate CTA on cards.
+- `property-info-panel.tsx` — single source for the three panel densities
+  (featured / card / hero), all driven by one `Property`. Keep new panel
+  variants here rather than inlining panel content at call sites.
+- `property-specs-block.tsx` — TYPE/SIZE/BEDROOMS/etc. as a 2- or 4-col
+  grid that omits rows when fields are absent. No bedrooms/bathrooms icon
+  triplet.
 - `quarter-card.tsx`, `journal-card.tsx` — index cards.
 - `contact-form.tsx` — POSTs JSON to `/api/contact`.
 - `newsletter-form.tsx` — footer signup. POSTs to `/api/contact` with

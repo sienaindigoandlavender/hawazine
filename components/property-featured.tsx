@@ -16,6 +16,7 @@ export function PropertyFeatured({
       imageUrl={property.heroImageUrl}
       imageAlt={property.heroImageAlt}
       size="featured"
+      tone="paper-deep"
       href={`/properties/${property.slug}`}
       priority={priority}
       aspectRatio="aspect-[16/9] md:aspect-[2.2/1]"
