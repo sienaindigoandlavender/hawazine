@@ -118,6 +118,19 @@ npm run typecheck  # tsc --noEmit
   `DefinedTermSet` by default; `?format=simple`, `?term=<slug>`, and
   `?category=<slug>` variants) with `Cache-Control: public, max-age=3600`
   and `Access-Control-Allow-Origin: *` so AI systems can fetch and cite it.
+- **Properties live in a flat TypeScript file** at
+  `lib/content/properties.ts`. Same architecture decision as the Index and
+  Glossary — flat file, not Supabase, for v1. Inventory changes less
+  frequently than journal entries; the schema is already complete; flat
+  file means instant deploys with no migration overhead. The Properties
+  landing (`/properties`) shows a featured entry and a grid of cards
+  using the shared `ImageWithPanel` component (the same Modern House
+  pattern used by the Journal). Individual property pages
+  (`/properties/[slug]`) emit `RealEstateListing` JSON-LD and
+  cross-link to relevant Index entries based on `titleStatus` and the
+  presence of `renovationNotes`. Migration to Supabase becomes
+  worth considering only if inventory grows beyond ~30 listings or
+  online editing becomes necessary.
 - **The Index (`/buying`) lives in a flat TypeScript file** at
   `lib/content/the-index.ts`. Same architecture decision as the Glossary —
   flat file, not Supabase, for v1. The landing page at `/buying` lists

@@ -71,6 +71,34 @@ Two floors, two bedrooms, one reception, a working kitchen, and a terrace whose 
     published: true,
     updatedAt: "2026-04-02",
   },
+  {
+    slug: "dar-bab-doukkala",
+    title: "Dar, Bab Doukkala",
+    subtitle: "A compact two-bedroom dar near the gate",
+    propertyType: "dar",
+    quarterSlug: "bab-doukkala",
+    subLocation: "Two minutes from Bab Doukkala, ten from Jemaa el-Fna",
+    sizeM2: 95,
+    bedrooms: 2,
+    bathrooms: 2,
+    floors: 2,
+    hasTerrace: true,
+    titleStatus: "titre_foncier",
+    titleNotes: "Titre foncier, clean registry entry, no encumbrances.",
+    conditionSummary:
+      "Move-in ready. Renovated in 2022 by the current owners.",
+    descriptionMarkdown: `A well-proportioned dar set on a quiet stretch near Bab Doukkala. The entry derb is wide enough for porters, narrow enough to stay quiet. Two floors, two bedrooms, a small patio with a single orange tree, and a west-facing terrace that catches the late afternoon light.
+
+The renovation was thoughtful — original bejmat throughout, tadelakt walls in the patio and bathrooms, new cedar joinery where it was needed.`,
+    askingPriceDh: 1_850_000,
+    priceNote: "Asking 1.85M dh.",
+    heroImageUrl:
+      "https://images.unsplash.com/photo-1559599101-f09722fb4948?w=1600&h=1067&fit=crop",
+    heroImageAlt: "Patio of a dar near Bab Doukkala, afternoon",
+    featured: false,
+    published: true,
+    updatedAt: "2026-03-28",
+  },
 ];
 
 export function getPublishedProperties(): Property[] {
