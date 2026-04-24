@@ -14,11 +14,8 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-page gap-10 px-6 py-16 md:grid-cols-3 md:gap-12">
         <div>
           <p className="font-serif text-2xl">{siteConfig.name}</p>
-          <p className="mt-4 font-ui text-meta leading-relaxed text-paper/70">
-            Licensed Moroccan real estate agency — carte professionnelle {siteConfig.carteProfessionnelle}.
-          </p>
-          <p className="mt-4 font-ui text-meta leading-relaxed text-paper/70">
-            {siteConfig.tagline}
+          <p className="mt-3 font-ui text-meta text-paper/60">
+            Marrakech medina.
           </p>
           <p className="mt-4 font-ui text-meta">
             <a href={`mailto:${siteConfig.email}`} className="hover:text-paper">

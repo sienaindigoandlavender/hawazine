@@ -19,9 +19,9 @@ export default function PrivacyPage() {
       <h2>Data retention</h2>
       <p>Contact form submissions are retained for as long as necessary to handle your enquiry and no longer. We do not sell or share your data with third parties.</p>
       <h2>Your rights</h2>
-      <p>If you are based in the EU or UK, you have the right to access, correct, or delete your personal data. Write to us at mouad@hawazine.com and we will respond within 30 days.</p>
+      <p>If you are based in the EU or UK, you have the right to access, correct, or delete your personal data. Write to us at morocco@hawazine.com and we will respond within 30 days.</p>
       <h2>Contact</h2>
-      <p>Questions about this policy: mouad@hawazine.com</p>
+      <p>Questions about this policy: morocco@hawazine.com</p>
     </StaticPage>
   );
 }
