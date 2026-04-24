@@ -38,14 +38,6 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   };
 }
 
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("en-GB", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
-
 export default async function JournalEntryPage({ params }: Params) {
   const entry = await getJournalEntryBySlug(params.slug);
   if (!entry) notFound();
@@ -77,7 +69,7 @@ export default async function JournalEntryPage({ params }: Params) {
       <JournalEntryHeader entry={entry} />
 
       {entry.heroImageUrl && (
-        <div className="mx-auto max-w-page px-6 mt-8 mb-16 md:mb-20">
+        <div className="mx-auto max-w-page px-6 mb-16 md:mb-20">
           <div className="relative aspect-[16/9] w-full overflow-hidden bg-ink/5">
             <Image
               src={entry.heroImageUrl}
@@ -99,14 +91,11 @@ export default async function JournalEntryPage({ params }: Params) {
       </section>
 
       <footer className="mx-auto max-w-page px-6 mt-24 mb-24">
-        <div className="mx-auto max-w-reading border-t border-rule pt-8">
-          <p className="font-sans text-meta text-quiet">
-            Published {formatDate(entry.publishedAt)}
-          </p>
-          <p className="mt-6 font-sans text-meta">
+        <div className="mx-auto max-w-reading border-t border-rule pt-8 text-center">
+          <p className="font-sans text-meta">
             <Link
               href="/journal"
-              className="uppercase tracking-[0.18em] text-quiet transition-colors hover:text-accent"
+              className="uppercase tracking-[0.2em] text-quiet transition-colors hover:text-accent"
             >
               ← Back to the Journal
             </Link>
