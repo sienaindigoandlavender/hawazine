@@ -11,7 +11,7 @@ Editorial publication for a Marrakech-medina real estate agency.
 | Language | TypeScript |
 | Styling | Tailwind CSS |
 | Content | Hardcoded in typed TS modules under `lib/content/` |
-| Fonts | EB Garamond (serif) + Inter (sans) via `next/font/google` |
+| Fonts | Fraunces (serif) + IBM Plex Sans (sans) via `next/font/google` |
 | Maps | Mapbox GL JS |
 | Email | Resend |
 | Hosting | Vercel |
@@ -54,8 +54,11 @@ Never commit `.env*` files; only `.env.example` ships in git.
 | Quarters (medina neighbourhoods) | `lib/content/quarters.ts` |
 | Properties (listings) | `lib/content/properties.ts` |
 | Journal entries (editorial) | `lib/content/journal.ts` |
+| The Index entries (reference) | `lib/content/the-index.ts` |
+| Glossary terms | `lib/content/glossary.ts` |
+| The Oracle (market intelligence) | `lib/content/oracle.ts` |
 | Static pages (Marrakech, Buying, About, How we work) | `lib/content/pages.ts` |
-| Site config (nav, email, carte pro. number) | `lib/site.ts` |
+| Site config (nav, email) | `lib/site.ts` |
 
 Each entity has a `published` boolean; set it to `false` to hide without
 deleting. Markdown bodies are rendered through `react-markdown` + `remark-gfm`
@@ -70,7 +73,10 @@ Public routes:
 - `/` — home
 - `/marrakech`, `/marrakech/[quarter]`
 - `/buying`, `/buying/melkia`, `/buying/the-process`, `/buying/costs`, `/buying/what-to-ask`
-- `/journal`, `/journal/[slug]`
+- `/craft` — scaffold
+- `/the-index`, `/the-index/[slug]` — reference entries (scaffold, empty until content arrives)
+- `/glossary` — single-page glossary with same-page anchors (no per-term URLs; this is a deliberate decision matching the Slow Morocco format)
+- `/journal`, `/journal/[slug]` — editorial, demoted to secondary nav
 - `/properties`, `/properties/[slug]`
 - `/about`, `/how-we-work`, `/contact`
 
@@ -104,3 +110,20 @@ npm run typecheck  # tsc --noEmit
   photography before launch.
 - The contact form has no database persistence. Every submission is an email
   (TO via Resend) and nothing else.
+
+## Layout pass — April 2026
+
+This iteration restructured identity and layout without touching infrastructure:
+
+- Typography: Fraunces + IBM Plex Sans; new display/section/subtitle/body/meta
+  scale in `tailwind.config.ts`.
+- Palette: warm paper `#F8F4EC`, warm ink `#1A1714`, ink-soft `#3D342E` for
+  body prose, quiet `#7A6E63`, accent terracotta `#8B3A2F`, rule `#D9CFBE`.
+- Wordmark: 1.75rem serif with a small all-caps tagline on desktop.
+- Nav: primary `Marrakech · Buying · Craft · Properties · Contact`; a smaller
+  secondary `The Index · Glossary · Journal` sits below it.
+- Reading column narrows to 640px.
+- New route scaffolds: `/craft`, `/the-index`, `/the-index/[slug]`, `/glossary`.
+- **Glossary URL structure — resolved**: single page, same-page anchors
+  (`/glossary#melkia`), no per-term routes. Matches the Slow Morocco format.
+  Decision documented here rather than left flagged.

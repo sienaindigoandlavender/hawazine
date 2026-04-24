@@ -126,6 +126,43 @@ export interface MarketNote {
   published: boolean;
 }
 
+export type IndexCategory =
+  | "legal"
+  | "procedure"
+  | "costs"
+  | "questions"
+  | "ownership";
+
+export interface IndexEntry {
+  slug: string;
+  title: string;
+  glossLine: string;
+  category: IndexCategory;
+  bodyMarkdown: string;
+  updatedAt: string;
+  published: boolean;
+}
+
+export type GlossaryCategory =
+  | "legal-title"
+  | "transaction-taxation"
+  | "urban-planning-land"
+  | "architecture"
+  | "people-roles";
+
+export interface GlossaryTerm {
+  slug: string; // same-page anchor target
+  term: string;
+  pronunciation?: string;
+  arabic?: string;
+  category: GlossaryCategory;
+  definition: string;
+  context?: string;
+  also?: string[];
+  see?: string[]; // slugs of other terms
+  quickReference?: boolean;
+}
+
 export interface PriceAggregate {
   quarter: string;
   count: number;
