@@ -72,9 +72,18 @@ attempt was removed in favour of the dual-label pattern.
 
 - `/marrakech` — the medina overview + quarter cards + interactive map
 - `/marrakech/[quarter]` — per-quarter page; map highlights that quarter
-- `/buying`, `/buying/melkia`, `/buying/the-process`, `/buying/costs`,
-  `/buying/what-to-ask` — legal / procedural reference content. Accessed
-  as "Buying" from primary nav and "The Index" from secondary nav.
+- `/buying` — The Index landing. Lists questions by category, sourced from
+  `lib/content/the-index.ts`. Accessed as "Buying" from primary nav and
+  "The Index" from secondary nav (same destination, two doors).
+- `/buying/[slug]` — individual Index entries, driven by `indexEntries` and
+  rendered through `app/buying/[slug]/page.tsx`. Emits FAQPage or Article
+  JSON-LD based on body length. `generateStaticParams` pre-renders every
+  entry at build.
+- `/buying/melkia`, `/buying/the-process`, `/buying/costs`,
+  `/buying/what-to-ask` — older static reference pages. Next.js routes
+  specific segments before `[slug]` so they continue to resolve. The
+  landing no longer links to them; they survive by URL only, pending a
+  later migration into the Index entry schema.
 - `/craft` — architecture / restoration / trades (scaffold, content TK)
 - `/properties`, `/properties/[slug]` — listings (may be empty; current
   inventory is flagged on the homepage as "represented via Mubawab")

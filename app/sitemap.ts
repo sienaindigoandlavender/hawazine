@@ -3,6 +3,7 @@ import { siteConfig } from "@/lib/site";
 import { getPublishedQuarters } from "@/lib/content/quarters";
 import { getPublishedProperties } from "@/lib/content/properties";
 import { getPublishedJournalEntries } from "@/lib/content/journal";
+import { indexEntries } from "@/lib/content/the-index";
 import { safeSitemapUrl } from "@/lib/sitemap-helpers";
 
 const STATIC_ROUTES = [
@@ -57,10 +58,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
+  const indexEntryUrls = indexEntries.map((e) => ({
+    url: safeSitemapUrl(base, `/buying/${e.slug}`),
+    lastModified: new Date(e.lastUpdated),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
   return [
     ...staticEntries,
     ...quarterEntries,
     ...propertyEntries,
     ...journalEntries,
+    ...indexEntryUrls,
   ];
 }
