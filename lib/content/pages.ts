@@ -76,11 +76,11 @@ The writing on this site is the work. Not its advertisement.`,
     slug: "how-we-work",
     title: "How we work",
     subtitle: "Fees, mandates, and what you should expect",
-    bodyMarkdown: `We take exclusive buyer-side mandates. The fee is 2.5% of the purchase price, payable on completion; it is disclosed on the mandate and it does not change. We do not take seller-side commission on the same property we represent a buyer for.
+    bodyMarkdown: `We take exclusive buyer-side mandates. The fee is 2.5% of the purchase price, payable on completion, disclosed on the mandate and fixed. On a property where we represent the buyer, we take no seller-side commission.
 
-We do not do unaccompanied viewings. The first visit is with Mouad, in person. We do not share photographs or addresses of active listings over email before a mandate is signed — this is a deliberate choice that protects the seller's privacy and, frankly, keeps the tyre-kickers away from houses that do not deserve the traffic.
+Viewings are in person. The first is with Mouad. Photographs and addresses of active listings are held off email until a mandate is signed — for the seller's privacy, and for the house.
 
-If you are weighing whether to speak to us, the contact page is the right place to start. A short, honest message about what you are looking for is better than a long one.`,
+When you are ready to speak, write from the contact page. A short, clear message is read more closely than a long one.`,
     updatedAt: "2026-04-17",
   },
 ];
