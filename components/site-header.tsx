@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { primaryNav, siteConfig } from "@/lib/site";
-import { GoogleTranslate } from "@/components/google-translate";
 
 export function SiteHeader() {
   return (
@@ -24,10 +23,6 @@ export function SiteHeader() {
             ))}
           </ul>
         </nav>
-
-        <div className="hidden md:block">
-          <GoogleTranslate />
-        </div>
       </div>
 
       <nav aria-label="Primary mobile" className="md:hidden border-t border-ink/5">
