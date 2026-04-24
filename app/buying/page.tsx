@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { IndexSearch } from "@/components/index-search";
 import { siteConfig } from "@/lib/site";
 import {
   getIndexEntriesByCategory,
@@ -7,6 +8,7 @@ import {
   indexCategories,
   indexEntries,
 } from "@/lib/content/the-index";
+import { buildSearchCorpus } from "@/lib/search";
 
 export const metadata: Metadata = {
   title: "Buying a Riad in Morocco — The Index",
@@ -32,10 +34,11 @@ function formatDate(iso: string): string {
 
 export default function BuyingIndexPage() {
   const mostRecent = getMostRecentIndexUpdate();
+  const corpus = buildSearchCorpus();
 
   return (
     <>
-      <header className="mx-auto max-w-page px-6 pt-16 pb-10 md:pt-24 md:pb-14">
+      <header className="mx-auto max-w-page px-6 pt-16 pb-4 md:pt-24 md:pb-6">
         <p className="font-sans text-meta uppercase tracking-[0.18em] text-quiet">
           Reference
         </p>
@@ -66,57 +69,59 @@ export default function BuyingIndexPage() {
         </p>
       </header>
 
-      <div className="mx-auto max-w-page px-6 pb-16 md:pb-24">
-        {indexCategories.map((cat) => {
-          const entries = getIndexEntriesByCategory(cat.slug);
-          return (
-            <section
-              key={cat.slug}
-              id={cat.slug}
-              className="scroll-mt-24 mt-16 first:mt-0"
-            >
-              <h2 className="font-serif text-section text-ink">{cat.label}</h2>
-              <p className="mt-3 max-w-reading font-serif text-body text-ink-soft">
-                {cat.description}
-              </p>
-              {entries.length === 0 ? (
-                <p className="mt-10 max-w-reading font-serif text-body text-quiet">
-                  Entries in preparation.
+      <IndexSearch corpus={corpus}>
+        <div className="mx-auto max-w-page px-6 pb-16 md:pb-24">
+          {indexCategories.map((cat) => {
+            const entries = getIndexEntriesByCategory(cat.slug);
+            return (
+              <section
+                key={cat.slug}
+                id={cat.slug}
+                className="scroll-mt-24 mt-16 first:mt-0"
+              >
+                <h2 className="font-serif text-section text-ink">{cat.label}</h2>
+                <p className="mt-3 max-w-reading font-serif text-body text-ink-soft">
+                  {cat.description}
                 </p>
-              ) : (
-                <ol className="mt-10 border-t border-rule">
-                  {entries.map((entry) => (
-                    <li key={entry.slug} className="border-b border-rule">
-                      <Link
-                        href={`/buying/${entry.slug}`}
-                        className="group flex items-baseline gap-6 py-6"
-                      >
-                        <span className="font-sans text-meta text-quiet tabular-nums min-w-[2rem]">
-                          {String(entry.number).padStart(2, "0")}
-                        </span>
-                        <div className="flex-1">
-                          <h3 className="font-serif text-subtitle text-ink transition-colors group-hover:text-accent">
-                            {entry.question}
-                          </h3>
-                          <p className="mt-1 font-sans text-meta text-quiet">
-                            {entry.preview}
-                          </p>
-                        </div>
-                        <span
-                          aria-hidden="true"
-                          className="font-sans text-meta text-quiet transition-colors group-hover:text-accent"
+                {entries.length === 0 ? (
+                  <p className="mt-10 max-w-reading font-serif text-body text-quiet">
+                    Entries in preparation.
+                  </p>
+                ) : (
+                  <ol className="mt-10 border-t border-rule">
+                    {entries.map((entry) => (
+                      <li key={entry.slug} className="border-b border-rule">
+                        <Link
+                          href={`/buying/${entry.slug}`}
+                          className="group flex items-baseline gap-6 py-6"
                         >
-                          →
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ol>
-              )}
-            </section>
-          );
-        })}
-      </div>
+                          <span className="font-sans text-meta text-quiet tabular-nums min-w-[2rem]">
+                            {String(entry.number).padStart(2, "0")}
+                          </span>
+                          <div className="flex-1">
+                            <h3 className="font-serif text-subtitle text-ink transition-colors group-hover:text-accent">
+                              {entry.question}
+                            </h3>
+                            <p className="mt-1 font-sans text-meta text-quiet">
+                              {entry.preview}
+                            </p>
+                          </div>
+                          <span
+                            aria-hidden="true"
+                            className="font-sans text-meta text-quiet transition-colors group-hover:text-accent"
+                          >
+                            →
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ol>
+                )}
+              </section>
+            );
+          })}
+        </div>
+      </IndexSearch>
 
       <section className="mx-auto max-w-page border-t border-rule px-6 py-10">
         <p className="max-w-reading font-serif text-body text-ink-soft">
