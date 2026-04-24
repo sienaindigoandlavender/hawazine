@@ -44,7 +44,7 @@ export function SiteFooter() {
             Reference
           </p>
           <ul className="mt-4 space-y-2 font-sans text-meta text-paper/85">
-            <li><Link href="/the-index" className="hover:text-paper">The Index</Link></li>
+            <li><Link href="/buying" className="hover:text-paper">The Index</Link></li>
             <li><Link href="/glossary" className="hover:text-paper">Glossary</Link></li>
             <li><Link href="/journal" className="hover:text-paper">Journal</Link></li>
           </ul>

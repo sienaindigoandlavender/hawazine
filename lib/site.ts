@@ -18,7 +18,7 @@ export const primaryNav = [
 ] as const;
 
 export const secondaryNav = [
-  { href: "/the-index", label: "The Index" },
+  { href: "/buying", label: "The Index" },
   { href: "/glossary", label: "Glossary" },
   { href: "/journal", label: "Journal" },
 ] as const;

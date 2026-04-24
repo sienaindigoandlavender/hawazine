@@ -55,16 +55,21 @@ Markdown bodies render through `react-markdown` + `remark-gfm` via the
 Primary nav: `Marrakech · Buying · Craft · Properties · Contact`.
 Secondary nav (smaller, quieter, reference-only): `The Index · Glossary · Journal`.
 
+**Buying and The Index are the same destination.** Primary nav calls it
+"Buying" (commercial framing); secondary nav calls it "The Index"
+(reference framing). Both link to `/buying`. Individual reference entries
+live at `/buying/<slug>`. There is no `/the-index` route — a short-lived
+attempt was removed in favour of the dual-label pattern.
+
 - `/marrakech` — the medina overview + quarter cards + interactive map
 - `/marrakech/[quarter]` — per-quarter page; map highlights that quarter
-- `/buying`, `/buying/*` — existing procedural content (melkia, the-process,
-  costs, what-to-ask)
+- `/buying`, `/buying/melkia`, `/buying/the-process`, `/buying/costs`,
+  `/buying/what-to-ask` — legal / procedural reference content. Accessed
+  as "Buying" from primary nav and "The Index" from secondary nav.
 - `/craft` — architecture / restoration / trades (scaffold, content TK)
 - `/properties`, `/properties/[slug]` — listings (may be empty; current
   inventory is flagged on the homepage as "represented via Mubawab")
 - `/contact` — contact form
-- `/the-index`, `/the-index/[slug]` — longform reference entries (scaffold,
-  empty until content lands)
 - `/glossary` — single-page glossary with same-page anchors
   (`/glossary#melkia`). No per-term routes — that decision is resolved, not
   open.
