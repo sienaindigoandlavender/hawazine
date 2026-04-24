@@ -2,9 +2,9 @@ export const siteConfig = {
   name: "Hawazine",
   domain: "hawazine.com",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://hawazine.com",
-  tagline: "Houses inside the wall of the Marrakech medina.",
+  tagline: "Courtyards and terraces in the Marrakech medina.",
   description:
-    "Riads, dars, and land across every quarter of the Marrakech medina. An editorial publication that happens to sell houses in it.",
+    "Riads, dars, and land in the Marrakech medina — courtyards, terraces, and the Atlas in the distance. An editorial publication that happens to sell houses in it.",
   email: "morocco@hawazine.com",
 } as const;
 

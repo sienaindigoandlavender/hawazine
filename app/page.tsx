@@ -15,8 +15,8 @@ export default function HomePage() {
     <>
       <EditorialHero
         kicker="Hawazine — Marrakech"
-        title="Houses the medina keeps to itself."
-        subtitle="Riads, dars, and land, quarter by quarter, at the medina's pace."
+        title="A courtyard, a terrace, the Atlas in the distance."
+        subtitle="Marrakech medina, behind plain doors."
       />
 
       <section className="mx-auto max-w-page px-6 py-8 md:py-16">
