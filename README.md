@@ -44,6 +44,9 @@ At minimum, for local dev you need:
 - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` — only needed if you wish to reference
   a real Cloudinary account in image URLs. URLs are hardcoded in content
   modules, so the cloud name can also simply be part of those URLs.
+- `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` — required
+  for the Journal (`/journal`) to fetch entries. Without them, the Journal
+  renders its empty state; the rest of the site is unaffected.
 
 Never commit `.env*` files; only `.env.example` ships in git.
 
@@ -124,6 +127,15 @@ npm run typecheck  # tsc --noEmit
   `/buying/melkia`, `/buying/the-process`, `/buying/costs`, and
   `/buying/what-to-ask` continue to resolve (Next.js prefers specific
   segments over `[slug]`) pending a later content migration.
+- **The Journal (`/journal`) is the one piece of site content in Supabase.**
+  Schema lives at `supabase/schema.sql` — run it once in the Supabase SQL
+  Editor to create the `journal_entries` table, the `updated_at` trigger,
+  and the anon-reads-published-only RLS policy. Entries are edited via
+  Supabase Studio (Table Editor); no custom admin UI in Hawazine. Pages
+  use ISR with a 1-hour revalidate window, so edits surface within an
+  hour without a redeploy. If the Supabase env vars are unset, the
+  Journal renders its empty state — the site degrades rather than
+  crashing.
 
 ## Layout pass — April 2026
 

@@ -6,28 +6,45 @@ hawazine repo so you do not have to re-derive them from the original brief.
 ## Project shape
 
 - Next.js 14, App Router, TypeScript, Tailwind.
-- **No database, no CMS.** Content is hardcoded in typed TS modules under
-  `lib/content/`. This is a deliberate v1 choice and should not be reversed
-  without explicit approval — the original brief specified Supabase, but
-  Jacqueline overrode that.
-- **No admin routes.** The `/admin` routes from the brief do not exist in v1.
-  Editing content = editing files under `lib/content/` + a redeploy. If a
-  future session reintroduces Supabase, the admin routes can be added then.
-- **No `/api/revalidate`.** Static generation only, via `generateStaticParams`
-  on dynamic routes.
+- **Flat-file content by default.** Quarters, properties, pages, glossary,
+  and The Index live as typed TS data under `lib/content/`. Only the
+  Journal lives in Supabase — specifically so Cloudinary image URLs can
+  be pasted via Supabase Studio rather than committed to the repo.
+  Glossary and The Index briefs both explicitly chose flat file over
+  Supabase; do not migrate them without an equivalent explicit decision.
+- **Supabase is Journal-only.** `NEXT_PUBLIC_SUPABASE_URL` and
+  `NEXT_PUBLIC_SUPABASE_ANON_KEY` power `/journal`. Schema lives at
+  `supabase/schema.sql`. RLS grants the anon role `SELECT` on
+  `published = true` rows only; edits go through Supabase Studio with
+  the service role.
+- **No admin routes.** The editing surface is Supabase Studio (for the
+  Journal) and git (for flat-file content). Do not build `/admin` UI
+  without an explicit decision to reverse this rule.
+- **No `/api/revalidate`.** Journal pages use time-based ISR
+  (`revalidate = 3600`). Flat-file content rebuilds on git push.
 
 ## Content model
 
-All content lives under `lib/content/`:
+Flat-file content in `lib/content/`:
 
 - `quarters.ts` — medina neighbourhoods (Laksour, Mouassine, etc.)
 - `properties.ts` — listings (riad/dar/land/other)
-- `journal.ts` — editorial pieces
 - `pages.ts` — long-form static pages (Marrakech landing, Buying and its
   sub-pages, About, How we work). Slugs match the route path.
+- `glossary.ts` — single-page glossary terms
+- `the-index.ts` — /buying reference entries
+- `oracle.ts` — market intelligence (private transactions + public notes)
 
-Types are in `lib/types.ts`. Every list has a `published` flag; filter with
-the `getPublished…` helpers, never use the raw arrays in page code.
+Supabase-backed content:
+
+- `journal.ts` exports **async** helpers that query the `journal_entries`
+  table via `lib/supabase.ts`. When env vars are missing, every helper
+  returns an empty result — pages must render their empty-state paths
+  without crashing.
+
+Types are in `lib/types.ts`. Flat-file lists have a `published` flag;
+filter with the `getPublished…` helpers, never use the raw arrays in
+page code.
 
 Markdown bodies render through `react-markdown` + `remark-gfm` via the
 `EssayBody` component. Do not reach for MDX unless the brief requests it.

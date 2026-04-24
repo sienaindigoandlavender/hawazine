@@ -8,16 +8,19 @@ import {
 } from "@/lib/content/journal";
 import { siteConfig } from "@/lib/site";
 
+export const revalidate = 3600;
+
 interface Params {
   params: { slug: string };
 }
 
-export function generateStaticParams() {
-  return getPublishedJournalEntries().map((e) => ({ slug: e.slug }));
+export async function generateStaticParams() {
+  const entries = await getPublishedJournalEntries();
+  return entries.map((e) => ({ slug: e.slug }));
 }
 
-export function generateMetadata({ params }: Params): Metadata {
-  const entry = getJournalEntryBySlug(params.slug);
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const entry = await getJournalEntryBySlug(params.slug);
   if (!entry) return {};
   return {
     title: entry.title,
@@ -33,8 +36,8 @@ export function generateMetadata({ params }: Params): Metadata {
   };
 }
 
-export default function JournalEntryPage({ params }: Params) {
-  const entry = getJournalEntryBySlug(params.slug);
+export default async function JournalEntryPage({ params }: Params) {
+  const entry = await getJournalEntryBySlug(params.slug);
   if (!entry) notFound();
 
   const jsonLd = {
