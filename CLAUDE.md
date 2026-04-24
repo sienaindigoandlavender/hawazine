@@ -70,6 +70,10 @@ Shared components in `components/`:
   `source: "newsletter"` so the same Resend mail path handles it.
 - `google-translate.tsx` — client component, loads Google Translate
   via `<Script strategy="afterInteractive">`.
+- `google-analytics.tsx` — loads the GA4 gtag script via
+  `<Script strategy="afterInteractive">`. Renders nothing when
+  `NEXT_PUBLIC_GA_MEASUREMENT_ID` is unset, so dev/preview stays clean.
+  Mounted once from `app/layout.tsx`.
 - `quarter-map.tsx` — Mapbox GL JS client component. Renders a neutral
   placeholder if `NEXT_PUBLIC_MAPBOX_TOKEN` is not set.
 
