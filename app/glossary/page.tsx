@@ -9,6 +9,8 @@ import {
 } from "@/lib/content/glossary";
 import { siteConfig } from "@/lib/site";
 import { buildGlossaryJsonLd } from "@/lib/glossary-schema";
+import { ReferenceSearch } from "@/components/reference-search";
+import { buildGlossaryCorpus } from "@/lib/search";
 
 export const metadata: Metadata = {
   title: "Glossary — Moroccan property, architecture & craft terminology",
@@ -55,6 +57,7 @@ const QUICK_REFERENCE: {
 
 export default function GlossaryPage() {
   const jsonLd = buildGlossaryJsonLd(siteConfig.url);
+  const corpus = buildGlossaryCorpus();
 
   return (
     <>
@@ -63,7 +66,7 @@ export default function GlossaryPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <header className="mx-auto max-w-page px-6 pt-16 pb-10 md:pt-24 md:pb-14">
+      <header className="mx-auto max-w-page px-6 pt-16 pb-4 md:pt-24 md:pb-6">
         <p className="font-sans text-meta uppercase tracking-[0.18em] text-quiet">
           Reference
         </p>
@@ -92,89 +95,96 @@ export default function GlossaryPage() {
         </p>
       </header>
 
-      <section className="mx-auto max-w-page px-6 py-10 md:py-12">
-        <p className="font-sans text-meta uppercase tracking-[0.18em] text-quiet">
-          Quick reference
-        </p>
-        <div className="mt-6 grid grid-cols-1 gap-10 border-t border-rule pt-8 md:grid-cols-3 md:gap-12">
-          {QUICK_REFERENCE.map((group) => (
-            <div key={group.heading}>
-              <p className="font-sans text-meta uppercase tracking-[0.14em] text-ink">
-                {group.heading}
-              </p>
-              <ul className="mt-4 space-y-4">
-                {group.terms.map(({ slug, oneLiner }) => {
-                  const entry = getGlossaryEntryBySlug(slug);
-                  if (!entry) return null;
-                  return (
-                    <li key={slug}>
-                      <Link href={`#${slug}`} className="group block">
-                        <span className="font-serif text-subtitle text-ink transition-colors group-hover:text-accent">
-                          {entry.term}
-                        </span>
-                        <span className="mt-1 block font-serif text-body text-ink-soft">
-                          {oneLiner}
-                        </span>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <nav
-        aria-label="Glossary categories"
-        className="mx-auto max-w-page border-y border-rule px-6 py-5"
+      <ReferenceSearch
+        corpus={corpus}
+        mode="glossary"
+        placeholder="Search the Glossary…"
+        ariaLabel="Search the Glossary"
       >
-        <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 font-sans text-meta uppercase tracking-[0.18em] text-quiet">
+        <section className="mx-auto max-w-page px-6 py-10 md:py-12">
+          <p className="font-sans text-meta uppercase tracking-[0.18em] text-quiet">
+            Quick reference
+          </p>
+          <div className="mt-6 grid grid-cols-1 gap-10 border-t border-rule pt-8 md:grid-cols-3 md:gap-12">
+            {QUICK_REFERENCE.map((group) => (
+              <div key={group.heading}>
+                <p className="font-sans text-meta uppercase tracking-[0.14em] text-ink">
+                  {group.heading}
+                </p>
+                <ul className="mt-4 space-y-4">
+                  {group.terms.map(({ slug, oneLiner }) => {
+                    const entry = getGlossaryEntryBySlug(slug);
+                    if (!entry) return null;
+                    return (
+                      <li key={slug}>
+                        <Link href={`#${slug}`} className="group block">
+                          <span className="font-serif text-subtitle text-ink transition-colors group-hover:text-accent">
+                            {entry.term}
+                          </span>
+                          <span className="mt-1 block font-serif text-body text-ink-soft">
+                            {oneLiner}
+                          </span>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <nav
+          aria-label="Glossary categories"
+          className="mx-auto max-w-page border-y border-rule px-6 py-5"
+        >
+          <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 font-sans text-meta uppercase tracking-[0.18em] text-quiet">
+            {glossaryCategories.map((cat) => {
+              const count = getGlossaryEntriesByCategory(cat.slug).length;
+              return (
+                <li key={cat.slug}>
+                  <a
+                    href={`#${cat.slug}`}
+                    className="transition-colors hover:text-ink"
+                  >
+                    {cat.label}
+                    <span className="ml-2 text-ink-soft/40">{count}</span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+
+        <div className="mx-auto max-w-page px-6 py-14 md:py-20">
           {glossaryCategories.map((cat) => {
-            const count = getGlossaryEntriesByCategory(cat.slug).length;
+            const entries = getGlossaryEntriesByCategory(cat.slug);
             return (
-              <li key={cat.slug}>
-                <a
-                  href={`#${cat.slug}`}
-                  className="transition-colors hover:text-ink"
-                >
-                  {cat.label}
-                  <span className="ml-2 text-ink-soft/40">{count}</span>
-                </a>
-              </li>
+              <section
+                key={cat.slug}
+                id={cat.slug}
+                className="scroll-mt-24 mt-16 first:mt-0"
+              >
+                <h2 className="font-serif text-section text-ink">{cat.label}</h2>
+                <p className="mt-3 max-w-reading font-serif text-body text-ink-soft">
+                  {cat.description}
+                </p>
+                {entries.length === 0 ? (
+                  <p className="mt-10 max-w-reading font-serif text-body text-quiet">
+                    Entries in preparation.
+                  </p>
+                ) : (
+                  <dl className="mt-10">
+                    {entries.map((entry) => (
+                      <Entry key={entry.slug} entry={entry} />
+                    ))}
+                  </dl>
+                )}
+              </section>
             );
           })}
-        </ul>
-      </nav>
-
-      <div className="mx-auto max-w-page px-6 py-14 md:py-20">
-        {glossaryCategories.map((cat) => {
-          const entries = getGlossaryEntriesByCategory(cat.slug);
-          return (
-            <section
-              key={cat.slug}
-              id={cat.slug}
-              className="scroll-mt-24 mt-16 first:mt-0"
-            >
-              <h2 className="font-serif text-section text-ink">{cat.label}</h2>
-              <p className="mt-3 max-w-reading font-serif text-body text-ink-soft">
-                {cat.description}
-              </p>
-              {entries.length === 0 ? (
-                <p className="mt-10 max-w-reading font-serif text-body text-quiet">
-                  Entries in preparation.
-                </p>
-              ) : (
-                <dl className="mt-10">
-                  {entries.map((entry) => (
-                    <Entry key={entry.slug} entry={entry} />
-                  ))}
-                </dl>
-              )}
-            </section>
-          );
-        })}
-      </div>
+        </div>
+      </ReferenceSearch>
 
       <section className="mx-auto max-w-page px-6 pb-16">
         <div className="border-t border-rule pt-10">

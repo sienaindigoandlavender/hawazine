@@ -49,3 +49,24 @@ export function buildSearchCorpus(): SearchResult[] {
 
   return [...fromIndex, ...fromGlossary];
 }
+
+// Glossary-only corpus for the /glossary search. Results link to same-page
+// anchors (`#slug`) rather than `/glossary#slug`, so the native anchor
+// behaviour handles the scroll without a router round-trip.
+export function buildGlossaryCorpus(): SearchResult[] {
+  return glossaryEntries.map((entry) => ({
+    id: `glossary-${entry.slug}`,
+    type: "GLOSSARY",
+    title: entry.term,
+    snippet: truncate(entry.definition, 120),
+    href: `#${entry.slug}`,
+    searchableText: [
+      entry.term,
+      ...(entry.alsoKnownAs ?? []),
+      entry.french ?? "",
+    ]
+      .filter(Boolean)
+      .join(" "),
+    secondaryText: [entry.definition, entry.context ?? ""].join(" "),
+  }));
+}
