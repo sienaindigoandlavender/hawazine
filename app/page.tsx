@@ -1,12 +1,28 @@
 import Link from "next/link";
 import { EditorialHero } from "@/components/editorial-hero";
 import { JournalPreview } from "@/components/journal-preview";
+import { PropertyFeatured } from "@/components/property-featured";
 import { getPublishedJournalEntries } from "@/lib/content/journal";
+import { getPublishedProperties } from "@/lib/content/properties";
+import type { Property } from "@/lib/types";
 
 export const revalidate = 3600;
 
+function pickFeatured(list: Property[]): Property | undefined {
+  if (list.length === 0) return undefined;
+  const sorted = [...list].sort((a, b) =>
+    a.updatedAt < b.updatedAt ? 1 : a.updatedAt > b.updatedAt ? -1 : 0,
+  );
+  return sorted.find((p) => p.featured) ?? sorted[0];
+}
+
 export default async function HomePage() {
   const journalEntries = (await getPublishedJournalEntries()).slice(0, 3);
+  const properties = getPublishedProperties();
+  const featuredProperty = pickFeatured(properties);
+  const remainingPropertyCount = featuredProperty
+    ? properties.length - 1
+    : 0;
 
   return (
     <>
@@ -17,35 +33,67 @@ export default async function HomePage() {
       />
 
       <section className="mx-auto max-w-page px-6 py-12 md:py-20">
-        <div className="grid gap-12 md:grid-cols-2 md:gap-20">
-          <div>
-            <p className="font-sans text-meta uppercase tracking-[0.18em] text-quiet">
-              Begin here
-            </p>
-            <ul className="mt-6 border-t border-rule">
-              {BEGIN_HERE.map((item) => (
-                <li key={item.href} className="border-b border-rule">
-                  <Link
-                    href={item.href}
-                    className="group grid grid-cols-[8rem_minmax(0,1fr)] items-baseline gap-6 py-5"
-                  >
-                    <span className="font-serif text-subtitle text-ink transition-colors group-hover:text-accent">
-                      {item.label}
-                    </span>
-                    <span className="font-serif text-body text-ink-soft">
-                      {item.blurb}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <p className="font-sans text-meta uppercase tracking-[0.18em] text-quiet">
+          Begin here
+        </p>
+        <ul className="mt-6 border-t border-rule md:max-w-[680px]">
+          {BEGIN_HERE.map((item) => (
+            <li key={item.href} className="border-b border-rule">
+              <Link
+                href={item.href}
+                className="group grid grid-cols-[8rem_minmax(0,1fr)] items-baseline gap-6 py-5"
+              >
+                <span className="font-serif text-subtitle text-ink transition-colors group-hover:text-accent">
+                  {item.label}
+                </span>
+                <span className="font-serif text-body text-ink-soft">
+                  {item.blurb}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
 
-          <div>
-            <p className="font-sans text-meta uppercase tracking-[0.18em] text-quiet">
-              Currently representing
-            </p>
-            <p className="mt-6 font-serif text-body text-ink-soft">
+      <section className="pb-16 md:pb-24">
+        <div className="mx-auto max-w-page px-6 pb-10 md:pb-12">
+          <p className="font-sans text-meta uppercase tracking-[0.18em] text-quiet">
+            Currently representing
+          </p>
+        </div>
+
+        {featuredProperty ? (
+          <>
+            <PropertyFeatured property={featuredProperty} />
+            <div className="mx-auto max-w-page px-6 pt-8">
+              {remainingPropertyCount > 0 ? (
+                <p className="font-sans text-meta">
+                  <Link
+                    href="/properties"
+                    className="uppercase tracking-[0.18em] text-quiet transition-colors hover:text-accent"
+                  >
+                    {remainingPropertyCount}{" "}
+                    {remainingPropertyCount === 1
+                      ? "more property"
+                      : "more properties"}{" "}
+                    →
+                  </Link>
+                </p>
+              ) : (
+                <p className="font-sans text-meta">
+                  <Link
+                    href="/properties"
+                    className="uppercase tracking-[0.18em] text-quiet transition-colors hover:text-accent"
+                  >
+                    All properties →
+                  </Link>
+                </p>
+              )}
+            </div>
+          </>
+        ) : (
+          <div className="mx-auto max-w-page px-6">
+            <p className="max-w-reading font-serif text-body text-ink-soft">
               Listings not yet published on hawazine.com. Current inventory is
               represented via Mouad on{" "}
               <a
@@ -67,7 +115,7 @@ export default async function HomePage() {
               </Link>
             </p>
           </div>
-        </div>
+        )}
       </section>
 
       <section className="mx-auto max-w-page px-6 py-16 md:py-24">
