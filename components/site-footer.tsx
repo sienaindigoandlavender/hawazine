@@ -31,7 +31,7 @@ export function SiteFooter() {
           <ul className="mt-4 space-y-2 font-ui text-meta text-paper/85">
             <li><Link href="/marrakech" className="hover:text-paper">Marrakech</Link></li>
             <li><Link href="/buying" className="hover:text-paper">Buying</Link></li>
-            <li><Link href="/journal" className="hover:text-paper">Journal</Link></li>
+            <li><Link href="/journal" className="hover:text-paper">The Index</Link></li>
             <li><Link href="/properties" className="hover:text-paper">Properties</Link></li>
           </ul>
         </div>

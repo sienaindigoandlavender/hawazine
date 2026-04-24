@@ -11,7 +11,7 @@ export const siteConfig = {
 export const primaryNav = [
   { href: "/marrakech", label: "Marrakech" },
   { href: "/buying", label: "Buying" },
-  { href: "/journal", label: "Journal" },
+  { href: "/journal", label: "The Index" },
   { href: "/properties", label: "Properties" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
