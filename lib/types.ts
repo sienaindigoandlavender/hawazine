@@ -126,6 +126,43 @@ export interface MarketNote {
   published: boolean;
 }
 
+export type IndexCategory =
+  | "the-basics"
+  | "legal-title"
+  | "transaction-process"
+  | "costs-taxes"
+  | "renovation-reality"
+  | "due-diligence"
+  | "after-the-sale";
+
+export interface IndexCrossLink {
+  term: string;
+  slug: string;
+}
+
+export interface IndexGlossaryLink {
+  term: string;
+  anchor: string;
+}
+
+export interface IndexEntry {
+  slug: string;
+  number: number;
+  question: string;
+  preview: string;
+  category: IndexCategory;
+  body: string;
+  seeAlso?: IndexCrossLink[];
+  glossaryTerms?: IndexGlossaryLink[];
+  lastUpdated: string;
+}
+
+export interface IndexCategoryMeta {
+  slug: IndexCategory;
+  label: string;
+  description: string;
+}
+
 export type GlossaryCategory =
   | "legal-title"
   | "transaction-taxation"

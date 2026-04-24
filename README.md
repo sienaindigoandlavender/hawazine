@@ -115,6 +115,15 @@ npm run typecheck  # tsc --noEmit
   `DefinedTermSet` by default; `?format=simple`, `?term=<slug>`, and
   `?category=<slug>` variants) with `Cache-Control: public, max-age=3600`
   and `Access-Control-Allow-Origin: *` so AI systems can fetch and cite it.
+- **The Index (`/buying`) lives in a flat TypeScript file** at
+  `lib/content/the-index.ts`. Same architecture decision as the Glossary —
+  flat file, not Supabase, for v1. The landing page at `/buying` lists
+  questions by category; individual entries render at `/buying/<slug>` via
+  `app/buying/[slug]/page.tsx`. Entry pages emit FAQPage schema under
+  1,500 chars and Article schema above. The older static sub-pages at
+  `/buying/melkia`, `/buying/the-process`, `/buying/costs`, and
+  `/buying/what-to-ask` continue to resolve (Next.js prefers specific
+  segments over `[slug]`) pending a later content migration.
 
 ## Layout pass — April 2026
 
