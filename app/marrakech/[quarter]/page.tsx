@@ -14,7 +14,11 @@ const QuarterMap = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="aspect-[16/9] w-full bg-ink/5" aria-hidden="true" />
+      <div
+        className="w-full bg-ink/5"
+        style={{ height: "480px" }}
+        aria-hidden="true"
+      />
     ),
   },
 );
@@ -64,7 +68,7 @@ export default function QuarterPage({ params }: Params) {
           General indication only. We never map specific addresses — that stays between us and our buyers.
         </p>
         <div className="mt-8">
-          <QuarterMap center={quarter.mapCenter} zoom={quarter.mapZoom} />
+          <QuarterMap activeQuarter={quarter.slug} />
         </div>
       </section>
 
