@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { EditorialHero } from "@/components/editorial-hero";
 import { PropertyCard } from "@/components/property-card";
-import { JournalCard } from "@/components/journal-card";
 import { getFeaturedProperties } from "@/lib/content/properties";
-import { getPublishedJournalEntries } from "@/lib/content/journal";
+import {
+  JOURNAL_FORMAT_LABEL,
+  getPublishedJournalEntries,
+} from "@/lib/content/journal";
 
 export default function HomePage() {
   const featured = getFeaturedProperties();
@@ -39,19 +41,41 @@ export default function HomePage() {
       {journal.length > 0 && (
         <section className="mx-auto max-w-page px-6 py-16 md:py-24">
           <div className="flex items-baseline justify-between">
-            <h2 className="font-serif text-section text-ink">From the journal</h2>
+            <h2 className="font-serif text-section text-ink">From The Index</h2>
             <Link
               href="/journal"
               className="font-ui text-meta uppercase tracking-[0.14em] text-quiet hover:text-accent"
             >
-              All writing
+              The Index →
             </Link>
           </div>
-          <div className="mt-10 grid gap-12 md:grid-cols-2">
+          <ul className="mt-10 border-t border-ink/10">
             {journal.map((entry) => (
-              <JournalCard key={entry.slug} entry={entry} />
+              <li key={entry.slug} className="border-b border-ink/10">
+                <Link
+                  href={`/journal/${entry.slug}`}
+                  className="group grid grid-cols-[7rem_minmax(0,1fr)_auto] items-baseline gap-4 py-5 md:grid-cols-[12rem_minmax(0,1fr)_auto] md:gap-6"
+                >
+                  <span className="font-ui text-meta uppercase tracking-[0.18em] text-quiet">
+                    {entry.format ? JOURNAL_FORMAT_LABEL[entry.format] : ""}
+                  </span>
+                  <span className="font-serif text-body text-ink transition-colors group-hover:text-accent">
+                    {entry.title}
+                  </span>
+                  <time
+                    dateTime={entry.publishedAt}
+                    className="font-ui text-meta text-quiet"
+                  >
+                    {new Date(entry.publishedAt).toLocaleDateString("en-GB", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </time>
+                </Link>
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
       )}
 

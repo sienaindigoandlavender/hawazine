@@ -10,7 +10,7 @@ import {
 } from "@/lib/content/journal";
 
 export const metadata: Metadata = {
-  title: "Journal",
+  title: "The Index",
   description:
     "Writing from Hawazine on the Marrakech medina — its quarters, its titles, its prices, its buildings.",
   alternates: { canonical: "/journal" },
