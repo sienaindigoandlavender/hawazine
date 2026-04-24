@@ -34,24 +34,56 @@ Markdown bodies render through `react-markdown` + `remark-gfm` via the
 
 ## Design tokens
 
-- Colours live in `tailwind.config.ts`: `ink #111`, `paper #fff`, `quiet #6B6B6B`,
-  `accent #1B2A4E`. Footer uses an inline linear gradient from `#1f1f1f` →
-  `#161616` → `#0e0e0e`. Do not introduce terracotta, saffron, zellige-blue.
-- Fonts: `EB_Garamond` (serif, body + editorial display) and `Inter` (sans,
-  navigation, metadata, UI). Exposed as CSS variables `--font-serif` and
-  `--font-sans`. Tailwind classes `font-serif` and `font-sans`; there is also
-  a `.font-ui` CSS class bound to the sans stack, used interchangeably.
-- Backgrounds: pure white on all content pages. No cream, no parchment.
-- Body text: `#111`, never grey. Use `quiet` only for metadata/captions.
+- Colours live in `tailwind.config.ts` (April 2026 restructure):
+  `paper #F8F4EC` (warm off-white, site background), `paper-deep #F1EBDE`
+  (section bands), `ink #1A1714` (warm near-black), `ink-soft #3D342E`
+  (default body prose — the site `body` declaration binds to this),
+  `quiet #7A6E63`, `accent #8B3A2F` (deep terracotta — hover / occasional
+  highlight only, not for large fills), `rule #D9CFBE` (hairlines). Footer
+  keeps its dark inline gradient `#1f1f1f → #161616 → #0e0e0e`.
+- Fonts: `Fraunces` (serif, display + body) and `IBM_Plex_Sans` (sans, nav,
+  metadata, UI). Exposed as CSS variables `--font-serif` and `--font-sans`.
+  Tailwind: `font-serif` and `font-sans`. The earlier `.font-ui` CSS class
+  has been retired in new components; prefer `font-sans`.
+- Backgrounds: warm paper `#F8F4EC` everywhere. Do not reintroduce pure
+  white or cream.
+- Body prose: `ink-soft` default. Editorial prose inside `.prose-hawazine`
+  reads `ink` (slightly heavier). Use `quiet` for metadata/captions only.
+
+## Route map (April 2026 restructure)
+
+Primary nav: `Marrakech · Buying · Craft · Properties · Contact`.
+Secondary nav (smaller, quieter, reference-only): `The Index · Glossary · Journal`.
+
+- `/marrakech` — the medina overview + quarter cards + interactive map
+- `/marrakech/[quarter]` — per-quarter page; map highlights that quarter
+- `/buying`, `/buying/*` — existing procedural content (melkia, the-process,
+  costs, what-to-ask)
+- `/craft` — architecture / restoration / trades (scaffold, content TK)
+- `/properties`, `/properties/[slug]` — listings (may be empty; current
+  inventory is flagged on the homepage as "represented via Mubawab")
+- `/contact` — contact form
+- `/the-index`, `/the-index/[slug]` — longform reference entries (scaffold,
+  empty until content lands)
+- `/glossary` — single-page glossary with same-page anchors
+  (`/glossary#melkia`). No per-term routes — that decision is resolved, not
+  open.
+- `/journal`, `/journal/[slug]` — editorial. Demoted to secondary nav.
+  `journalEntries` is empty at scaffold; content arrives when there's
+  something worth publishing under one of the four formats.
+- `/about`, `/how-we-work` — only reachable via footer, not top nav
+- `/disclaimer`, `/terms`, `/privacy` — footer legal strip
 
 ## Tailwind conventions
 
 - **Use explicit class names.** Dynamic Tailwind classes get purged — if a
   class name is built from a variable (`\`text-${color}\``), it will not ship.
   Use `clsx` with full class strings in conditionals.
-- Reading width: `max-w-reading` (680px). Page width: `max-w-page` (1200px).
-- Text scales: `text-display`, `text-section`, `text-subtitle`, `text-body`,
-  `text-meta` are defined in `tailwind.config.ts`.
+- Reading width: `max-w-reading` (640px — narrowed from 680 in the April
+  2026 restructure). Page width: `max-w-page` (1200px).
+- Text scales: `text-display` (4rem), `text-section` (2.5rem),
+  `text-subtitle` (1.5rem), `text-body` (1.125rem/1.65), `text-meta`
+  (0.8125rem) — defined in `tailwind.config.ts`.
 
 ## Components
 
@@ -103,6 +135,8 @@ Shared components in `components/`:
 - `lib/content/pages.ts` uses slashes in slugs (`buying/melkia`) — these match
   the route path. Do not change them to underscores or flatten them.
 - When adding a new static page, update `app/sitemap.ts` `STATIC_ROUTES`.
+- Glossary is a **single page**. Terms live at `/glossary#<slug>` anchors,
+  never at `/glossary/[term]`. Do not scaffold a dynamic term route.
 - When adding a new dynamic collection (e.g., land listings), remember to
   also add its `generateStaticParams` on the route and include it in the
   sitemap loop.

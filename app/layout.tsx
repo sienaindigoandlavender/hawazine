@@ -1,21 +1,23 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { EB_Garamond, Inter } from "next/font/google";
+import { Fraunces, IBM_Plex_Sans } from "next/font/google";
 import { siteConfig } from "@/lib/site";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { GoogleAnalytics } from "@/components/google-analytics";
 
-const serif = EB_Garamond({
+const serif = Fraunces({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-serif",
+  axes: ["SOFT", "opsz"],
 });
 
-const sans = Inter({
+const sans = IBM_Plex_Sans({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-sans",
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -49,10 +51,10 @@ const organizationJsonLd = {
   url: siteConfig.url,
   description: siteConfig.description,
   email: siteConfig.email,
-  areaServed: {
-    "@type": "City",
-    name: "Marrakech",
-  },
+  areaServed: [
+    { "@type": "City", name: "Marrakech" },
+    { "@type": "Country", name: "Morocco" },
+  ],
 };
 
 export default function RootLayout({

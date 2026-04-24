@@ -3,6 +3,7 @@ import { siteConfig } from "@/lib/site";
 import { getPublishedQuarters } from "@/lib/content/quarters";
 import { getPublishedProperties } from "@/lib/content/properties";
 import { getPublishedJournalEntries } from "@/lib/content/journal";
+import { getPublishedIndexEntries } from "@/lib/content/the-index";
 import { safeSitemapUrl } from "@/lib/sitemap-helpers";
 
 const STATIC_ROUTES = [
@@ -13,6 +14,9 @@ const STATIC_ROUTES = [
   "/buying/the-process",
   "/buying/costs",
   "/buying/what-to-ask",
+  "/craft",
+  "/the-index",
+  "/glossary",
   "/journal",
   "/properties",
   "/about",
@@ -55,10 +59,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
+  const indexEntries = getPublishedIndexEntries().map((e) => ({
+    url: safeSitemapUrl(base, `/the-index/${e.slug}`),
+    lastModified: new Date(e.updatedAt),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
   return [
     ...staticEntries,
     ...quarterEntries,
     ...propertyEntries,
     ...journalEntries,
+    ...indexEntries,
   ];
 }
