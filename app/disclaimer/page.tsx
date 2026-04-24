@@ -11,7 +11,7 @@ export default function DisclaimerPage() {
     <StaticPage title="Disclaimer" kicker="Legal">
       <p>The information published on this site is for general informational purposes only. It does not constitute legal, financial, or notarial advice.</p>
       <p>Property descriptions, prices, and availability are provided in good faith but may change without notice. Buyers are responsible for conducting their own due diligence and consulting a qualified Moroccan notaire before entering any transaction.</p>
-      <p>Hawazine operates as a licensed Moroccan real estate agency and acts as intermediary only. We do not hold client funds and are not a party to any sale agreement.</p>
+      <p>Hawazine acts as intermediary only. We hold no client funds and are not a party to any sale agreement.</p>
     </StaticPage>
   );
 }

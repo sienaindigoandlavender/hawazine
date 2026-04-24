@@ -65,22 +65,22 @@ None of these questions are rude. Sellers who take offence at them are signallin
     slug: "about",
     title: "About Hawazine",
     subtitle: "An editorial agency for the Marrakech medina",
-    bodyMarkdown: `Hawazine is a small, licensed Moroccan real estate agency specialising in the Marrakech medina — in particular, the quarters of Laksour and Mouassine.
+    bodyMarkdown: `Hawazine is the Marrakech medina, read slowly.
 
-We work slowly, with a small number of properties at any one time, for buyers who want to understand what they are buying. We do not run a listings warehouse, we do not promise to be the cheapest, and we do not pretend to cover every quarter of the city.
+Every quarter of the old city. Riads, dars, and land, held to the standard of the medina itself.
 
-The writing you see on this site is the work we do anyway, made public. It is the thinking that goes into every mandate we take on.`,
+The writing on this site is the work. Not its advertisement.`,
     updatedAt: "2026-04-17",
   },
   {
     slug: "how-we-work",
     title: "How we work",
     subtitle: "Fees, mandates, and what you should expect",
-    bodyMarkdown: `We take exclusive buyer-side mandates. The fee is 2.5% of the purchase price, payable on completion; it is disclosed on the mandate and it does not change. We do not take seller-side commission on the same property we represent a buyer for.
+    bodyMarkdown: `We take exclusive buyer-side mandates. The fee is 2.5% of the purchase price, payable on completion, disclosed on the mandate and fixed. On a property where we represent the buyer, we take no seller-side commission.
 
-We do not do unaccompanied viewings. The first visit is with Mouad, in person. We do not share photographs or addresses of active listings over email before a mandate is signed — this is a deliberate choice that protects the seller's privacy and, frankly, keeps the tyre-kickers away from houses that do not deserve the traffic.
+Viewings are in person. The first is with Mouad. Photographs and addresses of active listings are held off email until a mandate is signed — for the seller's privacy, and for the house.
 
-If you are weighing whether to speak to us, the contact page is the right place to start. A short, honest message about what you are looking for is better than a long one.`,
+When you are ready to speak, write from the contact page. A short, clear message is read more closely than a long one.`,
     updatedAt: "2026-04-17",
   },
 ];

@@ -42,12 +42,12 @@ What matters at the moment of purchase is not whether the property has "a title"
   },
   {
     slug: "why-we-do-not-list-prices-first",
-    title: "Why we do not list prices first",
-    bodyMarkdown: `If you scroll through a conventional listings site, the price is the first thing you see. Square metres are second. Photographs are third. The house, in whatever way it actually exists, is somewhere around fourth or fifth.
+    title: "The price is the last thing.",
+    bodyMarkdown: `A price without a house in front of it is the least useful number in real estate. It is also, on every portal, the first thing a buyer reads.
 
-We have inverted this on Hawazine, deliberately. The photograph comes first because the photograph is the house. The description comes second because a house has things to say about itself. The specifications come third, as a reference. Price is on the page, in the sidebar, but it is not the headline — because a price without the context of what you are buying is the least useful number in real estate.
+On Hawazine the house comes first. The photograph, the rooms, the light, the derb. The number is on the page, in the margin, waiting for the house to make it meaningful.
 
-This is also, we think, more honest about how serious buyers actually look. Nobody buys a riad because it is 3.2M dh. People buy a particular riad, at a particular price, because the house itself is the right thing.`,
+Nobody buys a riad because it is 3.2M dh. Buyers buy a particular riad, at a particular price, because the house is the right house. The number follows the house. Anything else is a listing.`,
     publishedAt: "2026-03-14",
     published: true,
   },

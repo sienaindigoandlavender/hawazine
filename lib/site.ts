@@ -2,11 +2,10 @@ export const siteConfig = {
   name: "Hawazine",
   domain: "hawazine.com",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://hawazine.com",
-  tagline: "Riads, dars, and land in the Marrakech medina.",
+  tagline: "Houses inside the wall of the Marrakech medina.",
   description:
-    "A licensed Moroccan real estate agency specialising in melkia-titled riads, dars, and land in Laksour and Mouassine. An editorial publication that happens to sell property.",
+    "Riads, dars, and land across every quarter of the Marrakech medina. An editorial publication that happens to sell houses in it.",
   email: "morocco@hawazine.com",
-  carteProfessionnelle: "[carte professionnelle — number TK]",
 } as const;
 
 export const primaryNav = [

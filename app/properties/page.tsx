@@ -17,7 +17,7 @@ export default function PropertiesIndex() {
       <EditorialHero
         kicker="Properties"
         title="Current listings"
-        subtitle="A small, curated set of riads, dars, and land. Each one is accepted onto the roster only after the title, condition, and price have been checked."
+        subtitle="Riads, dars, and land. Each one walked before it is offered."
       />
       <section className="mx-auto max-w-page px-6 py-8 md:py-12">
         {properties.length === 0 ? (

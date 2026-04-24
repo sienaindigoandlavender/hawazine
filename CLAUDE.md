@@ -110,6 +110,83 @@ Shared components in `components/`:
   Markdown-in-TS is deliberate.
 - Do not rewire the admin UI / Supabase unless explicitly asked.
 
+## Voice and positioning
+
+This is the editorial and brand register for every piece of copy on the
+site — hero, pages, journal, form microcopy, metadata. Read before
+writing a sentence.
+
+### Who we are
+
+Hawazine is a Marrakech medina real estate agency with editorial
+authority. We are not a portal. We are not a samsar. We are not a
+branch of a French luxury network parachuted into the souks.
+
+We are inside the medina — by history, by residency, by the work of
+actually reading the titles, walking the derbs, and understanding what
+a house here has been through before it became available.
+
+We write about the medina the way Monocle writes about cities — with
+intelligence, specificity, and genuine affection. The writing is not
+content marketing. It is the work itself.
+
+### The voice
+
+- **The Empress, not the Fool.** Warm, grounded, unhurried. We do not
+  chase. We do not perform. We hold the knowledge and offer it plainly
+  to people who are ready to receive it.
+- **The Oracle.** We see patterns. We state them without promising
+  outcomes. We give buyers the data and the context to think clearly
+  — and we trust them to draw their own conclusions.
+- **Monocle register, not Barnes register.** Barnes writes brochures.
+  Monocle writes about the world. We write about the medina — its
+  quarters, its titles, its prices, its buildings, its people. The
+  properties we sell are part of that world, not the other way around.
+- **Authentic Moroccan warmth, not performed hospitality.** There is a
+  difference between the mint tea that appears before you have sat
+  down in a tourist shop and the tea a family makes you when you come
+  to look at their house. We are the second kind.
+- **Authority without aggression.** We do not argue. We do not need
+  to. We state what we know with enough precision that the alternative
+  — the portal listing, the unqualified agent, the uninformed offer —
+  reveals itself as insufficient.
+
+### What we do not do
+
+- We do not announce our credentials. The work speaks.
+- We do not say "nestled", "discover", "journey", "unlock", "luxury
+  living", or "investment opportunity".
+- We do not keep ourselves small out of false modesty.
+- We do not inflate ourselves with borrowed prestige.
+- We do not use humour — the buyers are serious, the transactions are
+  complex, the stakes are real.
+- We do not list every neighbourhood in every sentence — we speak of
+  the medina as a whole.
+
+### What we write
+
+- **The Medina** — the place itself. A quarter, a street, a building.
+  Written mid-scene, present tense, from inside.
+- **The Market** — price, pattern, structure. What the data actually
+  shows. The Oracle register. Dense, honest, no promises.
+- **The House** — a portrait of a single property. Not a listing
+  description. A history.
+- **The Record** — one observation, one paragraph. Published when
+  something is worth noting.
+
+(These are the `JournalFormat` slugs in `lib/types.ts`: `the-medina`,
+`the-market`, `the-house`, `the-record`.)
+
+### The positioning
+
+We are building toward becoming the authoritative English-language
+intelligence source on Marrakech medina real estate — and eventually
+Moroccan property more broadly. The agency is the first expression of
+that authority. The editorial is the proof of it. The data layer comes
+next.
+
+We do not need to say any of this on the site. We simply need to be it.
+
 ## Rules copied forward from the brief
 
 - Ship complete replacement files when editing; no partial diffs in

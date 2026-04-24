@@ -1,7 +1,7 @@
 # Hawazine
 
 The Hawazine website — a Next.js 14 App Router project, deployed to Vercel.
-Editorial publication for a licensed Marrakech-medina real estate agency.
+Editorial publication for a Marrakech-medina real estate agency.
 
 ## Stack
 
@@ -99,8 +99,6 @@ npm run typecheck  # tsc --noEmit
 
 ## Operational notes
 
-- **Mouad's carte professionnelle number** is a TK placeholder in `lib/site.ts`.
-  Replace before the site goes live.
 - **Demo Cloudinary URLs** (`res.cloudinary.com/demo/...`) are used throughout
   the content modules so the scaffold renders without setup. Replace with real
   photography before launch.

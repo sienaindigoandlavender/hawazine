@@ -13,8 +13,8 @@ export default function HomePage() {
     <>
       <EditorialHero
         kicker="Hawazine — Marrakech"
-        title="An agency that writes about the medina, and happens to sell houses in it."
-        subtitle="Riads, dars, and land in Laksour and Mouassine. Chosen slowly, on melkia or titre foncier, held to a standard worth defending."
+        title="Houses the medina keeps to itself."
+        subtitle="Riads, dars, and land, quarter by quarter, at the medina's pace."
       />
 
       <section className="mx-auto max-w-page px-6 py-8 md:py-16">
