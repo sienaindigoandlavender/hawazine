@@ -1,4 +1,16 @@
 import type { JournalEntry, JournalFormat } from "@/lib/types";
+import { getSupabaseClient } from "@/lib/supabase";
+
+// Journal content is the one piece of site data stored in Supabase —
+// specifically so Cloudinary image URLs can be pasted via Supabase Studio
+// rather than committed to the repo. Glossary, The Index, Properties,
+// Quarters, and Pages remain flat files in lib/content/.
+//
+// Fallback contract: when Supabase env vars are missing, every getter
+// returns an empty result. Pages must render their empty-state paths
+// without crashing.
+
+const TABLE = "journal_entries";
 
 export const JOURNAL_FORMATS: readonly JournalFormat[] = [
   "the-medina",
@@ -7,48 +19,74 @@ export const JOURNAL_FORMATS: readonly JournalFormat[] = [
   "the-record",
 ] as const;
 
-export const JOURNAL_FORMAT_LABEL: Record<JournalFormat, string> = {
-  "the-medina": "The Medina",
-  "the-market": "The Market",
-  "the-house": "The House",
-  "the-record": "The Record",
-};
+const FORMAT_SET = new Set<string>(JOURNAL_FORMATS);
 
-export const JOURNAL_FORMAT_DESCRIPTION: Record<JournalFormat, string> = {
-  "the-medina": "A street, a quarter, a derb. Written from inside.",
-  "the-market": "Price, pattern, structure. What the data shows.",
-  "the-house": "A portrait of a single property. Not a listing.",
-  "the-record": "One fact. One paragraph. Published when it matters.",
-};
-
-export function formatLabel(format: JournalFormat): string {
-  return JOURNAL_FORMAT_LABEL[format];
+function coerceFormat(value: unknown): JournalFormat | undefined {
+  if (typeof value !== "string") return undefined;
+  return FORMAT_SET.has(value) ? (value as JournalFormat) : undefined;
 }
 
-// Scaffold-empty: Journal is not launching with editorial content. Entries
-// arrive when there is something actually worth publishing under one of the
-// four formats (the-medina / the-market / the-house / the-record).
-export const journalEntries: JournalEntry[] = [];
-
-export function getPublishedJournalEntries(): JournalEntry[] {
-  return [...journalEntries]
-    .filter((j) => j.published)
-    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+interface JournalRow {
+  slug: string;
+  title: string;
+  subtitle: string | null;
+  body_markdown: string;
+  hero_image_url: string | null;
+  hero_image_alt: string | null;
+  published_at: string;
+  published: boolean;
+  format: string | null;
 }
 
-export function getJournalEntryBySlug(slug: string): JournalEntry | undefined {
-  return journalEntries.find((j) => j.slug === slug && j.published);
+function rowToEntry(row: JournalRow): JournalEntry {
+  return {
+    slug: row.slug,
+    title: row.title,
+    subtitle: row.subtitle ?? undefined,
+    bodyMarkdown: row.body_markdown,
+    heroImageUrl: row.hero_image_url ?? undefined,
+    heroImageAlt: row.hero_image_alt ?? undefined,
+    publishedAt: row.published_at,
+    published: row.published,
+    format: coerceFormat(row.format),
+  };
 }
 
-export function getJournalEntriesByFormat(
-  format: JournalFormat,
-  limit = 2,
-): JournalEntry[] {
-  return getPublishedJournalEntries()
-    .filter((e) => e.format === format)
-    .slice(0, limit);
+export async function getPublishedJournalEntries(): Promise<JournalEntry[]> {
+  const supabase = getSupabaseClient();
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from(TABLE)
+    .select("*")
+    .eq("published", true)
+    .order("published_at", { ascending: false });
+
+  if (error) {
+    console.error("[journal] Supabase fetch error:", error);
+    return [];
+  }
+
+  return (data as JournalRow[]).map(rowToEntry);
 }
 
-export function getUnformattedJournalEntries(): JournalEntry[] {
-  return getPublishedJournalEntries().filter((e) => !e.format);
+export async function getJournalEntryBySlug(
+  slug: string,
+): Promise<JournalEntry | undefined> {
+  const supabase = getSupabaseClient();
+  if (!supabase) return undefined;
+
+  const { data, error } = await supabase
+    .from(TABLE)
+    .select("*")
+    .eq("slug", slug)
+    .eq("published", true)
+    .maybeSingle();
+
+  if (error) {
+    console.error("[journal] Supabase fetch error:", error);
+    return undefined;
+  }
+
+  return data ? rowToEntry(data as JournalRow) : undefined;
 }

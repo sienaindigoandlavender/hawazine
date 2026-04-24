@@ -26,7 +26,7 @@ const STATIC_ROUTES = [
   "/privacy",
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   const base = siteConfig.url;
 
@@ -51,7 +51,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const journalEntries = getPublishedJournalEntries().map((j) => ({
+  const journalEntries = (await getPublishedJournalEntries()).map((j) => ({
     url: safeSitemapUrl(base, `/journal/${j.slug}`),
     lastModified: new Date(j.publishedAt),
     changeFrequency: "yearly" as const,
