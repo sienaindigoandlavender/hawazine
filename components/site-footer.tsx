@@ -64,8 +64,13 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-page px-6 py-6 font-ui text-meta text-paper/40">
-        &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+      <div className="mx-auto max-w-page border-t border-paper/10 px-6 py-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between font-ui text-meta text-paper/40">
+        <span>&copy; 2026 Hawazine. All rights reserved.</span>
+        <nav className="flex gap-6">
+          <Link href="/disclaimer" className="hover:text-paper/70 transition-colors">Disclaimer</Link>
+          <Link href="/terms" className="hover:text-paper/70 transition-colors">Terms</Link>
+          <Link href="/privacy" className="hover:text-paper/70 transition-colors">Privacy</Link>
+        </nav>
       </div>
     </footer>
   );
