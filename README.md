@@ -136,6 +136,15 @@ npm run typecheck  # tsc --noEmit
   hour without a redeploy. If the Supabase env vars are unset, the
   Journal renders its empty state — the site degrades rather than
   crashing.
+- **Journal placeholder seed.** `supabase/journal-placeholder-seed.sql`
+  inserts three lorem-ipsum entries with Unsplash hero images
+  (`placeholder-on-tadelakt`, `placeholder-laksour-morning`,
+  `placeholder-on-the-market`) used to exercise the Journal UI during
+  the build. Drop them once real content lands: set `published = false`
+  in Supabase Studio to hide them, or `DELETE FROM journal_entries
+  WHERE slug LIKE 'placeholder-%'` to remove them entirely. No code
+  change needed on removal. `images.unsplash.com` is allow-listed in
+  `next.config.mjs` for the placeholder hero URLs.
 
 ## Layout pass — April 2026
 

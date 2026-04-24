@@ -1,7 +1,13 @@
 import Link from "next/link";
 import { EditorialHero } from "@/components/editorial-hero";
+import { JournalPreview } from "@/components/journal-preview";
+import { getPublishedJournalEntries } from "@/lib/content/journal";
 
-export default function HomePage() {
+export const revalidate = 3600;
+
+export default async function HomePage() {
+  const journalEntries = (await getPublishedJournalEntries()).slice(0, 3);
+
   return (
     <>
       <EditorialHero
@@ -80,6 +86,29 @@ export default function HomePage() {
           ground before they stand on it.
         </p>
       </section>
+
+      {journalEntries.length > 0 && (
+        <section className="mx-auto max-w-page px-6 py-16 md:py-24">
+          <div className="flex items-baseline justify-between gap-6">
+            <p className="font-sans text-meta uppercase tracking-[0.18em] text-quiet">
+              From the Journal
+            </p>
+            <Link
+              href="/journal"
+              className="font-sans text-meta uppercase tracking-[0.18em] text-quiet transition-colors hover:text-accent"
+            >
+              Read all entries →
+            </Link>
+          </div>
+          <ul className="mt-8 border-t border-rule">
+            {journalEntries.map((entry) => (
+              <li key={entry.slug}>
+                <JournalPreview entry={entry} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
     </>
   );
 }
