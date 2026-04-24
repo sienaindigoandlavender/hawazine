@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { IndexSearch } from "@/components/index-search";
+import { ReferenceSearch } from "@/components/reference-search";
 import { siteConfig } from "@/lib/site";
 import {
   getIndexEntriesByCategory,
@@ -69,7 +69,12 @@ export default function BuyingIndexPage() {
         </p>
       </header>
 
-      <IndexSearch corpus={corpus}>
+      <ReferenceSearch
+        corpus={corpus}
+        mode="unified"
+        placeholder="Search the Index and Glossary…"
+        ariaLabel="Search the Index and Glossary"
+      >
         <div className="mx-auto max-w-page px-6 pb-16 md:pb-24">
           {indexCategories.map((cat) => {
             const entries = getIndexEntriesByCategory(cat.slug);
@@ -121,7 +126,7 @@ export default function BuyingIndexPage() {
             );
           })}
         </div>
-      </IndexSearch>
+      </ReferenceSearch>
 
       <section className="mx-auto max-w-page border-t border-rule px-6 py-10">
         <p className="max-w-reading font-serif text-body text-ink-soft">
