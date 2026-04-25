@@ -1,7 +1,8 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fraunces, IBM_Plex_Sans } from "next/font/google";
 import { siteConfig } from "@/lib/site";
+import { buildOrganizationJsonLd, buildWebSiteJsonLd, SEO_KEYWORDS } from "@/lib/seo";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { GoogleAnalytics } from "@/components/google-analytics";
@@ -27,12 +28,19 @@ export const metadata: Metadata = {
     template: `%s — ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  category: "real estate",
+  keywords: [...SEO_KEYWORDS.base],
   openGraph: {
     type: "website",
     siteName: siteConfig.name,
     url: siteConfig.url,
     title: `${siteConfig.name} — ${siteConfig.tagline}`,
     description: siteConfig.description,
+    locale: siteConfig.locale,
   },
   twitter: {
     card: "summary_large_image",
@@ -42,19 +50,27 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "RealEstateAgent",
-  name: siteConfig.name,
-  url: siteConfig.url,
-  description: siteConfig.description,
-  email: siteConfig.email,
-  areaServed: [
-    { "@type": "City", name: "Marrakech" },
-    { "@type": "Country", name: "Morocco" },
-  ],
+export const viewport: Viewport = {
+  themeColor: "#FFFFFF",
+  colorScheme: "light",
 };
 
 export default function RootLayout({
@@ -62,13 +78,22 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const organizationJsonLd = buildOrganizationJsonLd();
+  const websiteJsonLd = buildWebSiteJsonLd();
+
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
+    <html lang={siteConfig.language} className={`${serif.variable} ${sans.variable}`}>
       <body className="min-h-screen bg-paper text-ink antialiased">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(organizationJsonLd),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteJsonLd),
           }}
         />
         <SiteHeader />

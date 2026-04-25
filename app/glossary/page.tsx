@@ -11,11 +11,13 @@ import { siteConfig } from "@/lib/site";
 import { buildGlossaryJsonLd } from "@/lib/glossary-schema";
 import { ReferenceSearch } from "@/components/reference-search";
 import { buildGlossaryCorpus } from "@/lib/search";
+import { absoluteUrl, buildBreadcrumbJsonLd, SEO_KEYWORDS } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Glossary — Moroccan property, architecture & craft terminology",
   description:
     "A reference glossary of the vocabulary foreign buyers encounter when purchasing property in Morocco. Legal, architectural, and craft terms defined plainly.",
+  keywords: [...SEO_KEYWORDS.base, ...SEO_KEYWORDS.glossary],
   alternates: { canonical: "/glossary" },
   openGraph: {
     title: "Hawazine Glossary",
@@ -59,11 +61,20 @@ export default function GlossaryPage() {
   const jsonLd = buildGlossaryJsonLd(siteConfig.url);
   const corpus = buildGlossaryCorpus();
 
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Glossary", path: "/glossary" },
+  ]);
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       <header className="mx-auto max-w-page px-6 pt-16 pb-4 md:pt-24 md:pb-6">
@@ -216,6 +227,9 @@ export default function GlossaryPage() {
             </li>
             <li>
               <code className="font-mono text-ink">/api/glossary?category=legal-title</code> — filter by category
+            </li>
+            <li>
+              <code className="font-mono text-ink">/llms.txt</code> — site-wide LLM discovery file
             </li>
           </ul>
         </div>

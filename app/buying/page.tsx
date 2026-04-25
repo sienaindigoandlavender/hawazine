@@ -9,11 +9,13 @@ import {
   indexEntries,
 } from "@/lib/content/the-index";
 import { buildSearchCorpus } from "@/lib/search";
+import { absoluteUrl, buildBreadcrumbJsonLd, SEO_KEYWORDS } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Buying a Riad in Morocco — The Index",
   description:
     "A reference for foreign buyers. Legal, procedural, and financial questions about buying property in Morocco, answered plainly.",
+  keywords: [...SEO_KEYWORDS.base, ...SEO_KEYWORDS.buying],
   alternates: { canonical: "/buying" },
   openGraph: {
     title: "The Index — Buying a Riad in Morocco",
@@ -36,8 +38,73 @@ export default function BuyingIndexPage() {
   const mostRecent = getMostRecentIndexUpdate();
   const corpus = buildSearchCorpus();
 
+  const collectionJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${absoluteUrl("/buying")}#collection`,
+    name: "Buying a Riad in Morocco — The Index",
+    alternateName: "The Index",
+    description:
+      "A reference for foreign buyers. Legal, procedural, and financial questions about buying property in Morocco, answered plainly.",
+    url: absoluteUrl("/buying"),
+    inLanguage: siteConfig.language,
+    isPartOf: { "@id": `${siteConfig.url}#website` },
+    publisher: { "@id": `${siteConfig.url}#organization` },
+    dateModified: mostRecent,
+    about: {
+      "@type": "Thing",
+      name: "Buying property in Morocco",
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListOrder: "https://schema.org/ItemListUnordered",
+      numberOfItems: indexEntries.length,
+      itemListElement: indexEntries.map((entry, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: absoluteUrl(`/buying/${entry.slug}`),
+        name: entry.question,
+      })),
+    },
+  };
+
+  // FAQ JSON-LD across the whole index — answer engines pull from this
+  // routinely. Keep the answer text grounded in `preview` (not the full
+  // body) to match what gets surfaced as a one-shot answer.
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: indexEntries.map((entry) => ({
+      "@type": "Question",
+      name: entry.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: entry.preview,
+        url: absoluteUrl(`/buying/${entry.slug}`),
+      },
+    })),
+  };
+
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Buying", path: "/buying" },
+  ]);
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       <header className="mx-auto max-w-page px-6 pt-16 pb-4 md:pt-24 md:pb-6">
         <p className="font-sans text-meta uppercase tracking-[0.18em] text-quiet">
           Reference

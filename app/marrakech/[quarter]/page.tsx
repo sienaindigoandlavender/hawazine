@@ -8,6 +8,8 @@ import {
   getPublishedQuarters,
   getQuarterBySlug,
 } from "@/lib/content/quarters";
+import { getPropertiesByQuarter } from "@/lib/content/properties";
+import { absoluteUrl, buildBreadcrumbJsonLd, SEO_KEYWORDS } from "@/lib/seo";
 
 const QuarterMap = dynamic(
   () => import("@/components/quarter-map").then((m) => m.QuarterMap),
@@ -22,7 +24,6 @@ const QuarterMap = dynamic(
     ),
   },
 );
-import { getPropertiesByQuarter } from "@/lib/content/properties";
 
 interface Params {
   params: { quarter: string };
@@ -35,10 +36,28 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: Params): Metadata {
   const quarter = getQuarterBySlug(params.quarter);
   if (!quarter) return {};
+  const seoTitle = `${quarter.name} — Marrakech medina quarter`;
+  const description =
+    quarter.subtitle ??
+    `${quarter.name}: a quarter of the Marrakech medina, profiled for property buyers.`;
   return {
-    title: quarter.name,
-    description: quarter.subtitle,
+    title: seoTitle,
+    description,
+    keywords: [
+      ...SEO_KEYWORDS.base,
+      `${quarter.name} Marrakech`,
+      `${quarter.name} riad`,
+      `${quarter.name} property`,
+      "Marrakech medina quarters",
+    ],
     alternates: { canonical: `/marrakech/${quarter.slug}` },
+    openGraph: {
+      type: "article",
+      title: seoTitle,
+      description,
+      url: absoluteUrl(`/marrakech/${quarter.slug}`),
+      images: quarter.heroImageUrl ? [quarter.heroImageUrl] : undefined,
+    },
   };
 }
 
@@ -48,8 +67,48 @@ export default function QuarterPage({ params }: Params) {
 
   const properties = getPropertiesByQuarter(quarter.slug);
 
+  const placeJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Place",
+    "@id": `${absoluteUrl(`/marrakech/${quarter.slug}`)}#place`,
+    name: quarter.name,
+    alternateName: `${quarter.name}, Marrakech medina`,
+    description: quarter.subtitle ?? quarter.essay.slice(0, 280),
+    url: absoluteUrl(`/marrakech/${quarter.slug}`),
+    image: quarter.heroImageUrl,
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: quarter.mapCenter.lat,
+      longitude: quarter.mapCenter.lng,
+    },
+    containedInPlace: {
+      "@type": "Place",
+      name: "Marrakech medina",
+      containedInPlace: {
+        "@type": "City",
+        name: "Marrakech",
+        containedInPlace: { "@type": "Country", name: "Morocco" },
+      },
+    },
+  };
+
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Marrakech", path: "/marrakech" },
+    { name: quarter.name, path: `/marrakech/${quarter.slug}` },
+  ]);
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(placeJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       <EditorialHero
         kicker={`Marrakech — the medina`}
         title={quarter.name}
