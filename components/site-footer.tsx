@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Script from "next/script";
 import { siteConfig } from "@/lib/site";
 import { NewsletterForm } from "@/components/newsletter-form";
 
@@ -75,6 +76,18 @@ export function SiteFooter() {
           </ul>
         </nav>
       </div>
+
+      <div className="mx-auto max-w-page border-t border-paper/10 px-6 py-5 flex justify-center md:justify-start">
+        <div
+          className="elfsight-app-90709076-65f3-443c-8cee-5041f5884859"
+          data-elfsight-app-lazy
+        />
+      </div>
+
+      <Script
+        src="https://elfsightcdn.com/platform.js"
+        strategy="lazyOnload"
+      />
     </footer>
   );
 }
