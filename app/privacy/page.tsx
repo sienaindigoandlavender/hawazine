@@ -15,7 +15,7 @@ export default function PrivacyPage() {
       <h2>Analytics</h2>
       <p>This site uses Google Analytics to understand how visitors use it. Google Analytics collects anonymised data including pages visited, time on site, and approximate location. No personally identifiable information is shared with Google. You may opt out via your browser settings or a GA opt-out extension.</p>
       <h2>Cookies</h2>
-      <p>Google Analytics sets cookies in your browser. No other cookies are set by this site. You may disable cookies in your browser at any time.</p>
+      <p>Google Analytics sets cookies in your browser. The site footer also loads a translation widget from Elfsight, which may set its own cookies to remember your selected language. No other cookies are set by this site. You may disable cookies in your browser at any time.</p>
       <h2>Data retention</h2>
       <p>Contact form submissions are retained for as long as necessary to handle your enquiry and no longer. We do not sell or share your data with third parties.</p>
       <h2>Your rights</h2>
