@@ -50,6 +50,12 @@ Supabase-backed content:
   are treated as unset so seeded entries degrade to prose-only until real
   Cloudinary URLs land in Supabase Studio. Position is fixed across
   entries by editorial decision — do not make it data-driven.
+- Image prompts: `hero_image_prompt` and `inline_image_{1,2}_prompt`
+  carry the MJ prompt strings used to generate each image. They round
+  trip through `JournalEntry` (`heroImagePrompt`, `inlineImage{1,2}Prompt`)
+  so internal tooling could surface them later, but they are **never**
+  rendered on the public entry page — they exist for the editorial
+  workflow inside Supabase Studio only.
 
 Types are in `lib/types.ts`. Flat-file lists have a `published` flag;
 filter with the `getPublished…` helpers, never use the raw arrays in

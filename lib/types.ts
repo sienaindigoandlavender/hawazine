@@ -82,10 +82,13 @@ export interface JournalEntry {
   bodyMarkdown: string;
   heroImageUrl?: string;
   heroImageAlt?: string;
+  heroImagePrompt?: string;
   inlineImage1Url?: string;
   inlineImage1Alt?: string;
+  inlineImage1Prompt?: string;
   inlineImage2Url?: string;
   inlineImage2Alt?: string;
+  inlineImage2Prompt?: string;
   publishedAt: string;
   published: boolean;
   format?: JournalFormat;
