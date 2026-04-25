@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { Components } from "react-markdown";
 
-const components: Components = {
+const baseComponents: Components = {
   a({ href, children, ...rest }) {
     if (href && href.startsWith("/")) {
       return (
@@ -23,13 +23,18 @@ const components: Components = {
 export function EssayBody({
   markdown,
   className,
+  components,
 }: {
   markdown: string;
   className?: string;
+  components?: Partial<Components>;
 }) {
+  const merged: Components = components
+    ? { ...baseComponents, ...components }
+    : baseComponents;
   return (
     <div className={`prose-hawazine mx-auto${className ? ` ${className}` : ""}`}>
-      <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
+      <ReactMarkdown remarkPlugins={[remarkGfm]} components={merged}>
         {markdown}
       </ReactMarkdown>
     </div>

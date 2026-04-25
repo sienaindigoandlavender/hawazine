@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Components } from "react-markdown";
 import { EssayBody } from "@/components/essay-body";
 import { JournalEntryHeader } from "@/components/journal-entry-header";
 import {
   getJournalEntryBySlug,
   getPublishedJournalEntries,
+  injectInlineImages,
 } from "@/lib/content/journal";
 import { siteConfig } from "@/lib/site";
 
@@ -38,9 +40,46 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   };
 }
 
+// Inline images come in via injectInlineImages as bare ![alt](url) markdown.
+// react-markdown wraps them in <p>, which is invalid HTML once we render the
+// image as a <figure>. The `p` override unwraps paragraphs whose only child
+// is an image so the figure renders at top level.
+const journalMarkdownComponents: Partial<Components> = {
+  p({ node, children }) {
+    const onlyChild =
+      node?.children?.length === 1 &&
+      "tagName" in node.children[0] &&
+      node.children[0].tagName === "img";
+    if (onlyChild) {
+      return <>{children}</>;
+    }
+    return <p>{children}</p>;
+  },
+  img({ src, alt }) {
+    if (!src) return null;
+    return (
+      <figure className="my-8 md:my-12">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={src}
+          alt={alt ?? ""}
+          className="h-auto w-full object-contain"
+        />
+        {alt && (
+          <figcaption className="mt-3 text-center font-sans text-meta italic text-quiet">
+            {alt}
+          </figcaption>
+        )}
+      </figure>
+    );
+  },
+};
+
 export default async function JournalEntryPage({ params }: Params) {
   const entry = await getJournalEntryBySlug(params.slug);
   if (!entry) notFound();
+
+  const processedBody = injectInlineImages(entry);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -85,8 +124,9 @@ export default async function JournalEntryPage({ params }: Params) {
 
       <section className="mx-auto max-w-page px-6">
         <EssayBody
-          markdown={entry.bodyMarkdown}
+          markdown={processedBody}
           className="prose-hawazine-lead"
+          components={journalMarkdownComponents}
         />
       </section>
 
