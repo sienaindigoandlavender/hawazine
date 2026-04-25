@@ -284,12 +284,10 @@ We do not need to say any of this on the site. We simply need to be it.
   partner logo walls.
 - No carousel on property pages — gallery is an arrow-navigable horizontal
   scroll with scrollbars hidden (`.no-scrollbar`).
-- Translation widget: an Elfsight Website Translator is mounted at the
-  bottom of `site-footer.tsx` (script via `next/script` with
-  `strategy="lazyOnload"`). The earlier "no in-site translation widget"
-  rule was reversed in April 2026 — most Marrakech-medina buyers read
-  French, sometimes Spanish, and the editorial-only English position was
-  costing reach. First attempt rendered a Share Buttons UI under the
-  same widget ID; current mount assumes the dashboard side has been
-  reconfigured to a Translator app. `/privacy` discloses the Elfsight
-  cookie. Remove if it doesn't earn its keep.
+- Translation widget: the intent stands — most Marrakech-medina buyers
+  read French, sometimes Spanish — but the Elfsight widget ID
+  `90709076-65f3-443c-8cee-5041f5884859` we tried twice in April 2026
+  is a Share Buttons app on Elfsight's side, not a Translator. Re-add
+  with a *different* widget ID once a Website Translator (dropdown
+  variant) is created in the Elfsight dashboard. Hand-curated `/fr`
+  and `/es` routes are an alternative worth weighing.
