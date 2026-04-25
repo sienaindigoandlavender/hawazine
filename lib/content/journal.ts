@@ -26,6 +26,10 @@ function coerceFormat(value: unknown): JournalFormat | undefined {
   return FORMAT_SET.has(value) ? (value as JournalFormat) : undefined;
 }
 
+// hero_image_prompt + inline_image_{1,2}_prompt are stored for editorial
+// workflow (copy → paste into MJ → regenerate) and round-tripped through
+// the type so a future feature could surface them in an internal tool —
+// they are never rendered on the public entry page.
 interface JournalRow {
   slug: string;
   title: string;
@@ -33,10 +37,13 @@ interface JournalRow {
   body_markdown: string;
   hero_image_url: string | null;
   hero_image_alt: string | null;
+  hero_image_prompt: string | null;
   inline_image_1_url: string | null;
   inline_image_1_alt: string | null;
+  inline_image_1_prompt: string | null;
   inline_image_2_url: string | null;
   inline_image_2_alt: string | null;
+  inline_image_2_prompt: string | null;
   published_at: string;
   published: boolean;
   format: string | null;
@@ -50,10 +57,13 @@ function rowToEntry(row: JournalRow): JournalEntry {
     bodyMarkdown: row.body_markdown,
     heroImageUrl: row.hero_image_url ?? undefined,
     heroImageAlt: row.hero_image_alt ?? undefined,
+    heroImagePrompt: row.hero_image_prompt ?? undefined,
     inlineImage1Url: row.inline_image_1_url ?? undefined,
     inlineImage1Alt: row.inline_image_1_alt ?? undefined,
+    inlineImage1Prompt: row.inline_image_1_prompt ?? undefined,
     inlineImage2Url: row.inline_image_2_url ?? undefined,
     inlineImage2Alt: row.inline_image_2_alt ?? undefined,
+    inlineImage2Prompt: row.inline_image_2_prompt ?? undefined,
     publishedAt: row.published_at,
     published: row.published,
     format: coerceFormat(row.format),
