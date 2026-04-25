@@ -133,17 +133,15 @@ export default async function JournalEntryPage({ params }: Params) {
       <JournalEntryHeader entry={entry} />
 
       {entry.heroImageUrl && (
-        <div className="mx-auto max-w-page px-6 mb-16 md:mb-20">
-          <div className="relative aspect-[16/9] w-full overflow-hidden bg-ink/5">
-            <Image
-              src={entry.heroImageUrl}
-              alt={entry.heroImageAlt ?? entry.title}
-              fill
-              sizes="(min-width: 1200px) 1200px, 100vw"
-              priority
-              className="object-cover"
-            />
-          </div>
+        <div className="relative aspect-[16/9] w-full overflow-hidden bg-ink/5 mb-16 md:mb-20 md:aspect-[2.2/1]">
+          <Image
+            src={entry.heroImageUrl}
+            alt={entry.heroImageAlt ?? entry.title}
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover"
+          />
         </div>
       )}
 
