@@ -4,12 +4,28 @@ import { PropertyCard } from "@/components/property-card";
 import { PropertyFeatured } from "@/components/property-featured";
 import { getPublishedProperties } from "@/lib/content/properties";
 import type { Property } from "@/lib/types";
+import { siteConfig } from "@/lib/site";
+import { absoluteUrl, buildBreadcrumbJsonLd, SEO_KEYWORDS } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Properties",
+  title: "Properties — riads, dars, and land in the Marrakech medina",
   description:
     "Riads, dars, and land in the Marrakech medina and beyond. Each property considered, verified, and presented with the information a serious buyer needs.",
+  keywords: [
+    ...SEO_KEYWORDS.base,
+    "riad for sale Marrakech",
+    "dar for sale Marrakech",
+    "land for sale Marrakech",
+    "Marrakech medina property listings",
+  ],
   alternates: { canonical: "/properties" },
+  openGraph: {
+    type: "website",
+    title: "Properties — riads, dars, and land in the Marrakech medina",
+    description:
+      "Riads, dars, and land in the Marrakech medina and beyond.",
+    url: absoluteUrl("/properties"),
+  },
 };
 
 function formatDate(iso: string): string {
@@ -42,8 +58,47 @@ export default function PropertiesIndex() {
     undefined,
   );
 
+  const collectionJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${absoluteUrl("/properties")}#collection`,
+    name: "Properties — Hawazine",
+    description:
+      "Riads, dars, and land currently represented by Hawazine in the Marrakech medina.",
+    url: absoluteUrl("/properties"),
+    inLanguage: siteConfig.language,
+    isPartOf: { "@id": `${siteConfig.url}#website` },
+    publisher: { "@id": `${siteConfig.url}#organization` },
+    ...(mostRecent && { dateModified: mostRecent }),
+    mainEntity: {
+      "@type": "ItemList",
+      itemListOrder: "https://schema.org/ItemListOrderDescending",
+      numberOfItems: properties.length,
+      itemListElement: properties.map((p, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: absoluteUrl(`/properties/${p.slug}`),
+        name: p.title,
+      })),
+    },
+  };
+
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Properties", path: "/properties" },
+  ]);
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       <header className="mx-auto max-w-page px-6 pt-16 pb-16 md:pt-24">
         <p className="font-sans text-meta uppercase tracking-[0.18em] text-quiet">
           Properties

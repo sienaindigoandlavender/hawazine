@@ -12,6 +12,7 @@ import {
 } from "@/lib/content/properties";
 import { getQuarterBySlug } from "@/lib/content/quarters";
 import { siteConfig } from "@/lib/site";
+import { absoluteUrl, buildBreadcrumbJsonLd, SEO_KEYWORDS } from "@/lib/seo";
 import {
   PROPERTY_TYPE_LABEL,
   TITLE_STATUS_LABEL,
@@ -30,14 +31,43 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: Params): Metadata {
   const property = getPropertyBySlug(params.slug);
   if (!property) return {};
+  const quarter = property.quarterSlug
+    ? getQuarterBySlug(property.quarterSlug)
+    : undefined;
+  const typeLabel = PROPERTY_TYPE_LABEL[property.propertyType];
+  const locationSuffix = quarter
+    ? `${quarter.name}, Marrakech medina`
+    : "Marrakech medina";
+  const seoTitle = `${property.title} — ${typeLabel} for sale in ${locationSuffix}`;
+  const description =
+    property.subtitle ??
+    `${typeLabel} for sale in ${locationSuffix}. ${property.conditionSummary ?? ""}`.trim();
   return {
-    title: property.title,
-    description: property.subtitle,
+    title: seoTitle,
+    description,
+    keywords: [
+      ...SEO_KEYWORDS.base,
+      `${typeLabel.toLowerCase()} for sale`,
+      quarter ? `${quarter.name} riad for sale` : "Marrakech riad for sale",
+      "buy a riad in Marrakech",
+    ],
     alternates: { canonical: `/properties/${property.slug}` },
     openGraph: {
       type: "website",
-      title: property.title,
-      description: property.subtitle,
+      title: seoTitle,
+      description,
+      url: absoluteUrl(`/properties/${property.slug}`),
+      images: [
+        {
+          url: property.heroImageUrl,
+          alt: property.heroImageAlt,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seoTitle,
+      description,
       images: [property.heroImageUrl],
     },
   };
@@ -114,15 +144,45 @@ export default function PropertyPage({ params }: Params) {
 
   const crossLinks = gatherCrossLinks(property);
 
-  const jsonLd = {
+  const additionalProperty = [
+    property.titleStatus && {
+      "@type": "PropertyValue",
+      name: "Title status",
+      value: TITLE_STATUS_LABEL[property.titleStatus],
+    },
+    property.floors && {
+      "@type": "PropertyValue",
+      name: "Floors",
+      value: property.floors,
+    },
+    typeof property.hasTerrace === "boolean" && {
+      "@type": "PropertyValue",
+      name: "Terrace",
+      value: property.hasTerrace ? "yes" : "no",
+    },
+  ].filter(Boolean);
+
+  const listingJsonLd = {
     "@context": "https://schema.org",
     "@type": "RealEstateListing",
+    "@id": `${absoluteUrl(`/properties/${property.slug}`)}#listing`,
     name: property.title,
+    headline: property.title,
     description: property.subtitle ?? property.title,
-    url: `${siteConfig.url}/properties/${property.slug}`,
-    image: property.heroImageUrl,
+    url: absoluteUrl(`/properties/${property.slug}`),
+    image: [property.heroImageUrl],
     category: PROPERTY_TYPE_LABEL[property.propertyType],
+    datePosted: property.updatedAt,
+    dateModified: property.updatedAt,
+    inLanguage: siteConfig.language,
+    isAccessibleForFree: true,
+    provider: { "@id": `${siteConfig.url}#organization` },
+    publisher: { "@id": `${siteConfig.url}#organization` },
     areaServed: quarter ? quarter.name : "Marrakech medina",
+    ...(property.bedrooms && { numberOfRooms: property.bedrooms }),
+    ...(property.bathrooms && {
+      numberOfBathroomsTotal: property.bathrooms,
+    }),
     ...(property.sizeM2 && {
       floorSize: {
         "@type": "QuantitativeValue",
@@ -135,14 +195,39 @@ export default function PropertyPage({ params }: Params) {
         "@type": "Offer",
         price: property.askingPriceDh,
         priceCurrency: "MAD",
+        url: absoluteUrl(`/properties/${property.slug}`),
+        availability: "https://schema.org/InStock",
+        seller: { "@id": `${siteConfig.url}#organization` },
       },
     }),
     address: {
       "@type": "PostalAddress",
-      addressLocality: quarter ? `${quarter.name}, Marrakech` : "Marrakech",
-      addressCountry: "MA",
+      addressLocality: quarter
+        ? `${quarter.name}, Marrakech`
+        : "Marrakech",
+      addressRegion: siteConfig.address.region,
+      addressCountry: siteConfig.address.countryCode,
     },
+    ...(quarter && {
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: quarter.mapCenter.lat,
+        longitude: quarter.mapCenter.lng,
+      },
+    }),
+    ...(additionalProperty.length > 0 && {
+      additionalProperty,
+    }),
   };
+
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Properties", path: "/properties" },
+    {
+      name: property.title,
+      path: `/properties/${property.slug}`,
+    },
+  ]);
 
   const hasDetailBlock = Boolean(
     property.titleNotes ||
@@ -157,7 +242,11 @@ export default function PropertyPage({ params }: Params) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(listingJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       <nav
