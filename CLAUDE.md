@@ -41,6 +41,15 @@ Supabase-backed content:
   table via `lib/supabase.ts`. When env vars are missing, every helper
   returns an empty result — pages must render their empty-state paths
   without crashing.
+- Inline images: each entry can carry up to two inline images
+  (`inline_image_{1,2}_{url,alt}` columns; `inlineImage{1,2}{Url,Alt}` on
+  the type). `injectInlineImages(entry)` inserts inline 1 after the third
+  paragraph and inline 2 after the seventh, splitting on `\n\n`. Bodies
+  with fewer than 4 paragraphs render no inline images; 4–7 paragraphs
+  render only inline 1; 8+ render both. URLs starting with `PLACEHOLDER_`
+  are treated as unset so seeded entries degrade to prose-only until real
+  Cloudinary URLs land in Supabase Studio. Position is fixed across
+  entries by editorial decision — do not make it data-driven.
 
 Types are in `lib/types.ts`. Flat-file lists have a `published` flag;
 filter with the `getPublished…` helpers, never use the raw arrays in
