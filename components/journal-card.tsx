@@ -25,12 +25,12 @@ export function JournalCard({ entry }: { entry: JournalEntry }) {
   return (
     <Link href={`/journal/${entry.slug}`} className="group block">
       {entry.heroImageUrl && (
-        <div className="relative aspect-[3/2] w-full overflow-hidden bg-ink/5">
+        <div className="relative aspect-[3/4] w-full overflow-hidden bg-ink/5">
           <Image
             src={entry.heroImageUrl}
             alt={entry.heroImageAlt ?? entry.title}
             fill
-            sizes="(min-width: 1024px) 50vw, 100vw"
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover"
           />
         </div>
