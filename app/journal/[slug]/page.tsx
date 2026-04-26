@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Components } from "react-markdown";
 import { EssayBody } from "@/components/essay-body";
+import { JournalEntryByline } from "@/components/journal-entry-byline";
 import { JournalEntryHeader } from "@/components/journal-entry-header";
 import {
   getJournalEntryBySlug,
@@ -133,7 +134,7 @@ export default async function JournalEntryPage({ params }: Params) {
       <JournalEntryHeader entry={entry} />
 
       {entry.heroImageUrl && (
-        <div className="relative aspect-[16/9] w-full overflow-hidden bg-ink/5 mb-16 md:mb-20 md:aspect-[2.2/1]">
+        <div className="relative aspect-[16/9] w-full overflow-hidden bg-ink/5 mb-12 md:mb-16 md:aspect-[2.2/1]">
           <Image
             src={entry.heroImageUrl}
             alt={entry.heroImageAlt ?? entry.title}
@@ -144,6 +145,8 @@ export default async function JournalEntryPage({ params }: Params) {
           />
         </div>
       )}
+
+      <JournalEntryByline entry={entry} />
 
       <section className="mx-auto max-w-page px-6">
         <EssayBody
