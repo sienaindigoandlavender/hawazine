@@ -163,18 +163,18 @@ export default async function HomePage() {
 
 const BEGIN_HERE: { href: string; label: string; blurb: string }[] = [
   {
-    href: "/marrakech",
-    label: "Marrakech",
-    blurb: "The medina and its quarters.",
+    href: "/properties",
+    label: "Buy",
+    blurb: "Riads, dars, and land currently represented.",
   },
   {
-    href: "/buying",
-    label: "Buying",
-    blurb: "How a house here changes hands.",
+    href: "/journal",
+    label: "Learn",
+    blurb: "Journal, The Index, and the Glossary.",
   },
   {
-    href: "/craft",
-    label: "Craft",
-    blurb: "Architecture, restoration, the trades.",
+    href: "/build",
+    label: "Build",
+    blurb: "Renovation done with the medina, not against it.",
   },
 ];

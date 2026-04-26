@@ -33,10 +33,10 @@ export function SiteFooter() {
             Navigate
           </p>
           <ul className="mt-4 space-y-2 font-sans text-meta text-paper/85">
-            <li><Link href="/marrakech" className="hover:text-paper">Marrakech</Link></li>
-            <li><Link href="/buying" className="hover:text-paper">Buying</Link></li>
-            <li><Link href="/craft" className="hover:text-paper">Craft</Link></li>
-            <li><Link href="/properties" className="hover:text-paper">Properties</Link></li>
+            <li><Link href="/properties" className="hover:text-paper">Buy</Link></li>
+            <li><Link href="/journal" className="hover:text-paper">Learn</Link></li>
+            <li><Link href="/build" className="hover:text-paper">Build</Link></li>
+            <li><Link href="/contact" className="hover:text-paper">Contact</Link></li>
           </ul>
         </div>
 
@@ -45,6 +45,7 @@ export function SiteFooter() {
             Reference
           </p>
           <ul className="mt-4 space-y-2 font-sans text-meta text-paper/85">
+            <li><Link href="/marrakech" className="hover:text-paper">Marrakech</Link></li>
             <li><Link href="/buying" className="hover:text-paper">The Index</Link></li>
             <li><Link href="/glossary" className="hover:text-paper">Glossary</Link></li>
             <li><Link href="/journal" className="hover:text-paper">Journal</Link></li>
