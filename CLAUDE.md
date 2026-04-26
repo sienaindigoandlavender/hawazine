@@ -87,7 +87,13 @@ Markdown bodies render through `react-markdown` + `remark-gfm` via the
   off-register for this project (reference: The Modern House — pure white
   page throughout; grey only appears as floating cards over photography).
   If a section genuinely needs visual separation, a single 1px `border-rule`
-  rule above and/or below it — never a coloured fill.
+  rule above and/or below it — never a coloured fill. **One sanctioned
+  exception (April 2026):** the "More from the Journal" strip on
+  individual journal entry pages sits on a full-width `bg-gray-100`
+  (#F3F4F6) band, marking the post-article browsing zone before the
+  dark footer. Use `gray-100` rather than `paper-deep` here — at
+  full-width scale, paper-deep's warm cast reads beige. Treat this as
+  the only such band; do not add others without a parallel decision.
 - Body prose: `ink-soft` default. Editorial prose inside `.prose-hawazine`
   reads `ink` (slightly heavier). Use `quiet` for metadata/captions only.
 
