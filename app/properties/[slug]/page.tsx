@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { QuarterMap } from "@/components/quarter-map";
 import {
   getPropertyBySlug,
   getPublishedProperties,
@@ -435,6 +436,35 @@ export default function PropertyPage({ params }: Params) {
           </Link>
         </div>
       </section>
+
+      {quarter && (
+        <section className="mx-auto max-w-page px-6 pb-16 md:pb-20">
+          <div className="mx-auto max-w-3xl border-t border-ink/15 pt-8">
+            <div className="flex flex-wrap items-baseline justify-between gap-4">
+              <p className="font-sans text-[0.6875rem] uppercase tracking-[0.24em] text-quiet">
+                Where in the medina
+              </p>
+              <Link
+                href={`/marrakech/${quarter.slug}`}
+                className="font-sans text-[0.6875rem] uppercase tracking-[0.2em] text-quiet transition-colors hover:text-accent"
+              >
+                {quarter.name} →
+              </Link>
+            </div>
+            <div className="mt-6">
+              <QuarterMap
+                activeQuarter={property.quarterSlug}
+                height="380px"
+              />
+            </div>
+            <p className="mt-3 font-sans text-meta text-quiet">
+              The property sits inside the {quarter.name} quarter. Hawazine
+              does not publish street-level locations; exact directions are
+              shared with serious enquiries.
+            </p>
+          </div>
+        </section>
+      )}
 
       {reading.length > 0 && (
         <section className="mx-auto max-w-page px-6 pb-20 md:pb-24">
