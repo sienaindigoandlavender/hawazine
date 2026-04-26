@@ -54,11 +54,14 @@ interface JournalRow {
 // for real Cloudinary URLs). Strip those at the row-mapping layer so every
 // downstream consumer — entry-page hero, featured, card, JSON-LD — sees
 // `undefined` and degrades cleanly instead of trying to render a broken
-// image.
+// image. Also trim incidental whitespace/newlines that sometimes ride
+// along when a URL is pasted from the Supabase Studio editor.
 function usable(value: string | null): string | undefined {
   if (!value) return undefined;
-  if (value.startsWith("PLACEHOLDER_")) return undefined;
-  return value;
+  const trimmed = value.trim();
+  if (!trimmed) return undefined;
+  if (trimmed.startsWith("PLACEHOLDER_")) return undefined;
+  return trimmed;
 }
 
 function rowToEntry(row: JournalRow): JournalEntry {
