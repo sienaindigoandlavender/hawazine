@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Components } from "react-markdown";
 import { EssayBody } from "@/components/essay-body";
-import { JournalEntryByline } from "@/components/journal-entry-byline";
+import {
+  JournalEntryByline,
+  JournalShareRow,
+} from "@/components/journal-entry-byline";
 import { JournalEntryHeader } from "@/components/journal-entry-header";
+import { JournalEntryNav } from "@/components/journal-entry-nav";
+import { JournalRelatedStrip } from "@/components/journal-related-strip";
 import {
   getJournalEntryBySlug,
   getPublishedJournalEntries,
@@ -91,6 +95,18 @@ export default async function JournalEntryPage({ params }: Params) {
   const entry = await getJournalEntryBySlug(params.slug);
   if (!entry) notFound();
 
+  const allEntries = await getPublishedJournalEntries();
+  const currentIndex = allEntries.findIndex((e) => e.slug === entry.slug);
+  // allEntries is ordered most-recent-first. "Previous" reads as the
+  // older neighbour (index + 1); "Next" as the newer (index - 1).
+  const previous =
+    currentIndex >= 0 ? allEntries[currentIndex + 1] : undefined;
+  const next =
+    currentIndex > 0 ? allEntries[currentIndex - 1] : undefined;
+  const related = allEntries
+    .filter((e) => e.slug !== entry.slug)
+    .slice(0, 4);
+
   const processedBody = injectInlineImages(entry);
 
   const articleJsonLd = {
@@ -156,18 +172,15 @@ export default async function JournalEntryPage({ params }: Params) {
         />
       </section>
 
-      <footer className="mx-auto max-w-page px-6 mt-24 mb-24">
-        <div className="mx-auto max-w-reading border-t border-rule pt-8 text-center">
-          <p className="font-sans text-meta">
-            <Link
-              href="/journal"
-              className="uppercase tracking-[0.2em] text-quiet transition-colors hover:text-accent"
-            >
-              ← Back to the Journal
-            </Link>
-          </p>
+      <div className="mx-auto max-w-page px-6 mt-16 md:mt-20">
+        <div className="mx-auto max-w-reading border-t border-rule pt-10">
+          <JournalShareRow entry={entry} />
         </div>
-      </footer>
+      </div>
+
+      <JournalEntryNav previous={previous} next={next} />
+
+      <JournalRelatedStrip entries={related} />
     </>
   );
 }
