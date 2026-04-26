@@ -47,7 +47,7 @@ export function PropertyCard({ property }: { property: Property }) {
           />
         )}
         {isNew(property) && (
-          <span className="absolute left-3 top-3 bg-paper px-2 py-1 font-sans text-[0.625rem] uppercase tracking-[0.18em] text-ink">
+          <span className="absolute left-2 top-2 bg-ink/35 px-2 py-1 font-sans text-[0.625rem] uppercase tracking-[0.18em] text-paper backdrop-blur-sm">
             New
           </span>
         )}
