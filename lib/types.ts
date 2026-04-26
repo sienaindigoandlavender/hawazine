@@ -1,10 +1,25 @@
-export type TitleStatus =
-  | "melkia"
-  | "titre_foncier"
-  | "requisition"
-  | "melkia_in_process";
+export type TitleStatus = "melkia" | "titre_foncier" | "requisition" | "mixed";
 
-export type PropertyType = "riad" | "land" | "dar" | "other";
+export type PropertyType =
+  | "riad"
+  | "dar"
+  | "douaria"
+  | "fondouk"
+  | "palace"
+  | "kasbah"
+  | "land";
+
+export type Orientation = "north" | "south" | "east" | "west";
+
+export type FloorType = "carrelage" | "tadelakt" | "bejmat" | "mixed";
+
+export type PropertyStatus =
+  | "available"
+  | "under_offer"
+  | "sold"
+  | "archived";
+
+export type PropertyImagesSource = "mubawab" | "cloudinary";
 
 export interface GalleryImage {
   url: string;
@@ -42,31 +57,74 @@ export interface Quarter {
   published: boolean;
 }
 
+// Modern House Sales register property record. Stays flat-file in
+// lib/content/properties.ts. Database-only fields (id, createdAt,
+// updatedAt) are intentionally absent — git history is the audit log.
+// `featured` is a Hawazine-specific extension used by the homepage's
+// "Currently representing" pick logic; not in the underlying schema.
 export interface Property {
+  // Identity
   slug: string;
+
+  // Headline
   title: string;
-  subtitle?: string;
+  quarterSlug: string;
+  subLocation: string | null;
+  city: string;
+  priceDh: number;
+  priceEur: number | null;
+
+  // Specs
   propertyType: PropertyType;
-  quarterSlug?: string;
-  subLocation?: string;
-  sizeM2?: number;
-  bedrooms?: number;
-  bathrooms?: number;
-  floors?: number;
-  hasTerrace?: boolean;
-  titleStatus?: TitleStatus;
-  titleNotes?: string;
-  conditionSummary?: string;
-  renovationNotes?: string;
-  descriptionMarkdown: string;
-  askingPriceDh?: number;
-  priceNote?: string;
-  heroImageUrl: string;
-  heroImageAlt: string;
-  galleryImages?: GalleryImage[];
-  featured?: boolean;
+  sizeM2: number;
+  bedrooms: number | null;
+  bathrooms: number | null;
+  roomsTotal: number | null;
+  floors: number | null;
+  hasTerrace: boolean;
+  hasCourtyard: boolean;
+  hasWell: boolean;
+  orientation: Orientation | null;
+  floorType: FloorType | null;
+
+  // Heritage / legal
+  ageBracket: string | null;
+  approximateYear: string | null;
+  conditionSummary: string | null;
+  titleStatus: TitleStatus;
+  titleNotes: string | null;
+
+  // Description
+  descriptionShort: string;
+  descriptionLong: string;
+  descriptionFrench: string | null;
+
+  // Gallery
+  galleryImageUrls: string[];
+  heroImageIndex: number;
+  imagesSource: PropertyImagesSource | null;
+
+  // Geo
+  latitude: number | null;
+  longitude: number | null;
+  walkingLandmarks: string[];
+
+  // Source
+  agentName: string;
+  agentRefMubawab: string | null;
+  agentUrlMubawab: string | null;
+
+  // Cross-links
+  relatedJournalSlugs: string[];
+  relatedIndexSlugs: string[];
+
+  // Status
   published: boolean;
-  updatedAt: string;
+  publishedAt: string | null;
+  status: PropertyStatus;
+
+  // Hawazine-specific (not in the agency schema)
+  featured?: boolean;
 }
 
 export type JournalFormat =
@@ -220,12 +278,15 @@ export const TITLE_STATUS_LABEL: Record<TitleStatus, string> = {
   melkia: "Melkia",
   titre_foncier: "Titre foncier",
   requisition: "Réquisition",
-  melkia_in_process: "Melkia in process",
+  mixed: "Mixed title",
 };
 
 export const PROPERTY_TYPE_LABEL: Record<PropertyType, string> = {
   riad: "Riad",
-  land: "Land",
   dar: "Dar",
-  other: "Property",
+  douaria: "Douaria",
+  fondouk: "Fondouk",
+  palace: "Palace",
+  kasbah: "Kasbah",
+  land: "Land",
 };
