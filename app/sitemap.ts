@@ -14,7 +14,7 @@ const STATIC_ROUTES = [
   "/buying/the-process",
   "/buying/costs",
   "/buying/what-to-ask",
-  "/craft",
+  "/build",
   "/glossary",
   "/journal",
   "/properties",

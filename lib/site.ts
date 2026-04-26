@@ -54,16 +54,34 @@ export const siteConfig = {
   logoPath: "/icon.svg",
 } as const;
 
-export const primaryNav = [
-  { href: "/marrakech", label: "Marrakech" },
-  { href: "/buying", label: "Buying" },
-  { href: "/craft", label: "Craft" },
-  { href: "/properties", label: "Properties" },
-  { href: "/contact", label: "Contact" },
-] as const;
+// April 2026 nav restructure: four-verb primary (Buy / Learn / Build /
+// Contact). Secondary nav has been retired. LEARN exposes the three
+// reference / editorial destinations as a submenu. The Marrakech
+// overview sits in the footer.
+export interface NavItem {
+  href: string;
+  label: string;
+  submenu?: ReadonlyArray<{ href: string; label: string }>;
+}
 
-export const secondaryNav = [
-  { href: "/buying", label: "The Index" },
-  { href: "/glossary", label: "Glossary" },
-  { href: "/journal", label: "Journal" },
-] as const;
+export const primaryNav: ReadonlyArray<NavItem> = [
+  { href: "/properties", label: "Buy" },
+  {
+    href: "/journal",
+    label: "Learn",
+    submenu: [
+      { href: "/journal", label: "Journal" },
+      { href: "/buying", label: "The Index" },
+      { href: "/glossary", label: "Glossary" },
+    ],
+  },
+  { href: "/build", label: "Build" },
+  { href: "/contact", label: "Contact" },
+];
+
+// Reference link(s) surfaced from the site footer rather than top nav.
+// The medina overview sits here; The Index and Glossary live under the
+// LEARN submenu in the primary nav.
+export const footerReferenceNav: ReadonlyArray<NavItem> = [
+  { href: "/marrakech", label: "Marrakech" },
+];

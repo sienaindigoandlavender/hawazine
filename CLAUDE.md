@@ -87,47 +87,58 @@ Markdown bodies render through `react-markdown` + `remark-gfm` via the
   off-register for this project (reference: The Modern House — pure white
   page throughout; grey only appears as floating cards over photography).
   If a section genuinely needs visual separation, a single 1px `border-rule`
-  rule above and/or below it — never a coloured fill.
+  rule above and/or below it — never a coloured fill. **One sanctioned
+  exception (April 2026):** the "More from the Journal" strip on
+  individual journal entry pages sits on a full-width `bg-gray-100`
+  (#F3F4F6) band, marking the post-article browsing zone before the
+  dark footer. Use `gray-100` rather than `paper-deep` here — at
+  full-width scale, paper-deep's warm cast reads beige. Treat this as
+  the only such band; do not add others without a parallel decision.
 - Body prose: `ink-soft` default. Editorial prose inside `.prose-hawazine`
   reads `ink` (slightly heavier). Use `quiet` for metadata/captions only.
 
 ## Route map (April 2026 restructure)
 
-Primary nav: `Marrakech · Buying · Craft · Properties · Contact`.
-Secondary nav (smaller, quieter, reference-only): `The Index · Glossary · Journal`.
+Primary nav (April 2026 four-verb restructure):
+`Buy · Learn · Build · Contact`.
 
-**Buying and The Index are the same destination.** Primary nav calls it
-"Buying" (commercial framing); secondary nav calls it "The Index"
-(reference framing). Both link to `/buying`. Individual reference entries
-live at `/buying/<slug>`. There is no `/the-index` route — a short-lived
-attempt was removed in favour of the dual-label pattern.
+- `Buy` → `/properties`
+- `Learn` → `/journal`, with a hover/focus dropdown that exposes the
+  three editorial / reference destinations: **Journal**, **The Index**
+  (`/buying`), **Glossary**.
+- `Build` → `/build` — the renovation-practice page (replaces the
+  earlier `/craft` scaffold).
+- `Contact` → `/contact`.
 
-- `/marrakech` — the medina overview + quarter cards + interactive map
-- `/marrakech/[quarter]` — per-quarter page; map highlights that quarter
-- `/buying` — The Index landing. Lists questions by category, sourced from
-  `lib/content/the-index.ts`. Accessed as "Buying" from primary nav and
-  "The Index" from secondary nav (same destination, two doors).
-- `/buying/[slug]` — individual Index entries, driven by `indexEntries` and
-  rendered through `app/buying/[slug]/page.tsx`. Emits FAQPage or Article
-  JSON-LD based on body length. `generateStaticParams` pre-renders every
-  entry at build.
+There is no separate secondary nav; the previous secondary destinations
+fold into the LEARN dropdown. The Marrakech overview is reachable from
+the site footer's Reference column.
+
+**Buying and The Index are still the same destination.** The route is
+`/buying`; nav exposes it labelled "The Index" inside the LEARN
+dropdown. Individual reference entries live at `/buying/<slug>`.
+
+- `/marrakech` — the medina overview + quarter cards + interactive map.
+  No longer in primary nav; reachable from footer Reference.
+- `/marrakech/[quarter]` — per-quarter page; map highlights that quarter.
+- `/buying` — The Index landing. Reached as "The Index" inside LEARN.
+- `/buying/[slug]` — individual Index entries, driven by `indexEntries`
+  and rendered through `app/buying/[slug]/page.tsx`. Emits FAQPage or
+  Article JSON-LD based on body length. `generateStaticParams`
+  pre-renders every entry at build.
 - `/buying/melkia`, `/buying/the-process`, `/buying/costs`,
-  `/buying/what-to-ask` — older static reference pages. Next.js routes
-  specific segments before `[slug]` so they continue to resolve. The
-  landing no longer links to them; they survive by URL only, pending a
-  later migration into the Index entry schema.
-- `/craft` — architecture / restoration / trades (scaffold, content TK)
-- `/properties`, `/properties/[slug]` — listings (may be empty; current
-  inventory is flagged on the homepage as "represented via Mubawab")
-- `/contact` — contact form
+  `/buying/what-to-ask` — older static reference pages, kept resolvable
+  pending migration into Index entry schema.
+- `/build` — renovation practice page (formerly `/craft`, renamed in
+  April 2026 to match the four-verb primary nav). Static long-form
+  content rendered through `EditorialHero` + `EssayBody`.
+- `/properties`, `/properties/[slug]` — listings.
+- `/contact` — contact form.
 - `/glossary` — single-page glossary with same-page anchors
-  (`/glossary#melkia`). No per-term routes — that decision is resolved, not
-  open.
-- `/journal`, `/journal/[slug]` — editorial. Demoted to secondary nav.
-  `journalEntries` is empty at scaffold; content arrives when there's
-  something worth publishing under one of the four formats.
-- `/about`, `/how-we-work` — only reachable via footer, not top nav
-- `/disclaimer`, `/terms`, `/privacy` — footer legal strip
+  (`/glossary#melkia`). No per-term routes.
+- `/journal`, `/journal/[slug]` — editorial. The LEARN destination.
+- `/about`, `/how-we-work` — footer only, not in primary nav.
+- `/disclaimer`, `/terms`, `/privacy` — footer legal strip.
 
 ## Tailwind conventions
 

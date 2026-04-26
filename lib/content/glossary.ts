@@ -186,7 +186,7 @@ export const glossaryEntries: GlossaryEntry[] = [
     seeAlso: [
       { term: "Riad", anchor: "riad" },
     ],
-    relatedContent: [{ label: "Craft", href: "/craft" }],
+    relatedContent: [{ label: "Build", href: "/build" }],
   },
   {
     slug: "requisition",

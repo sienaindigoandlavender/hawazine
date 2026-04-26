@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { primaryNav, secondaryNav, siteConfig } from "@/lib/site";
+import { primaryNav, siteConfig } from "@/lib/site";
 
 export function SiteHeader() {
   return (
@@ -14,33 +14,51 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <div className="hidden md:flex flex-col items-end gap-2">
+        <div className="hidden md:flex items-center">
           <nav aria-label="Primary">
             <ul className="font-sans flex items-center gap-7 text-meta uppercase tracking-[0.18em] text-ink">
-              {primaryNav.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="transition-colors hover:text-accent"
+              {primaryNav.map((item) =>
+                item.submenu ? (
+                  <li
+                    key={item.href}
+                    className="group relative"
                   >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <nav aria-label="Reference">
-            <ul className="font-sans flex items-center gap-5 text-[0.6875rem] uppercase tracking-[0.18em] text-quiet">
-              {secondaryNav.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="transition-colors hover:text-accent"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+                    <Link
+                      href={item.href}
+                      className="inline-flex items-center gap-1 transition-colors hover:text-accent"
+                      aria-haspopup="true"
+                    >
+                      {item.label}
+                      <span aria-hidden="true" className="text-quiet">
+                        ▾
+                      </span>
+                    </Link>
+                    <div className="invisible absolute left-0 top-full z-30 pt-3 opacity-0 transition-opacity duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                      <ul className="min-w-[12rem] border border-rule bg-paper px-4 py-3 normal-case tracking-normal">
+                        {item.submenu.map((sub) => (
+                          <li key={sub.href}>
+                            <Link
+                              href={sub.href}
+                              className="block py-1.5 font-sans text-meta uppercase tracking-[0.18em] text-quiet transition-colors hover:text-accent"
+                            >
+                              {sub.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </li>
+                ) : (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="transition-colors hover:text-accent"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ),
+              )}
             </ul>
           </nav>
         </div>
@@ -49,20 +67,25 @@ export function SiteHeader() {
       <div className="md:hidden border-t border-rule">
         <nav aria-label="Primary mobile">
           <ul className="font-sans flex items-center gap-x-5 overflow-x-auto whitespace-nowrap px-6 py-3 text-meta uppercase tracking-[0.14em] text-ink">
-            {primaryNav.map((item) => (
-              <li key={item.href} className="shrink-0">
-                <Link href={item.href}>{item.label}</Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <nav aria-label="Reference mobile" className="border-t border-rule">
-          <ul className="font-sans flex items-center gap-x-5 overflow-x-auto whitespace-nowrap px-6 py-2 text-[0.6875rem] uppercase tracking-[0.18em] text-quiet">
-            {secondaryNav.map((item) => (
-              <li key={item.href} className="shrink-0">
-                <Link href={item.href}>{item.label}</Link>
-              </li>
-            ))}
+            {primaryNav.flatMap((item) => {
+              const root = (
+                <li key={item.href} className="shrink-0">
+                  <Link href={item.href}>{item.label}</Link>
+                </li>
+              );
+              if (!item.submenu) return [root];
+              const subItems = item.submenu
+                .filter((sub) => sub.href !== item.href)
+                .map((sub) => (
+                  <li
+                    key={`${item.href}::${sub.href}`}
+                    className="shrink-0 text-quiet"
+                  >
+                    <Link href={sub.href}>{sub.label}</Link>
+                  </li>
+                ));
+              return [root, ...subItems];
+            })}
           </ul>
         </nav>
       </div>
