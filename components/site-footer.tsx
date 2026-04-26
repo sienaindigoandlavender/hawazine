@@ -6,7 +6,7 @@ import { NewsletterForm } from "@/components/newsletter-form";
 export function SiteFooter() {
   return (
     <footer
-      className="mt-24 text-paper"
+      className="text-paper"
       style={{
         background:
           "linear-gradient(to bottom, #1f1f1f 0%, #161616 55%, #0e0e0e 100%)",
