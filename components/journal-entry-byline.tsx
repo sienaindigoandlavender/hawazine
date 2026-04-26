@@ -29,7 +29,10 @@ function ShareIcon({
   );
 }
 
-function ShareIcons({ entry }: { entry: JournalEntry }) {
+// Re-usable row of share icons (email / Facebook / X / LinkedIn) keyed
+// to a journal entry's canonical URL. Used both inside the top byline
+// (under the hero) and at the end of the article body.
+export function JournalShareRow({ entry }: { entry: JournalEntry }) {
   const url = `${siteConfig.url}/journal/${entry.slug}`;
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(entry.title);
@@ -37,7 +40,7 @@ function ShareIcons({ entry }: { entry: JournalEntry }) {
   const iconClass = "h-4 w-4";
 
   return (
-    <div className="mt-5 flex items-center justify-center gap-5">
+    <div className="flex items-center justify-center gap-5">
       <ShareIcon
         href={`mailto:?subject=${encodedTitle}&body=${encodedUrl}`}
         label="Share by email"
@@ -99,7 +102,9 @@ export function JournalEntryByline({ entry }: { entry: JournalEntry }) {
           <span className="text-ink">{DEFAULT_PHOTOGRAPHY}</span>
         </p>
       </div>
-      <ShareIcons entry={entry} />
+      <div className="mt-5">
+        <JournalShareRow entry={entry} />
+      </div>
     </div>
   );
 }
