@@ -103,7 +103,7 @@ export default function PropertiesIndex() {
         <p className="font-sans text-meta uppercase tracking-[0.18em] text-quiet">
           Properties
         </p>
-        <h1 className="mt-4 font-serif text-display leading-[1.04] text-ink md:text-[4.25rem]">
+        <h1 className="mt-4 font-serif text-display leading-[1.04] text-ink md:text-[3.25rem]">
           Riads, dars, and land in the Marrakech medina and beyond.
         </h1>
         <p className="mt-6 max-w-reading font-serif text-subtitle text-ink-soft">

@@ -109,7 +109,7 @@ export default function BuyingIndexPage() {
         <p className="font-sans text-meta uppercase tracking-[0.18em] text-quiet">
           Reference
         </p>
-        <h1 className="mt-4 font-serif text-display leading-[1.05] text-ink md:text-[4.25rem]">
+        <h1 className="mt-4 font-serif text-display leading-[1.05] text-ink md:text-[3.25rem]">
           Buying a Riad in Morocco
         </h1>
         <p className="mt-6 max-w-reading font-serif text-subtitle text-ink-soft">

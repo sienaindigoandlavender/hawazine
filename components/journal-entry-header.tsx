@@ -7,7 +7,7 @@ import type { JournalEntry } from "@/lib/types";
 export function JournalEntryHeader({ entry }: { entry: JournalEntry }) {
   return (
     <header className="mx-auto max-w-page px-6 pt-16 pb-10 md:pt-24">
-      <h1 className="mx-auto max-w-[900px] text-center font-serif text-section leading-[1.15] text-ink md:text-[3rem]">
+      <h1 className="mx-auto max-w-[900px] text-center font-serif text-section leading-[1.15] text-ink md:text-[2.5rem]">
         {entry.title}
       </h1>
     </header>
