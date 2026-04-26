@@ -49,19 +49,31 @@ interface JournalRow {
   format: string | null;
 }
 
+// Image URLs in Supabase may carry a `PLACEHOLDER_*` sentinel during the
+// editorial workflow (hero/inline placeholders that the editor will swap
+// for real Cloudinary URLs). Strip those at the row-mapping layer so every
+// downstream consumer — entry-page hero, featured, card, JSON-LD — sees
+// `undefined` and degrades cleanly instead of trying to render a broken
+// image.
+function usable(value: string | null): string | undefined {
+  if (!value) return undefined;
+  if (value.startsWith("PLACEHOLDER_")) return undefined;
+  return value;
+}
+
 function rowToEntry(row: JournalRow): JournalEntry {
   return {
     slug: row.slug,
     title: row.title,
     subtitle: row.subtitle ?? undefined,
     bodyMarkdown: row.body_markdown,
-    heroImageUrl: row.hero_image_url ?? undefined,
+    heroImageUrl: usable(row.hero_image_url),
     heroImageAlt: row.hero_image_alt ?? undefined,
     heroImagePrompt: row.hero_image_prompt ?? undefined,
-    inlineImage1Url: row.inline_image_1_url ?? undefined,
+    inlineImage1Url: usable(row.inline_image_1_url),
     inlineImage1Alt: row.inline_image_1_alt ?? undefined,
     inlineImage1Prompt: row.inline_image_1_prompt ?? undefined,
-    inlineImage2Url: row.inline_image_2_url ?? undefined,
+    inlineImage2Url: usable(row.inline_image_2_url),
     inlineImage2Alt: row.inline_image_2_alt ?? undefined,
     inlineImage2Prompt: row.inline_image_2_prompt ?? undefined,
     publishedAt: row.published_at,
@@ -76,13 +88,8 @@ function rowToEntry(row: JournalRow): JournalEntry {
 // - inline 2 inserts after paragraph 7 (idx 6)
 // - if body has fewer than 4 paragraphs, neither image renders
 // - if body has 4-7 paragraphs, only inline 1 renders
-// - URLs prefixed with PLACEHOLDER_ are treated as unset so entries
-//   degrade to prose-only until real Cloudinary URLs are pasted in
-//   Supabase Studio.
-function isUsable(url: string | undefined): url is string {
-  return Boolean(url && !url.startsWith("PLACEHOLDER_"));
-}
-
+// Placeholder URLs are already stripped to `undefined` by `usable()` in
+// rowToEntry, so the helper just checks for presence.
 function escapeMarkdownAlt(alt: string): string {
   return alt.replace(/]/g, "\\]");
 }
@@ -91,9 +98,9 @@ export function injectInlineImages(entry: JournalEntry): string {
   const paragraphs = entry.bodyMarkdown.split("\n\n");
   if (paragraphs.length < 4) return entry.bodyMarkdown;
 
-  const useInline1 = isUsable(entry.inlineImage1Url);
+  const useInline1 = Boolean(entry.inlineImage1Url);
   const useInline2 =
-    isUsable(entry.inlineImage2Url) && paragraphs.length >= 8;
+    Boolean(entry.inlineImage2Url) && paragraphs.length >= 8;
 
   if (!useInline1 && !useInline2) return entry.bodyMarkdown;
 
