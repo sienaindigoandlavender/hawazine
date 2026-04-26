@@ -169,7 +169,7 @@ export default function IndexEntryPage({ params }: Params) {
         </nav>
 
         <header className="mt-8">
-          <h1 className="font-serif text-section text-ink md:text-[2.75rem] md:leading-[1.08]">
+          <h1 className="font-serif text-section text-ink md:text-[2.25rem] md:leading-[1.08]">
             {entry.question}
           </h1>
           <p className="mt-6 max-w-reading font-serif text-subtitle text-ink-soft">

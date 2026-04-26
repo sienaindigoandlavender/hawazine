@@ -63,7 +63,7 @@ export function JournalFeatured({ entry }: { entry: JournalEntry }) {
             <p className="pb-2 font-sans text-[0.6875rem] uppercase tracking-[0.24em] text-paper">
               <span className="border-b border-paper/80 pb-1">{kicker}</span>
             </p>
-            <h2 className="mt-6 max-w-3xl font-serif text-[1.75rem] leading-[1.15] text-paper md:text-[2.5rem]">
+            <h2 className="mt-6 max-w-3xl font-serif text-[1.75rem] leading-[1.15] text-paper md:text-[2rem]">
               {entry.title}
             </h2>
             <span className="mt-8 inline-block border border-paper/90 px-8 py-3 font-sans text-[0.6875rem] uppercase tracking-[0.24em] text-paper transition-colors group-hover:bg-paper group-hover:text-ink">
@@ -76,7 +76,7 @@ export function JournalFeatured({ entry }: { entry: JournalEntry }) {
           <p className="pb-2 font-sans text-[0.6875rem] uppercase tracking-[0.24em] text-quiet">
             <span className="border-b border-quiet pb-1">{kicker}</span>
           </p>
-          <h2 className="mt-6 font-serif text-section leading-[1.15] text-ink md:text-[2.5rem]">
+          <h2 className="mt-6 font-serif text-section leading-[1.15] text-ink md:text-[2rem]">
             {entry.title}
           </h2>
           {entry.subtitle && (

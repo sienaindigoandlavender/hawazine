@@ -101,7 +101,7 @@ export default async function JournalIndex() {
         <p className="font-sans text-meta uppercase tracking-[0.18em] text-quiet">
           Journal
         </p>
-        <h1 className="mt-4 font-serif text-display leading-[1.04] text-ink md:text-[4.25rem]">
+        <h1 className="mt-4 font-serif text-display leading-[1.04] text-ink md:text-[3.25rem]">
           Dispatches from the medina.
         </h1>
         <p className="mt-6 max-w-reading font-serif text-subtitle text-ink-soft">

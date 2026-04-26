@@ -25,11 +25,11 @@ const config: Config = {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
       },
       fontSize: {
-        display: ["4rem", { lineHeight: "1.04", letterSpacing: "-0.015em" }],
-        section: ["2.5rem", { lineHeight: "1.12", letterSpacing: "-0.008em" }],
-        subtitle: ["1.5rem", { lineHeight: "1.35", letterSpacing: "-0.003em" }],
-        body: ["1.125rem", { lineHeight: "1.65" }],
-        meta: ["0.8125rem", { lineHeight: "1.45", letterSpacing: "0.04em" }],
+        display: ["3rem", { lineHeight: "1.06", letterSpacing: "-0.012em" }],
+        section: ["2rem", { lineHeight: "1.15", letterSpacing: "-0.006em" }],
+        subtitle: ["1.25rem", { lineHeight: "1.4", letterSpacing: "-0.002em" }],
+        body: ["1rem", { lineHeight: "1.55" }],
+        meta: ["0.75rem", { lineHeight: "1.45", letterSpacing: "0.04em" }],
       },
       maxWidth: {
         reading: "640px",

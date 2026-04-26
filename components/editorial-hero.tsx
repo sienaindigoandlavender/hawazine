@@ -28,7 +28,7 @@ export function EditorialHero({
               {kicker}
             </p>
           )}
-          <h1 className="mt-4 font-serif text-display leading-[1.05] text-ink md:text-[4rem]">
+          <h1 className="mt-4 font-serif text-display leading-[1.05] text-ink md:text-[3rem]">
             {title}
           </h1>
           {subtitle && (

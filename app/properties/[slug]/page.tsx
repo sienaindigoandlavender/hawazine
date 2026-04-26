@@ -269,7 +269,7 @@ export default function PropertyPage({ params }: Params) {
         <p className="font-sans text-meta uppercase tracking-[0.18em] text-quiet">
           Property
         </p>
-        <h1 className="mt-4 max-w-reading font-serif text-display leading-[1.04] text-ink md:text-[4rem]">
+        <h1 className="mt-4 max-w-reading font-serif text-display leading-[1.04] text-ink md:text-[3rem]">
           {property.title}
         </h1>
         {property.subtitle && (
