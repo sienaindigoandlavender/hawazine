@@ -9,9 +9,28 @@ const FORMAT_DISPLAY: Record<string, string> = {
   "the-record": "The Record",
 };
 
+// Modern House-style torn-paper edge: a few gentle waves that fill from
+// below in paper, breaking the rectangle of the hero on its way into the
+// grid below. Drawn with an SVG so it scales with viewport width.
+function TornPaperEdge() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 1440 80"
+      preserveAspectRatio="none"
+      className="pointer-events-none absolute inset-x-0 bottom-[-1px] h-12 w-full md:h-16"
+    >
+      <path
+        d="M0,80 L0,42 C160,12 320,62 540,38 C760,14 980,64 1180,32 C1300,16 1380,46 1440,36 L1440,80 Z"
+        fill="#FFFFFF"
+      />
+    </svg>
+  );
+}
+
 // The Modern House pattern: full-bleed hero image with centred overlay
 // text (small underlined eyebrow, large white serif title, thin-bordered
-// READ MORE button). No panel.
+// READ MORE button) and a torn-paper edge on its way into the grid below.
 export function JournalFeatured({ entry }: { entry: JournalEntry }) {
   const kicker = entry.format
     ? FORMAT_DISPLAY[entry.format] ?? "Latest"
@@ -37,9 +56,10 @@ export function JournalFeatured({ entry }: { entry: JournalEntry }) {
               aria-hidden="true"
               className="absolute inset-0 bg-gradient-to-t from-ink/55 via-ink/15 to-transparent"
             />
+            <TornPaperEdge />
           </div>
 
-          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-6 pb-[10%] text-center md:pb-[12%]">
+          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-6 pb-[14%] text-center md:pb-[16%]">
             <p className="pb-2 font-sans text-[0.6875rem] uppercase tracking-[0.24em] text-paper">
               <span className="border-b border-paper/80 pb-1">{kicker}</span>
             </p>

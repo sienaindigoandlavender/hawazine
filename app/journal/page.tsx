@@ -123,13 +123,13 @@ export default async function JournalIndex() {
         </section>
       ) : (
         <>
-          <section className="mb-24">
+          <section className="mb-16 md:mb-20">
             <JournalFeatured entry={featured} />
           </section>
 
           {grid.length > 0 && (
             <section className="mx-auto max-w-page px-6 mb-24">
-              <div className="grid gap-x-10 gap-y-16 md:grid-cols-2">
+              <div className="grid gap-x-10 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
                 {grid.map((entry) => (
                   <JournalCard key={entry.slug} entry={entry} />
                 ))}
