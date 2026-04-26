@@ -10,9 +10,11 @@ export const revalidate = 3600;
 
 function pickFeatured(list: Property[]): Property | undefined {
   if (list.length === 0) return undefined;
-  const sorted = [...list].sort((a, b) =>
-    a.updatedAt < b.updatedAt ? 1 : a.updatedAt > b.updatedAt ? -1 : 0,
-  );
+  const sorted = [...list].sort((a, b) => {
+    const ap = a.publishedAt ?? "";
+    const bp = b.publishedAt ?? "";
+    return ap < bp ? 1 : ap > bp ? -1 : 0;
+  });
   return sorted.find((p) => p.featured) ?? sorted[0];
 }
 

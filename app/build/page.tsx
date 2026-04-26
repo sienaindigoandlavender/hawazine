@@ -33,7 +33,7 @@ We work with master craftsmen who learned their trades in the medina — tadelak
 
 We do not promise speed. A serious medina renovation takes nine to eighteen months once the title is clean and the budget understood. We do promise a finished result that does not require redoing in five years — and a transparent record of what was done, what cost what, and why.
 
-If you have bought a house and want to talk about how to bring it back, or you are evaluating a property and want a renovation cost honestly assessed before you commit — write to us.`;
+If you have bought a house and want to talk about how to bring it back, or you are evaluating a property and want a renovation cost honestly assessed before you commit — [write to us](/contact).`;
 
 export default function BuildPage() {
   return (

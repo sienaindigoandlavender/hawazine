@@ -46,7 +46,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const propertyEntries = getPublishedProperties().map((p) => ({
     url: safeSitemapUrl(base, `/properties/${p.slug}`),
-    lastModified: new Date(p.updatedAt),
+    lastModified: p.publishedAt ? new Date(p.publishedAt) : now,
     changeFrequency: "weekly" as const,
     priority: 0.8,
   }));

@@ -99,7 +99,7 @@ export async function GET() {
       : properties
           .map(
             (p) =>
-              `- [${p.title}](${abs(`/properties/${p.slug}`)}): ${p.subtitle ?? ""}`.trim(),
+              `- [${p.title}](${abs(`/properties/${p.slug}`)}): ${p.descriptionShort}`.trim(),
           )
           .join("\n"),
     "",

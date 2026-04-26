@@ -28,7 +28,15 @@ hawazine repo so you do not have to re-derive them from the original brief.
 Flat-file content in `lib/content/`:
 
 - `quarters.ts` — medina neighbourhoods (Laksour, Mouassine, etc.)
-- `properties.ts` — listings (riad/dar/land/other)
+- `properties.ts` — listings (riad / dar / douaria / fondouk / palace
+  / kasbah / land). Each row carries the full Modern House Sales-register
+  shape: galleryImageUrls + heroImageIndex, descriptionShort +
+  descriptionLong, condition / title / orientation / floorType,
+  walkingLandmarks, agentRefMubawab, etc. See the `Property` interface
+  in `lib/types.ts`. Image URLs may point at Mubawab's CDN
+  (`www.mubawab-media.com`, whitelisted in `next.config.mjs`) until a
+  later pass moves them to Cloudinary; the per-row `imagesSource` flag
+  records which CDN owns the assets.
 - `pages.ts` — long-form static pages (Marrakech landing, Buying and its
   sub-pages, About, How we work). Slugs match the route path.
 - `glossary.ts` — single-page glossary terms
@@ -94,6 +102,12 @@ Markdown bodies render through `react-markdown` + `remark-gfm` via the
   dark footer. Use `gray-100` rather than `paper-deep` here — at
   full-width scale, paper-deep's warm cast reads beige. Treat this as
   the only such band; do not add others without a parallel decision.
+  **Second sanctioned exception (April 2026):** the entire `/properties/*`
+  route tree sits on a warm off-white `#F0EEEA`, applied via
+  `app/properties/layout.tsx`. This matches the Modern House Sales
+  register — pure white reads as Sotheby's-sterile; the off-white is
+  agency-grade with Hawazine's quiet warmth underneath. Cards on
+  `/properties` sit transparently on this canvas (no card backgrounds).
 - Body prose: `ink-soft` default. Editorial prose inside `.prose-hawazine`
   reads `ink` (slightly heavier). Use `quiet` for metadata/captions only.
 
@@ -165,15 +179,24 @@ Shared components in `components/`:
   default (warm off-white card over photography); `tone="paper"` is the
   Journal default. `size="featured"` floats the panel mid-left; `size="card"`
   pins it bottom-left in a smaller footprint.
-- `property-featured.tsx`, `property-card.tsx` — wrap `ImageWithPanel` for
-  the landing top entry and grid cards respectively. The whole card is the
-  link; no separate CTA on cards.
-- `property-info-panel.tsx` — single source for the three panel densities
-  (featured / card / hero), all driven by one `Property`. Keep new panel
-  variants here rather than inlining panel content at call sites.
-- `property-specs-block.tsx` — TYPE/SIZE/BEDROOMS/etc. as a 2- or 4-col
-  grid that omits rows when fields are absent. No bedrooms/bathrooms icon
-  triplet.
+- `property-featured.tsx` — homepage-only featured property block
+  ("Currently representing"). Wraps `ImageWithPanel` (paper-deep tone)
+  with the floating info panel. The /properties landing no longer uses
+  this — it switched to the Modern House Sales register, which has no
+  featured-vs-rest distinction.
+- `property-card.tsx` — Modern House Sales register grid card. Image at
+  3:2 with an optional NEW badge (top-left, properties published in
+  the last 30 days), then title + sub-location stacked left and price
+  + title status stacked right beneath the image. No card border, no
+  shadow, no panel. Sits transparently on the off-white `/properties`
+  canvas. Used by both the /properties landing and /marrakech/[quarter].
+- `property-info-panel.tsx` — homepage-only info panel for
+  `PropertyFeatured`. The /properties landing and detail pages dropped
+  the floating-panel pattern when they shifted to the Sales register.
+- The detail page metadata grid is rendered inline in
+  `app/properties/[slug]/page.tsx` rather than via a separate component;
+  the previous `property-specs-block.tsx` was removed in the April 2026
+  Sales-register refactor.
 - `quarter-card.tsx`, `journal-card.tsx` — index cards.
 - `contact-form.tsx` — POSTs JSON to `/api/contact`.
 - `newsletter-form.tsx` — footer signup. POSTs to `/api/contact` with
