@@ -44,14 +44,9 @@ export function JournalCard({ entry }: { entry: JournalEntry }) {
         <h3 className="mt-4 font-serif text-subtitle leading-[1.2] text-ink transition-colors group-hover:text-accent">
           {entry.title}
         </h3>
-        {entry.subtitle && (
-          <p className="mt-3 line-clamp-2 font-serif text-body text-ink-soft">
-            {entry.subtitle}
-          </p>
-        )}
         <time
           dateTime={entry.publishedAt}
-          className="mt-4 block font-sans text-meta text-quiet"
+          className="mt-3 block font-sans text-meta text-quiet"
         >
           {formatDate(entry.publishedAt)}
         </time>
