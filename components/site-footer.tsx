@@ -75,6 +75,7 @@ export function SiteFooter() {
           <li><a href="https://www.slowmorocco.com" target="_blank" rel="noopener noreferrer" className="hover:text-paper">Slow Morocco</a></li>
           <li><a href="https://derb.so" target="_blank" rel="noopener noreferrer" className="hover:text-paper">Derb — City Guide</a></li>
           <li><a href="https://darija.io" target="_blank" rel="noopener noreferrer" className="hover:text-paper">Darija Dictionary</a></li>
+          <li><a href="https://www.riaddisiena.com" target="_blank" rel="noopener noreferrer" className="hover:text-paper">Riad di Siena</a></li>
         </ul>
       </div>
 
