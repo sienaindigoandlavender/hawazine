@@ -116,6 +116,18 @@ export default function MarrakechPage() {
             <QuarterCard key={quarter.slug} quarter={quarter} />
           ))}
         </div>
+
+        <p className="mt-12 font-sans text-sm text-ink/60">
+          Practical questions about Marrakech?{" "}
+          <a
+            href="https://derb.so"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-ink transition-colors"
+          >
+            Derb has 57 answers →
+          </a>
+        </p>
       </section>
     </>
   );
