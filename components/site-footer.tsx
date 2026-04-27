@@ -67,6 +67,17 @@ export function SiteFooter() {
         </div>
       </div>
 
+      <div className="mx-auto max-w-page border-t border-paper/10 px-6 pb-10 pt-8">
+        <p className="font-sans text-meta uppercase tracking-[0.18em] text-paper/60">
+          Morocco
+        </p>
+        <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2 font-sans text-meta text-paper/85">
+          <li><a href="https://www.slowmorocco.com" target="_blank" rel="noopener noreferrer" className="hover:text-paper">Slow Morocco</a></li>
+          <li><a href="https://derb.so" target="_blank" rel="noopener noreferrer" className="hover:text-paper">Derb — City Guide</a></li>
+          <li><a href="https://darija.io" target="_blank" rel="noopener noreferrer" className="hover:text-paper">Darija Dictionary</a></li>
+        </ul>
+      </div>
+
       <div className="mx-auto max-w-page border-t border-paper/10 px-6 py-5 flex flex-col gap-2 md:flex-row md:items-center md:justify-between font-sans text-[0.75rem] text-paper/40">
         <span>&copy; Hawazine 2026</span>
         <nav aria-label="Legal">
