@@ -27,11 +27,21 @@ const RIAD_LAKSOUR_XVIIIE_IMAGES = [
   "https://www.mubawab-media.com/ad/8/132/078F/h/15_80168028.jpg",
 ];
 
-// Paste Mubawab image URLs here, then flip the property's `published`
-// flag to true. Pattern from the listing page is
-// https://www.mubawab-media.com/ad/8/343/277F/h/<filename>.jpeg —
-// right-click each image on the listing page and copy address.
-const RIAD_RENOVATED_TITLED_LAKSOUR_IMAGES: string[] = [];
+const RIAD_RENOVATED_TITLED_LAKSOUR_IMAGES = [
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777812161/2_qlm3x0.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777812140/1_luaxh7.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777812177/3_f3qyae.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777812318/8_uk4th8.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777812326/9_y3fd7h.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777812356/12_bbddol.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777812223/7_p62l4j.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777812495/17_fjpgcr.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777812380/14_isnniw.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777812298/6_hksgen.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777812373/13_sycj5q.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777812387/15_oeehws.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777812392/16_u7sfs2.jpg",
+];
 
 const RIAD_JEMAA_EL_FNA_IMAGES = [
   "https://www.mubawab-media.com/ad/8/101/700F/h/Laksour-280205-3_79862256.jpeg",
@@ -182,7 +192,7 @@ export const properties: Property[] = [
     descriptionFrench: null,
     galleryImageUrls: RIAD_RENOVATED_TITLED_LAKSOUR_IMAGES,
     heroImageIndex: 0,
-    imagesSource: "mubawab",
+    imagesSource: "cloudinary",
     latitude: null,
     longitude: null,
     walkingLandmarks: [
@@ -197,7 +207,7 @@ export const properties: Property[] = [
       "https://www.mubawab.ma/en/a/8343277/small-renovated-riad-with-title-deed-%E2%80%94-laksour",
     relatedJournalSlugs: [],
     relatedIndexSlugs: [],
-    published: false,
+    published: true,
     publishedAt: "2026-05-03",
     status: "available",
     featured: false,
