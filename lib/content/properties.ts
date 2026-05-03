@@ -27,9 +27,22 @@ const RIAD_LAKSOUR_XVIIIE_IMAGES = [
   "https://www.mubawab-media.com/ad/8/132/078F/h/15_80168028.jpg",
 ];
 
-// Paste Cloudinary URLs here, then flip the property's `published`
-// flag to true.
-const DAR_SIDI_ABDELAZIZ_IMAGES: string[] = [];
+const DAR_SIDI_ABDELAZIZ_IMAGES = [
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777816243/1_i1a7av.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777816244/2_xqbr4w.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777816245/3_ntzs2z.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777816246/4_e7y6dg.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777816248/5_askmbc.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777816250/6_neyaes.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777816250/7_vuswbs.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777816252/8_oqndys.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777816253/9_iy6ydg.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777816254/10_sikgjn.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777816256/11_atzigb.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777816257/12_gbph4p.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777816260/15_g3w5oq.jpg",
+  "https://res.cloudinary.com/do2ojyohc/image/upload/v1777816263/17_kzsx6f.jpg",
+];
 
 const RIAD_RENOVATED_TITLED_LAKSOUR_IMAGES = [
   "https://res.cloudinary.com/do2ojyohc/image/upload/v1777812161/2_qlm3x0.jpg",
@@ -222,7 +235,7 @@ export const properties: Property[] = [
     quarterSlug: "mouassine",
     subLocation: "Sidi Abdelaziz",
     city: "Marrakech",
-    priceDh: 0,
+    priceDh: 3_200_000,
     priceEur: null,
     propertyType: "dar",
     sizeM2: 57,
@@ -263,7 +276,7 @@ export const properties: Property[] = [
     agentUrlMubawab: null,
     relatedJournalSlugs: [],
     relatedIndexSlugs: [],
-    published: false,
+    published: true,
     publishedAt: "2026-05-03",
     status: "available",
     featured: false,
