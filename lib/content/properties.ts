@@ -27,6 +27,10 @@ const RIAD_LAKSOUR_XVIIIE_IMAGES = [
   "https://www.mubawab-media.com/ad/8/132/078F/h/15_80168028.jpg",
 ];
 
+// Paste Cloudinary URLs here, then flip the property's `published`
+// flag to true.
+const DAR_SIDI_ABDELAZIZ_IMAGES: string[] = [];
+
 const RIAD_RENOVATED_TITLED_LAKSOUR_IMAGES = [
   "https://res.cloudinary.com/do2ojyohc/image/upload/v1777812161/2_qlm3x0.jpg",
   "https://res.cloudinary.com/do2ojyohc/image/upload/v1777812140/1_luaxh7.jpg",
@@ -208,6 +212,58 @@ export const properties: Property[] = [
     relatedJournalSlugs: [],
     relatedIndexSlugs: [],
     published: true,
+    publishedAt: "2026-05-03",
+    status: "available",
+    featured: false,
+  },
+  {
+    slug: "dar-sidi-abdelaziz",
+    title: "Renovated Medina House — Sidi Abdelaziz",
+    quarterSlug: "mouassine",
+    subLocation: "Sidi Abdelaziz",
+    city: "Marrakech",
+    priceDh: 0,
+    priceEur: null,
+    propertyType: "dar",
+    sizeM2: 57,
+    bedrooms: 5,
+    bathrooms: 3,
+    roomsTotal: null,
+    floors: null,
+    hasTerrace: true,
+    hasCourtyard: false,
+    hasWell: false,
+    orientation: null,
+    floorType: "mixed",
+    ageBracket: null,
+    approximateYear: null,
+    conditionSummary: "Fully renovated",
+    titleStatus: "titre_foncier",
+    titleNotes:
+      "Titre foncier already established. No immatriculation procedure to open; the transaction proceeds without that delay.",
+    descriptionShort:
+      "A 57 m² family dar in Sidi Abdelaziz, fully renovated with carved cedar ceilings, hand-cut zellige, and sculpted gebs. Held under titre foncier. Short walk from Medersa Ben Youssef and Jemaa el-Fna.",
+    descriptionLong:
+      "In the quarter anchored by the zaouia of Sidi Abdelaziz Tebbaa — one of the Seven Saints of Marrakech. The dar is fully renovated and carries the layered detail of authentic medina craftsmanship: carved cedar ceilings, hand-cut zellige floors, sculpted plaster (gebs) cornices, painted lanterns. The ground-floor salon is the set piece — sculpted plaster framing the volume, a crystal chandelier overhead. Five bedrooms across multiple levels; three with en-suite bathrooms, plus a separate WC. An equipped kitchen sits behind a sculpted plaster archway. Two terraces, the rooftop opening toward the Koutoubia. Title is registered as titre foncier: no immatriculation procedure to open. Short walk to the Medersa Ben Youssef and the Musée de Marrakech; quiet derbs, established neighbours, easy walking access to Jemaa el-Fna. Suited to a family residence, a pied-à-terre, or — with adaptation — a small guesthouse. Viewings by appointment.",
+    descriptionFrench: null,
+    galleryImageUrls: DAR_SIDI_ABDELAZIZ_IMAGES,
+    heroImageIndex: 0,
+    imagesSource: "cloudinary",
+    latitude: null,
+    longitude: null,
+    walkingLandmarks: [
+      "Short walk to Medersa Ben Youssef",
+      "Musée de Marrakech within minutes",
+      "Quiet derbs, established neighbours",
+      "Walking access to Jemaa el-Fna",
+      "Rooftop view toward the Koutoubia",
+    ],
+    agentName: "Hawazine",
+    agentRefMubawab: null,
+    agentUrlMubawab: null,
+    relatedJournalSlugs: [],
+    relatedIndexSlugs: [],
+    published: false,
     publishedAt: "2026-05-03",
     status: "available",
     featured: false,
